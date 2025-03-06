@@ -5,6 +5,7 @@ categories:
     - Reversing
 tags:
     - Reversing
+date: 2025-03-04
 ---
 
 ## 목표
