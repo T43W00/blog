@@ -1,6 +1,6 @@
 ---
-title: Windows 32bit 유니버셜 쉘코드 제작
-description: C언어로 Windows 32bit 환경의 유니버셜 쉘코드 제작하기
+title: Windows 32비트 유니버셜 쉘코드 제작
+description: C언어로 Windows 32비트 환경의 유니버셜 쉘코드 제작하기
 categories:
     - Reversing
 tags:
@@ -9,7 +9,7 @@ tags:
 
 ## 목표
 
-함수의 주소를 동적으로 구해 계산기를 실행하는 코드를 C언어로 작성하여 쉘코드로 추출하여 실행하기
+- Windows 32비트 유니버셜 쉘코드 개념 이해와 제작 및 실행
 
 ---
 
@@ -30,11 +30,9 @@ tags:
 
 `ASLR` 기법을 우회하기 위해 함수의 주소를 동적으로 구해야 한다.
 
-먼저 `Windows` 운영체제에서 어떻게 함수의 주소를 가져오는지 알 필요가 있다.
+함수의 주소는 `DLL`의 `PE` 헤더를 파싱하여 `Export Table`을 통해 함수의 오프셋을 찾을 수 있다.
 
-함수의 주소는 함수를 저장하고 있는 `DLL` 파일에서를 함수의 오프셋을 통해 가져온다.
-
-하지만 `DLL` 파일의 주소와 함수의 오프셋 또한 동적으로 구해야 한다.
+그렇기 때문에 먼저 `DLL`의 베이스 주소를 구해야 한다.
 
 ---
 
@@ -48,7 +46,7 @@ tags:
 
 먼저 `Windows` 운영체제에서 각 프로세스의 정보를 담고 있는 `PEB(Process Environment Block)` 구조체에 접근해야 한다.
 
-`PEB` 구조체는 `fs` 레지스터의 `0x30` 오프셋을 통해 접근할 수 있다.
+`PEB` 구조체는 `fs` 레지스터의 `0x30` 오프셋에 위치한다.
 
 <img src="image-2.png" alt="Image" width="900">
 
@@ -58,7 +56,7 @@ tags:
 
 다음으로 프로세스에 로드된 모듈(`DLL`)에 대한 정보를 포함하는 `PEB_LDR_DATA` 구조체의 포인터인 `Ldr`에 접근해야 한다.
 
-`Ldr`은 `PEB` 구조체의 `0x0C` 오프셋을 통해 접근할 수 있다.
+`Ldr`은 `PEB` 구조체의 `0x0C` 오프셋에 위치한다.
 
 <img src="image-1.png" alt="Image" width="900">
 
@@ -78,7 +76,7 @@ tags:
 
 #### DllBase
 
-보통의 경우에는 메모리에 배치되는 순서가 `Process Image` -> `ntdll.dll` -> `kernel32.dll` 이기 때문에 `InMemoryOrderModuleList`의 세번째 모듈을 가져오면 된다.
+보통의 경우에는 메모리에 배치되는 순서가 `Process Image` -> `ntdll.dll` -> `kernel32.dll` 이기 때문에 `InMemoryOrderModuleList`의 세 번째 모듈이 `kernel32.dll`에 해당한다.
 
 &nbsp;
 
@@ -96,11 +94,11 @@ tags:
 
 ---
 
-#### NT Header 
+#### NT Header
 
-먼저 `NT Header`의 위치를 나타내는 값인 `e_lfanew`을 구해야 한다.
+먼저 `PE` 파일의 로딩 정보를 저장하는 `NT Header`에 접근해야 한다.
 
-`DllBase`의 `0x3C` 오프셋을 통해 구할 수 있다.
+`NT Header`의 위치는 `e_lfanew`에 저장되어 있는 오프셋을 통해 구할 수 있는데, 이는 `DllBase(DOS Header)`의 `0x3C` 오프셋에 저장되어 있다.
 
 <img src="image-5.png" alt="Image" width="900">
 
@@ -108,9 +106,9 @@ tags:
 
 #### Optional Header
 
-프로그램 실행에 필요한 정보를 담고 있는 `Optional Header`에 접근해야 한다.
+다음으로 프로그램 실행에 필요한 정보를 담고 있는 `Optional Header`에 접근해야 한다.
 
-`Optional Header`는 `NT Header`의 `0x18` 오프셋을 통해 구할 수 있다.
+`Optional Header`는 `NT Header`의 `0x18` 오프셋에 위치한다.
 
 <img src="image-6.png" alt="Image" width="900">
 
@@ -118,9 +116,9 @@ tags:
 
 #### Data Directory
 
-다음으로 `Export Table`의 `RVA`가 저장되어 있는 `Data Directory`에 접근해야 한다.
+이제 `Export Table`의 `RVA`가 저장되어 있는 `Data Directory`에 접근해야 한다.
 
-`Data Directory`는 `Optional Header`의 `0x60` 오프셋을 통해 구할 수 있다.
+`Data Directory`는 `Optional Header`의 `0x60` 오프셋에 위치한다.
 
 <img src="image-7.png" alt="Image" width="900">
 
@@ -146,7 +144,7 @@ tags:
 
 - `AddressOfFunctions` : 함수들의 주소 배열의 `RVA` (오프셋 : `0x1C`)
 - `AddressOfNames` : 함수 이름들의 `RVA` 배열의 `RVA` (오프셋 : `0x20`)
-- `AddressOfNameOrdinals` : 이름과 함수 주소를 매핑하는 Ordinals 배열의 RVA (오프셋 : `0x24`)
+- `AddressOfNameOrdinals` : 이름과 함수 주소를 매핑하는 `Ordinals` 배열의 `RVA` (오프셋 : `0x24`)
 
 ---
 
@@ -172,9 +170,9 @@ tags:
 
 `Inline Assembly`를 이용하면 `fs` 레지스터를 통해 `PEB`에 접근할 수 있다.
 
-위에서 구한 오프셋을 더해 `Export Table`의 필드들을 구해서 위 방법으로 `WinExec` 함수의 주소를 구하였다.
+앞서 설명한 방법들을 통해 `Export Table`의 필드들을 순회하여 `WinExec` 함수의 주소를 구하였다.
 
-문자열이 사용되면 이후 쉘코드로 실행될 때 문제가 있을 수 있기에 `ASCII` 값으로 저장하였다.
+`"WinExec"`나 `"calc.exe"`와 같은 문자열 리터럴 값은 이후 쉘코드로 추출하였을 때 그 배열을 **절대주소**로 불러오기 때문에, 이를 방지하기 위해 `ASCII` 값으로 저장하였다.
 
 ```c
 // compile : gcc -o shellcode.exe shellcode.c -m32
@@ -206,9 +204,10 @@ int main() {
     char *AddressOfNameOrdinals = (char *)(DllBase + *(int *)(Export_Table_Addr + 0x24));
 
     int i = 0;
+
     char WinExec_Name[] = {0x57, 0x69, 0x6E, 0x45, 0x78, 0x65, 0x63, 0x00};
 
-    while (1) { // 순회하며 WinExec 찾기
+    while (1) { // 순회하며 WinExec 함수 찾기
         char *Func_Name = (char *)*(int *)(AddressOfNames + i * sizeof(int)) + (int)DllBase;
         if (Func_Name[0] == WinExec_Name[0] &&
             Func_Name[1] == WinExec_Name[1] &&
@@ -219,11 +218,14 @@ int main() {
             Func_Name[6] == WinExec_Name[6]) {
             break;
         }
+
         i++;
     }
 
     int WinExec_index = i;
 
+
+    // Export Table Fields 구하기
     short ordinal = *(short*)(AddressOfNameOrdinals + WinExec_index * sizeof(short));
     int WinExec_RVA = *(int*)(AddressOfFunctions + ordinal * sizeof(int));
     char* WinExec_Addr = (char*)(DllBase + WinExec_RVA);
@@ -242,7 +244,7 @@ int main() {
 
 ### 쉘코드 추출
 
-`objdump`를 이용하여 바이트 코드를 추출하였다.
+`objdump`를 통해 바이트 코드로 추출하였다.
 
 `_main` 함수에서 `PEB`를 가져오는 부분부터 호출하는 부분까지만 사용하면 된다.
 
