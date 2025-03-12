@@ -1,6 +1,6 @@
 ---
-title: Windows 32비트 유니버셜 쉘코드 제작
-description: C언어로 Windows 32비트 환경의 유니버셜 쉘코드 제작하기
+title: Windows x86 Universal Shellcode
+description: C언어로 Windows 32비트 환경의 유니버셜 쉘코드 제작
 categories:
     - Reversing
 tags:
