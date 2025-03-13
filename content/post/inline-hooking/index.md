@@ -59,7 +59,7 @@ BYTE Original_bytes[5];
 
 // 후킹할 함수
 int __stdcall Hooked_rand() {
-    return 4;
+    return 7;
 }
     
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
@@ -86,7 +86,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 
 ## 테스트 프로그램
 
-후킹을 테스트 할 프로그램으로 랜덤한 값을 출력하는 C 코드를 작성한 뒤 실행하였다.
+후킹을 테스트 할 프로그램으로 1부터 6까지 수 중에 랜덤한 값을 출력하는 C 코드를 작성한 뒤 실행하였다.
 
 ```c
 #include <stdio.h>
@@ -111,4 +111,4 @@ int main() {
 
 ## 코드 실행
 
-코드 실행 결과 랜덤 값이 4로 고정되어 출력되는 걸 확인할 수 있다.
+코드 실행 결과 랜덤 값이 7로 고정되어 출력되는 걸 확인할 수 있다.
