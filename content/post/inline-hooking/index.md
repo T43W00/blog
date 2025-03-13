@@ -97,14 +97,15 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 int main() {
     
     HINSTANCE hDll = LoadLibrary("hook.dll");
-
     srand((unsigned int)time(NULL));
-    
-    int random_value = (rand() % 6) + 1;
-    printf("%d\n", random_value);
-    
+    int random_value;
+
+    for (int i = 0; i < 10; i++) {
+        random_value = rand();
+        printf("%d\n", random_value);
+    }
+
     FreeLibrary(hDll);
-    
     return 0;
 }
 ```
