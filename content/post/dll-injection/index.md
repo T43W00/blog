@@ -100,7 +100,7 @@ int main(void) {
 
   if (Process32First(hSnapshot, &PE32)) {
     while (Process32Next(hSnapshot, &PE32)) {
-      if (!strcmp(PE32.szExeFile, "notepad.exe")) {
+      if (!strcmp(PE32.szExeFile, "Notepad.exe")) {
         targetPID = PE32.th32ProcessID;
         break;
       }
