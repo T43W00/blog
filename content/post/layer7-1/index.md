@@ -1,6 +1,6 @@
 ---
-title: Layer7 Week1
-description: Layer7 1주차 과제 정리
+title: Layer7 1차시
+description: Layer7 1차시 과제 정리
 categories:
     - Layer7
 tags:
