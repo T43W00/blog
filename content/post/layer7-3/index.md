@@ -1016,7 +1016,7 @@ int main() {
 }
 ```
 
-## 1954 | 
+## 1954 | 삼각형 출력하기 2
 
 ### 문제
 
@@ -1034,3 +1034,27 @@ n이 5이면
 ```
 
 ### 코드
+
+```c
+#include <stdio.h>
+
+void f1(int cnt) {
+    if (!cnt) return;
+    printf("*");
+    f1(cnt - 1);
+}
+
+void f2(int n) {
+    if (!n) return;
+    f1(n);
+    printf("\n");
+    f2(n - 1);
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    f2(n);
+    return 0;
+}
+```
