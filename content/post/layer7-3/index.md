@@ -993,7 +993,30 @@ int main() {
 
 ### 코드
 
-## 1954 |
+```c
+#include <stdio.h>
+
+int f(int n) {
+    if (!(n / 2)) {
+        f(n / 2);
+        printf("%d", n % 2);
+    } else {
+        printf("%d", n % 2);
+    }
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &n);
+
+    f(n);
+
+    return 0;
+}
+```
+
+## 1954 | 
 
 ### 문제
 
