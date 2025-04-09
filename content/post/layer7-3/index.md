@@ -832,7 +832,7 @@ void star(int n) {
     }
   
     star(n-1);
-    printf("*");
+    printf("%d", n);
 }
 
 void f(int n) {
@@ -860,14 +860,53 @@ int main() {
 
 ## 1860 | 수 삼각형 출력하기
 
-한 정수 n을 입력받아 n층의 수 삼각형을 출력하시오.
-(단, 반복문은 사용할 수 없다.)
+[문제 링크](https://codeup.kr/problem.php?id=1860)
 
 ### 문제
 
+한 정수 n을 입력받아 n층의 수 삼각형을 출력하시오.
+(단, 반복문은 사용할 수 없다.)
+
 ### 코드
 
+```c
+#include <stdio.h>
+
+void star(int n) {
+    if(n <= 0) {
+        return;
+    }
+  
+    star(n-1);
+    printf("%d", n);
+}
+
+void f(int n) {
+    if(n <= 0) {
+        return;
+    }
+
+    f(n-1);
+    star(n);
+    printf("\n");
+}
+
+int main() {
+    
+    int n;
+
+    scanf("%d", &n);
+    f(n);
+
+    return 0;
+}
+```
+
 ## 1912 | 팩토리얼 계산
+
+[문제 링크](https://codeup.kr/problem.php?id=1859)
+
+### 문제
 
 팩토리얼(!)은 다음과 같이 정의된다.
 
@@ -877,11 +916,11 @@ n!=n×(n−1)×(n−2)×⋯×2×1
 
 n이 입력되면 n!의 값을 출력하시오.
 
-### 문제
-
 ### 코드
 
 ## 1915 | 피보나치 수열
+
+[문제 링크](https://codeup.kr/problem.php?id=1859)
 
 ### 문제
 
@@ -896,6 +935,8 @@ n이 입력되면 n!의 값을 출력하시오.
 ### 코드
 
 ## 1920 | 2진수 변환
+
+[문제 링크](https://codeup.kr/problem.php?id=1859)
 
 ### 문제
 
