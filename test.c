@@ -1,12 +1,14 @@
 #include <stdio.h>
 
-void star(int n) {
+int sum = 1;
+
+void num(int n) {
     if(n <= 0) {
         return;
     }
-  
-    star(n-1);
-    printf("%d", n);
+    
+    num(n-1);
+    sum *= n;
 }
 
 void f(int n) {
@@ -15,8 +17,7 @@ void f(int n) {
     }
 
     f(n-1);
-    star(n);
-    printf("\n");
+    num(n);
 }
 
 int main() {

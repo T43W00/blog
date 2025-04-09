@@ -872,13 +872,15 @@ int main() {
 ```c
 #include <stdio.h>
 
-void star(int n) {
+int sum = 1;
+
+void num(int n) {
     if(n <= 0) {
         return;
     }
-  
-    star(n-1);
-    printf("%d", n);
+    
+    num(n-1);
+    sum *= n;
 }
 
 void f(int n) {
@@ -887,8 +889,7 @@ void f(int n) {
     }
 
     f(n-1);
-    star(n);
-    printf("\n");
+    num(n);
 }
 
 int main() {
@@ -896,8 +897,8 @@ int main() {
     int n;
 
     scanf("%d", &n);
-    f(n);
-
+    f(n)
+;
     return 0;
 }
 ```
@@ -918,6 +919,31 @@ n이 입력되면 n!의 값을 출력하시오.
 
 ### 코드
 
+```c
+#include <stdio.h>
+
+int f(int n) {
+    if (n == 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return n * f(n - 1);
+    }
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &n);
+
+    printf("%d", f(n));
+
+    return 0;
+}
+```
+
 ## 1915 | 피보나치 수열
 
 [문제 링크](https://codeup.kr/problem.php?id=1859)
@@ -934,6 +960,29 @@ n이 입력되면 n!의 값을 출력하시오.
 
 ### 코드
 
+```c
+#include <stdio.h>
+
+
+int f(int n) {
+    if (n == 1 || n == 2) {
+        return 1;
+    }
+    else {
+        return fi(n - 1) + fi(n - 2);
+    }
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &n);
+
+    printf("%d", fi(n));
+
+    return 0;
+}
+```
 ## 1920 | 2진수 변환
 
 [문제 링크](https://codeup.kr/problem.php?id=1859)
