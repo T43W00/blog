@@ -333,7 +333,9 @@ int main() {
 함수 : 1532, 1535*, 1538, 1548, 1580
 재귀함수 : 1852, 1859*, 1860, 1912, 1915, 1920*, 1954
 
-![](image.png)
+![alt text](image.png)
+
+![alt text](image-3.png)
 
 ---
 
@@ -837,7 +839,7 @@ void star(int n) {
     }
   
     star(n-1);
-    printf("%d", n);
+    printf("*");
 }
 
 void f(int n) {
@@ -877,15 +879,13 @@ int main() {
 ```c
 #include <stdio.h>
 
-int sum = 1;
-
-void num(int n) {
+void star(int n) {
     if(n <= 0) {
         return;
     }
-    
-    num(n-1);
-    sum *= n;
+  
+    star(n-1);
+    printf("%d ", n);
 }
 
 void f(int n) {
@@ -894,7 +894,8 @@ void f(int n) {
     }
 
     f(n-1);
-    num(n);
+    star(n);
+    printf("\n");
 }
 
 int main() {
@@ -902,8 +903,8 @@ int main() {
     int n;
 
     scanf("%d", &n);
-    f(n)
-;
+    f(n);
+
     return 0;
 }
 ```
@@ -968,13 +969,12 @@ int main() {
 ```c
 #include <stdio.h>
 
-
 int f(int n) {
     if (n == 1 || n == 2) {
         return 1;
     }
     else {
-        return fi(n - 1) + fi(n - 2);
+        return f(n - 1) + f(n - 2);
     }
 }
 
@@ -983,7 +983,7 @@ int main() {
 
     scanf("%d", &n);
 
-    printf("%d", fi(n));
+    printf("%d", f(n));
 
     return 0;
 }
@@ -1002,7 +1002,7 @@ int main() {
 #include <stdio.h>
 
 int f(int n) {
-    if (!(n / 2)) {
+    if (n / 2 != 0) {
         f(n / 2);
         printf("%d", n % 2);
     } else {
