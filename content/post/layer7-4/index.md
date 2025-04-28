@@ -197,7 +197,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         sum *= 2;
     }
-    
+
     printf("%d\n", sum - 1);
 
     hanoi(n, 1, 2, 3);
@@ -386,7 +386,7 @@ int main() {
 int parent[100001];
 
 int find(int x) {
-    if (parent[x] == x) return x;
+    if (parent[] == x) return x;
     return parent[x] = find(parent[x]);
 }
 
