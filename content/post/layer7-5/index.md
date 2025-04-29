@@ -166,6 +166,8 @@ int main() {
 
 ## Codeup 문제 정리
 
+![](image.png)
+
 ### 1805 | 입체기동장치 생산공장
 
 [문제 링크](https://codeup.kr/problem.php?id=1805)
@@ -416,7 +418,7 @@ int main() {
   printf("총 지출 : %d", user -> sum);
 
   free(user);
-  
+
   return 0;
 }
 ```
