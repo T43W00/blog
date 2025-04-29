@@ -414,6 +414,8 @@ int main() {
   printf("이름 : %s\n", user -> name);
   printf("학번 : %d\n", user -> id);
   printf("총 지출 : %d", user -> sum);
+
+  free(user);
   
   return 0;
 }
