@@ -198,11 +198,11 @@ int main() {
 struct VME {
     int num;
     int gas;
-} a[100];
+} a[100], tmp;
 
 int main() {
     
-  int n, tmp;
+  int n;
   scanf("%d", &n);
 
   for (int i = 0; i < n; i++) {
@@ -212,13 +212,9 @@ int main() {
   for (int i = 0; i < n; i++) {
       for (int j = i; j < n; j++) {
           if (a[i].num > a[j].num) {
-              tmp = a[i].num;
-              a[i].num = a[j].num;
-              a[j].num = tmp;
-
-              tmp = a[i].gas;
-              a[i].gas = a[j].gas;
-              a[j].gas = tmp;
+              tmp = a[i];
+              a[i] = a[j];
+              a[j] = tmp;
           }
       }
   }
