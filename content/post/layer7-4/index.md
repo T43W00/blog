@@ -1,6 +1,6 @@
 ---
-title: Layer7 4차시
-description: Layer7 4차시 과제 정리
+title: Layer7 C언어 4차시
+description: Layer7 C언어 4차시 과제 정리
 categories:
     - Layer7
 tags:

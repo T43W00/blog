@@ -1,6 +1,6 @@
 ---
-title: Layer7 5차시
-description: Layer7 5차시 과제 정리
+title: Layer7 C언어 5차시
+description: Layer7 C언어 5차시 과제 정리
 categories:
     - Layer7
 tags:
