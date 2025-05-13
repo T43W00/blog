@@ -142,3 +142,9 @@ gcc -o test test.c
 ```
 
 `gcc`의 `-o` 옵션을 사용하여 `test`라는 이름의 실행 파일로 컴파일 해주었다.
+
+---
+
+## Dreamhack Beginners 학습
+
+![](image-1.png)
