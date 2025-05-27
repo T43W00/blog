@@ -2,7 +2,7 @@
 mainSections = ["post"]
 # Output page's full content in RSS.
 rssFullContent = true
-favicon = "/favicon.jpg"
+favicon = "/favicon.png"
 
 [footer]
 since = 2020
@@ -19,7 +19,7 @@ subtitle = "정보보안 공부"
 [sidebar.avatar]
 enabled = true
 local = true
-src = "img/avatar.png"
+src = "https://t43w00.site/favicon.jpg"
 
 [article]
 headingAnchor = false
