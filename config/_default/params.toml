@@ -19,7 +19,7 @@ subtitle = "정보보안 공부"
 [sidebar.avatar]
 enabled = true
 local = true
-src = "https://t43w00.site/favicon.jpg"
+src = "img/avatar.png"
 
 [article]
 headingAnchor = false
