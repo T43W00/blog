@@ -1,6 +1,5 @@
 ---
 title: Layer7 리버싱 2차시
-description: Layer7 리버싱 2차시 과제 정리
 categories:
     - Layer7
     - Reversing
