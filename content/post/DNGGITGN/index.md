@@ -1,5 +1,5 @@
 ---
-title: Write-up
+title: Do not go gentle into that good night | Write-up
 categories:
     - Reversing
 tags:
