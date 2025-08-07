@@ -1,5 +1,5 @@
 ---
-title: Layer7 WebHacking mini CTF | Write-up
+title: Layer7 웹해킹 mini CTF | Write-up
 categories:
     - Layer7
     - Reversing
