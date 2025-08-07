@@ -1,11 +1,11 @@
 ---
-title: Layer7 웹해킹 mini CTF | Write-up
+title: Layer7 Web Hacking mini CTF | Write-up
 categories:
     - Layer7
-    - Reversing
+    - Web Hacking
 tags:
     - Layer7
-    - Reversing
+    - Web Hacking
 date: 2025-08-07
 ---
 

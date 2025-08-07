@@ -1,5 +1,5 @@
 ---
-title: Layer7 리버싱 mini CTF | Write-up
+title: Layer7 Reversing mini CTF | Write-up
 categories:
     - Layer7
     - Reversing
