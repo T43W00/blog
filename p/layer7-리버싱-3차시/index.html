@@ -1,0 +1,364 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="수업 내용 정리 gdb란? Gnu DeBugger의 약자로, 프로그램을 런타임에서 디버깅하는 도구다.\n다양한 유닉스 기반 시스템에서 동작하며 C, C++, Java, Go, Rust 등 다양한 언어를 지원한다.\ngdb 명령어 시작과 종료 gdb [프로그램명] : 프로그램 시작 quit, q : GDB 종료 소스 보기 list : main 함수를 기점으로 소스 출력 list [라인 번호] : 특정 라인을 기준으로 출력 list [함수명] : 함수의 소스를 출력 list - : 출력된 행의 이전 행을 출력 list [파일명]:[함수명] : 파일의 특정 함수 소스를 출력 layout asm : 어셈블리 코드를 보여주는 창 추가 브레이크 포인트 설정: break [함수명] : 특정 함수 시작 부분에 브레이크 포인트 설정 break [라인 번호] : 특정 라인에 브레이크 포인트 설정 info break : 설정된 브레이크 포인트 확인 delete [브레이크 포인트 번호] : 브레이크 포인트 삭제 disable/enable [브레이크 포인트 번호] : 브레이크 포인트 활성화/비활성화 프로그램 실행: run, r : 프로그램 실행 continue, c : 브레이크 포인트에서 실행을 다시 시작 step : 한 라인씩 실행 next : 한 라인씩 실행 (함수 호출 시에는 함수 안으로 들어가지 않고, 다음 라인으로 넘어감) finish : 현재 함수를 완료할 때까지 실행 return [값] : 함수를 강제로 종료하고 값을 반환 advance [라인 번호] : 특정 라인까지 프로그램 실행 advance [파일:라인 번호] : 특정 파일의 특정 라인까지 프로그램 실행 변수 확인 print [변수명] : 변수 값 출력 info variables : 모든 변수 출력 watch [변수명] : 변수가 변경될 때 브레이크 포인트 설정 메모리 확인 x/n [형식] [주소] : 특정 메모리 주소의 내용을 특정 형식으로 출력 info address [변수명] : 변수의 메모리 주소 확인 info stack : 스택 상태 확인 info frame : 현재 함수의 프레임 정보를 출력 ELF 파일 구조 ELF 파일은 유닉스 계열 운영체제에서 사용되는 표준 바이너리 파일 포맷이다.\n"><title>Layer7 리버싱 3차시</title><link rel=canonical href=https://t43w00.netlify.app/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Layer7 리버싱 3차시"><meta property='og:description' content="수업 내용 정리 gdb란? Gnu DeBugger의 약자로, 프로그램을 런타임에서 디버깅하는 도구다.\n다양한 유닉스 기반 시스템에서 동작하며 C, C++, Java, Go, Rust 등 다양한 언어를 지원한다.\ngdb 명령어 시작과 종료 gdb [프로그램명] : 프로그램 시작 quit, q : GDB 종료 소스 보기 list : main 함수를 기점으로 소스 출력 list [라인 번호] : 특정 라인을 기준으로 출력 list [함수명] : 함수의 소스를 출력 list - : 출력된 행의 이전 행을 출력 list [파일명]:[함수명] : 파일의 특정 함수 소스를 출력 layout asm : 어셈블리 코드를 보여주는 창 추가 브레이크 포인트 설정: break [함수명] : 특정 함수 시작 부분에 브레이크 포인트 설정 break [라인 번호] : 특정 라인에 브레이크 포인트 설정 info break : 설정된 브레이크 포인트 확인 delete [브레이크 포인트 번호] : 브레이크 포인트 삭제 disable/enable [브레이크 포인트 번호] : 브레이크 포인트 활성화/비활성화 프로그램 실행: run, r : 프로그램 실행 continue, c : 브레이크 포인트에서 실행을 다시 시작 step : 한 라인씩 실행 next : 한 라인씩 실행 (함수 호출 시에는 함수 안으로 들어가지 않고, 다음 라인으로 넘어감) finish : 현재 함수를 완료할 때까지 실행 return [값] : 함수를 강제로 종료하고 값을 반환 advance [라인 번호] : 특정 라인까지 프로그램 실행 advance [파일:라인 번호] : 특정 파일의 특정 라인까지 프로그램 실행 변수 확인 print [변수명] : 변수 값 출력 info variables : 모든 변수 출력 watch [변수명] : 변수가 변경될 때 브레이크 포인트 설정 메모리 확인 x/n [형식] [주소] : 특정 메모리 주소의 내용을 특정 형식으로 출력 info address [변수명] : 변수의 메모리 주소 확인 info stack : 스택 상태 확인 info frame : 현재 함수의 프레임 정보를 출력 ELF 파일 구조 ELF 파일은 유닉스 계열 운영체제에서 사용되는 표준 바이너리 파일 포맷이다.\n"><meta property='og:url' content='https://t43w00.netlify.app/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/'><meta property='og:site_name' content='T43W00'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Layer7'><meta property='article:tag' content='Reversing'><meta property='article:published_time' content='2025-06-08T00:00:00+00:00'><meta property='article:modified_time' content='2025-06-08T00:00:00+00:00'><meta name=twitter:title content="Layer7 리버싱 3차시"><meta name=twitter:description content="수업 내용 정리 gdb란? Gnu DeBugger의 약자로, 프로그램을 런타임에서 디버깅하는 도구다.\n다양한 유닉스 기반 시스템에서 동작하며 C, C++, Java, Go, Rust 등 다양한 언어를 지원한다.\ngdb 명령어 시작과 종료 gdb [프로그램명] : 프로그램 시작 quit, q : GDB 종료 소스 보기 list : main 함수를 기점으로 소스 출력 list [라인 번호] : 특정 라인을 기준으로 출력 list [함수명] : 함수의 소스를 출력 list - : 출력된 행의 이전 행을 출력 list [파일명]:[함수명] : 파일의 특정 함수 소스를 출력 layout asm : 어셈블리 코드를 보여주는 창 추가 브레이크 포인트 설정: break [함수명] : 특정 함수 시작 부분에 브레이크 포인트 설정 break [라인 번호] : 특정 라인에 브레이크 포인트 설정 info break : 설정된 브레이크 포인트 확인 delete [브레이크 포인트 번호] : 브레이크 포인트 삭제 disable/enable [브레이크 포인트 번호] : 브레이크 포인트 활성화/비활성화 프로그램 실행: run, r : 프로그램 실행 continue, c : 브레이크 포인트에서 실행을 다시 시작 step : 한 라인씩 실행 next : 한 라인씩 실행 (함수 호출 시에는 함수 안으로 들어가지 않고, 다음 라인으로 넘어감) finish : 현재 함수를 완료할 때까지 실행 return [값] : 함수를 강제로 종료하고 값을 반환 advance [라인 번호] : 특정 라인까지 프로그램 실행 advance [파일:라인 번호] : 특정 파일의 특정 라인까지 프로그램 실행 변수 확인 print [변수명] : 변수 값 출력 info variables : 모든 변수 출력 watch [변수명] : 변수가 변경될 때 브레이크 포인트 설정 메모리 확인 x/n [형식] [주소] : 특정 메모리 주소의 내용을 특정 형식으로 출력 info address [변수명] : 변수의 메모리 주소 확인 info stack : 스택 상태 확인 info frame : 현재 함수의 프레임 정보를 출력 ELF 파일 구조 ELF 파일은 유닉스 계열 운영체제에서 사용되는 표준 바이너리 파일 포맷이다.\n"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_da68217e1fd91b15.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐱</span></figure><div class=site-meta><h1 class=site-name><a href=/>T43W00</a></h1><h2 class=site-description>정보보안 공부</h2></div></header><ol class=menu-social><li><a href=https://github.com/t43w00 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://x.com/743w00 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#수업-내용-정리>수업 내용 정리</a><ol><li><a href=#gdb란>gdb란?</a></li><li><a href=#gdb-명령어>gdb 명령어</a><ol><li><a href=#시작과-종료>시작과 종료</a></li><li><a href=#소스-보기>소스 보기</a></li><li><a href=#브레이크-포인트-설정>브레이크 포인트 설정:</a></li><li><a href=#프로그램-실행>프로그램 실행:</a></li><li><a href=#변수-확인>변수 확인</a></li><li><a href=#메모리-확인>메모리 확인</a></li></ol></li><li><a href=#elf-파일-구조>ELF 파일 구조</a><ol><li><a href=#elf-header>ELF Header</a></li><li><a href=#program-header-table>Program Header Table</a></li><li><a href=#section-header-table>Section Header Table</a></li></ol></li></ol></li><li><a href=#실습용-코드-작성-후-명령어-실습-후-정리>실습용 코드 작성 후 명령어 실습 후 정리</a><ol><li><ol><li><a href=#실습용-코드>실습용 코드</a></li><li><a href=#명령어-실습>명령어 실습</a></li></ol></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/layer7/>Layer7
+</a><a href=/categories/reversing/>Reversing</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/>Layer7 리버싱 3차시</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jun 08, 2025</time></div></footer></div></header><section class=article-content><h2 id=수업-내용-정리>수업 내용 정리</h2><h3 id=gdb란>gdb란?</h3><p>Gnu DeBugger의 약자로, 프로그램을 런타임에서 디버깅하는 도구다.</p><p>다양한 유닉스 기반 시스템에서 동작하며 <code>C</code>, <code>C++</code>, <code>Java</code>, <code>Go</code>, <code>Rust</code> 등 다양한 언어를 지원한다.</p><h3 id=gdb-명령어>gdb 명령어</h3><h4 id=시작과-종료>시작과 종료</h4><ul><li>gdb [프로그램명] : 프로그램 시작</li><li>quit, q : GDB 종료</li></ul><h4 id=소스-보기>소스 보기</h4><ul><li>list : main 함수를 기점으로 소스 출력</li><li>list [라인 번호] : 특정 라인을 기준으로 출력</li><li>list [함수명] : 함수의 소스를 출력</li><li>list - : 출력된 행의 이전 행을 출력</li><li>list [파일명]:[함수명] : 파일의 특정 함수 소스를 출력</li><li>layout asm : 어셈블리 코드를 보여주는 창 추가</li></ul><h4 id=브레이크-포인트-설정>브레이크 포인트 설정:</h4><ul><li>break [함수명] : 특정 함수 시작 부분에 브레이크 포인트 설정</li><li>break [라인 번호] : 특정 라인에 브레이크 포인트 설정</li><li>info break : 설정된 브레이크 포인트 확인</li><li>delete [브레이크 포인트 번호] : 브레이크 포인트 삭제</li><li>disable/enable [브레이크 포인트 번호] : 브레이크 포인트 활성화/비활성화</li></ul><h4 id=프로그램-실행>프로그램 실행:</h4><ul><li>run, r : 프로그램 실행</li><li>continue, c : 브레이크 포인트에서 실행을 다시 시작</li><li>step : 한 라인씩 실행</li><li>next : 한 라인씩 실행 (함수 호출 시에는 함수 안으로 들어가지 않고, 다음 라인으로 넘어감)</li><li>finish : 현재 함수를 완료할 때까지 실행</li><li>return [값] : 함수를 강제로 종료하고 값을 반환</li><li>advance [라인 번호] : 특정 라인까지 프로그램 실행</li><li>advance [파일:라인 번호] : 특정 파일의 특정 라인까지 프로그램 실행</li></ul><h4 id=변수-확인>변수 확인</h4><ul><li>print [변수명] : 변수 값 출력</li><li>info variables : 모든 변수 출력</li><li>watch [변수명] : 변수가 변경될 때 브레이크 포인트 설정</li></ul><h4 id=메모리-확인>메모리 확인</h4><ul><li>x/n [형식] [주소] : 특정 메모리 주소의 내용을 특정 형식으로 출력</li><li>info address [변수명] : 변수의 메모리 주소 확인</li><li>info stack : 스택 상태 확인</li><li>info frame : 현재 함수의 프레임 정보를 출력</li></ul><br><h3 id=elf-파일-구조>ELF 파일 구조</h3><p><code>ELF</code> 파일은 유닉스 계열 운영체제에서 사용되는 표준 바이너리 파일 포맷이다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/1_rPzj1L9-oS4ydBRwZo-71g.png width=770 height=664 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/1_rPzj1L9-oS4ydBRwZo-71g_hu_60ccc4c88709c6ce.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/1_rPzj1L9-oS4ydBRwZo-71g_hu_1a50fe44c7844307.png 1024w" loading=lazy class=gallery-image data-flex-grow=115 data-flex-basis=278px></p><p><code>ELF</code> 파일은 위와 같이 크게 <code>ELF Header</code>, <code>Program Header Table</code>, <code>Section Header Table</code>로 구성된다.</p><br><h4 id=elf-header>ELF Header</h4><p>ELF 파일의 시작 부분에 위치하며, 파일의 구조 및 속성을 정의한다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>ELF Header:
+</span></span><span class=line><span class=cl>  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+</span></span><span class=line><span class=cl>  Class:                             ELF64
+</span></span><span class=line><span class=cl>  Data:                              2&#39;s complement, little endian
+</span></span><span class=line><span class=cl>  Version:                           1 (current)
+</span></span><span class=line><span class=cl>  OS/ABI:                            UNIX - System V
+</span></span><span class=line><span class=cl>  ABI Version:                       0
+</span></span><span class=line><span class=cl>  Type:                              DYN (Position-Independent Executable file)
+</span></span><span class=line><span class=cl>  Machine:                           Advanced Micro Devices X86-64
+</span></span><span class=line><span class=cl>  Version:                           0x1
+</span></span><span class=line><span class=cl>  Entry point address:               0x10c0
+</span></span><span class=line><span class=cl>  Start of program headers:          64 (bytes into file)
+</span></span><span class=line><span class=cl>  Start of section headers:          14616 (bytes into file)
+</span></span><span class=line><span class=cl>  Flags:                             0x0
+</span></span><span class=line><span class=cl>  Size of this header:               64 (bytes)
+</span></span><span class=line><span class=cl>  Size of program headers:           56 (bytes)
+</span></span><span class=line><span class=cl>  Number of program headers:         13
+</span></span><span class=line><span class=cl>  Size of section headers:           64 (bytes)
+</span></span><span class=line><span class=cl>  Number of section headers:         31
+</span></span><span class=line><span class=cl>  Section header string table index: 30
+</span></span></code></pre></td></tr></table></div></div><p>파일의 종류를 나타내는 매직넘버와 데이터 저장 방식, OS, 아키텍처, 헤더의 크기 등 파일에 관한 정보들이 담겨있다.</p><br><h4 id=program-header-table>Program Header Table</h4><p>실행에 필요한 정보를 담고 있으며, 커널이 ELF 파일을 실행할 때 이 정보를 참고해서 메모리에 어떻게 적재할지를 결정한다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Program Headers:
+</span></span><span class=line><span class=cl>  Type           Offset             VirtAddr           PhysAddr
+</span></span><span class=line><span class=cl>                 FileSiz            MemSiz              Flags  Align
+</span></span><span class=line><span class=cl>  PHDR           0x0000000000000040 0x0000000000000040 0x0000000000000040
+</span></span><span class=line><span class=cl>                 0x00000000000002d8 0x00000000000002d8  R      0x8
+</span></span><span class=line><span class=cl>  INTERP         0x0000000000000318 0x0000000000000318 0x0000000000000318
+</span></span><span class=line><span class=cl>                 0x000000000000001c 0x000000000000001c  R      0x1
+</span></span><span class=line><span class=cl>      [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]
+</span></span><span class=line><span class=cl>  LOAD           0x0000000000000000 0x0000000000000000 0x0000000000000000
+</span></span><span class=line><span class=cl>                 0x0000000000000888 0x0000000000000888  R      0x1000
+</span></span><span class=line><span class=cl>  LOAD           0x0000000000001000 0x0000000000001000 0x0000000000001000
+</span></span><span class=line><span class=cl>                 0x00000000000002e9 0x00000000000002e9  R E    0x1000
+</span></span><span class=line><span class=cl>  LOAD           0x0000000000002000 0x0000000000002000 0x0000000000002000
+</span></span><span class=line><span class=cl>                 0x00000000000000ec 0x00000000000000ec  R      0x1000
+</span></span><span class=line><span class=cl>  LOAD           0x0000000000002d88 0x0000000000003d88 0x0000000000003d88
+</span></span><span class=line><span class=cl>                 0x0000000000000288 0x00000000000004f8  RW     0x1000
+</span></span><span class=line><span class=cl>  DYNAMIC        0x0000000000002d98 0x0000000000003d98 0x0000000000003d98
+</span></span><span class=line><span class=cl>                 0x0000000000000200 0x0000000000000200  RW     0x8
+</span></span><span class=line><span class=cl>  NOTE           0x0000000000000338 0x0000000000000338 0x0000000000000338
+</span></span><span class=line><span class=cl>                 0x0000000000000030 0x0000000000000030  R      0x8
+</span></span><span class=line><span class=cl>  NOTE           0x0000000000000368 0x0000000000000368 0x0000000000000368
+</span></span><span class=line><span class=cl>                 0x0000000000000044 0x0000000000000044  R      0x4
+</span></span><span class=line><span class=cl>  GNU_PROPERTY   0x0000000000000338 0x0000000000000338 0x0000000000000338
+</span></span><span class=line><span class=cl>                 0x0000000000000030 0x0000000000000030  R      0x8
+</span></span><span class=line><span class=cl>  GNU_EH_FRAME   0x0000000000002008 0x0000000000002008 0x0000000000002008
+</span></span><span class=line><span class=cl>                 0x0000000000000034 0x0000000000000034  R      0x4
+</span></span><span class=line><span class=cl>  GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000
+</span></span><span class=line><span class=cl>                 0x0000000000000000 0x0000000000000000  RW     0x10
+</span></span><span class=line><span class=cl>  GNU_RELRO      0x0000000000002d88 0x0000000000003d88 0x0000000000003d88
+</span></span><span class=line><span class=cl>                 0x0000000000000278 0x0000000000000278  R      0x1
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> Section to Segment mapping:
+</span></span><span class=line><span class=cl>  Segment Sections...
+</span></span><span class=line><span class=cl>   00
+</span></span><span class=line><span class=cl>   01     .interp
+</span></span><span class=line><span class=cl>   02     .interp .note.gnu.property .note.gnu.build-id .note.ABI-tag .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_r .rela.dyn .rela.plt
+</span></span><span class=line><span class=cl>   03     .init .plt .plt.got .plt.sec .text .fini
+</span></span><span class=line><span class=cl>   04     .rodata .eh_frame_hdr .eh_frame
+</span></span><span class=line><span class=cl>   05     .init_array .fini_array .dynamic .got .data .bss
+</span></span><span class=line><span class=cl>   06     .dynamic
+</span></span><span class=line><span class=cl>   07     .note.gnu.property
+</span></span><span class=line><span class=cl>   08     .note.gnu.build-id .note.ABI-tag
+</span></span><span class=line><span class=cl>   09     .note.gnu.property
+</span></span><span class=line><span class=cl>   10     .eh_frame_hdr
+</span></span><span class=line><span class=cl>   11
+</span></span><span class=line><span class=cl>   12     .init_array .fini_array .dynamic .got
+</span></span></code></pre></td></tr></table></div></div><br><p>구조체에는 아래와 같은 필드들이 저장되어 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>struct Elf64_Phdr {
+</span></span><span class=line><span class=cl>    Elf64_Word p_type;   
+</span></span><span class=line><span class=cl>    Elf64_Word p_flags;  
+</span></span><span class=line><span class=cl>    Elf64_Off p_offset;  
+</span></span><span class=line><span class=cl>    Elf64_Addr p_vaddr;  
+</span></span><span class=line><span class=cl>    Elf64_Addr p_paddr;  
+</span></span><span class=line><span class=cl>    Elf64_Xword p_filesz;
+</span></span><span class=line><span class=cl>    Elf64_Xword p_memsz; 
+</span></span><span class=line><span class=cl>    Elf64_Xword p_align; 
+</span></span><span class=line><span class=cl>};
+</span></span></code></pre></td></tr></table></div></div><ul><li>p_type : 세그먼트의 타입 (ex. PT_LOAD, PT_DYNAMIC 등)</li><li>p_flags : 세그먼트 접근 권한 (읽기, 쓰기, 실행)</li><li>p_offset : 파일 내 세그먼트 시작 오프셋</li><li>p_vaddr : 메모리에 로드될 가상 주소</li><li>p_paddr : 물리 주소 (대부분 시스템에선 무시됨)</li><li>p_filesz : 파일에 존재하는 세그먼트 크기</li><li>p_memsz : 메모리에 할당될 세그먼트 크기</li><li>p_align : 정렬 조건 (페이지 단위 정렬 등)</li></ul><br><h4 id=section-header-table>Section Header Table</h4><p><code>.text</code>, <code>.data</code>와 같은 섹션들에 관한 정보들이 저장된다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Section Headers:
+</span></span><span class=line><span class=cl>  [Nr] Name              Type             Address           Offset
+</span></span><span class=line><span class=cl>       Size              EntSize          Flags  Link  Info  Align
+</span></span><span class=line><span class=cl>  [ 0]                   NULL             0000000000000000  00000000
+</span></span><span class=line><span class=cl>       0000000000000000  0000000000000000           0     0     0
+</span></span><span class=line><span class=cl>  [ 1] .interp           PROGBITS         0000000000000318  00000318
+</span></span><span class=line><span class=cl>       000000000000001c  0000000000000000   A       0     0     1
+</span></span><span class=line><span class=cl>  [ 2] .note.gnu.pr[...] NOTE             0000000000000338  00000338
+</span></span><span class=line><span class=cl>       0000000000000030  0000000000000000   A       0     0     8
+</span></span><span class=line><span class=cl>  [ 3] .note.gnu.bu[...] NOTE             0000000000000368  00000368
+</span></span><span class=line><span class=cl>       0000000000000024  0000000000000000   A       0     0     4
+</span></span><span class=line><span class=cl>  [ 4] .note.ABI-tag     NOTE             000000000000038c  0000038c
+</span></span><span class=line><span class=cl>       0000000000000020  0000000000000000   A       0     0     4
+</span></span><span class=line><span class=cl>  [ 5] .gnu.hash         GNU_HASH         00000000000003b0  000003b0
+</span></span><span class=line><span class=cl>       0000000000000030  0000000000000000   A       6     0     8
+</span></span><span class=line><span class=cl>  [ 6] .dynsym           DYNSYM           00000000000003e0  000003e0
+</span></span><span class=line><span class=cl>       0000000000000150  0000000000000018   A       7     1     8
+</span></span><span class=line><span class=cl>  [ 7] .dynstr           STRTAB           0000000000000530  00000530
+</span></span><span class=line><span class=cl>       000000000000015e  0000000000000000   A       0     0     1
+</span></span><span class=line><span class=cl>  [ 8] .gnu.version      VERSYM           000000000000068e  0000068e
+</span></span><span class=line><span class=cl>       000000000000001c  0000000000000002   A       6     0     2
+</span></span><span class=line><span class=cl>  [ 9] .gnu.version_r    VERNEED          00000000000006b0  000006b0
+</span></span><span class=line><span class=cl>       0000000000000070  0000000000000000   A       7     2     8
+</span></span><span class=line><span class=cl>  [10] .rela.dyn         RELA             0000000000000720  00000720
+</span></span><span class=line><span class=cl>       0000000000000108  0000000000000018   A       6     0     8
+</span></span><span class=line><span class=cl>  [11] .rela.plt         RELA             0000000000000828  00000828
+</span></span><span class=line><span class=cl>       0000000000000060  0000000000000018  AI       6    24     8
+</span></span><span class=line><span class=cl>  [12] .init             PROGBITS         0000000000001000  00001000
+</span></span><span class=line><span class=cl>       000000000000001b  0000000000000000  AX       0     0     4
+</span></span><span class=line><span class=cl>  [13] .plt              PROGBITS         0000000000001020  00001020
+</span></span><span class=line><span class=cl>       0000000000000050  0000000000000010  AX       0     0     16
+</span></span><span class=line><span class=cl>  [14] .plt.got          PROGBITS         0000000000001070  00001070
+</span></span><span class=line><span class=cl>       0000000000000010  0000000000000010  AX       0     0     16
+</span></span><span class=line><span class=cl>  [15] .plt.sec          PROGBITS         0000000000001080  00001080
+</span></span><span class=line><span class=cl>       0000000000000040  0000000000000010  AX       0     0     16
+</span></span><span class=line><span class=cl>  [16] .text             PROGBITS         00000000000010c0  000010c0
+</span></span><span class=line><span class=cl>       000000000000021c  0000000000000000  AX       0     0     16
+</span></span><span class=line><span class=cl>  [17] .fini             PROGBITS         00000000000012dc  000012dc
+</span></span><span class=line><span class=cl>       000000000000000d  0000000000000000  AX       0     0     4
+</span></span><span class=line><span class=cl>  [18] .rodata           PROGBITS         0000000000002000  00002000
+</span></span><span class=line><span class=cl>       0000000000000007  0000000000000000   A       0     0     4
+</span></span><span class=line><span class=cl>  [19] .eh_frame_hdr     PROGBITS         0000000000002008  00002008
+</span></span><span class=line><span class=cl>       0000000000000034  0000000000000000   A       0     0     4
+</span></span><span class=line><span class=cl>  [20] .eh_frame         PROGBITS         0000000000002040  00002040
+</span></span><span class=line><span class=cl>       00000000000000ac  0000000000000000   A       0     0     8
+</span></span><span class=line><span class=cl>  [21] .init_array       INIT_ARRAY       0000000000003d88  00002d88
+</span></span><span class=line><span class=cl>       0000000000000008  0000000000000008  WA       0     0     8
+</span></span><span class=line><span class=cl>  [22] .fini_array       FINI_ARRAY       0000000000003d90  00002d90
+</span></span><span class=line><span class=cl>       0000000000000008  0000000000000008  WA       0     0     8
+</span></span><span class=line><span class=cl>  [23] .dynamic          DYNAMIC          0000000000003d98  00002d98
+</span></span><span class=line><span class=cl>       0000000000000200  0000000000000010  WA       7     0     8
+</span></span><span class=line><span class=cl>  [24] .got              PROGBITS         0000000000003f98  00002f98
+</span></span><span class=line><span class=cl>       0000000000000068  0000000000000008  WA       0     0     8
+</span></span><span class=line><span class=cl>  [25] .data             PROGBITS         0000000000004000  00003000
+</span></span><span class=line><span class=cl>       0000000000000010  0000000000000000  WA       0     0     8
+</span></span><span class=line><span class=cl>  [26] .bss              NOBITS           0000000000004040  00003010
+</span></span><span class=line><span class=cl>       0000000000000240  0000000000000000  WA       0     0     64
+</span></span><span class=line><span class=cl>  [27] .comment          PROGBITS         0000000000000000  00003010
+</span></span><span class=line><span class=cl>       000000000000002b  0000000000000001  MS       0     0     1
+</span></span><span class=line><span class=cl>  [28] .symtab           SYMTAB           0000000000000000  00003040
+</span></span><span class=line><span class=cl>       0000000000000450  0000000000000018          29    21     8
+</span></span><span class=line><span class=cl>  [29] .strtab           STRTAB           0000000000000000  00003490
+</span></span><span class=line><span class=cl>       0000000000000367  0000000000000000           0     0     1
+</span></span><span class=line><span class=cl>  [30] .shstrtab         STRTAB           0000000000000000  000037f7
+</span></span><span class=line><span class=cl>       000000000000011a  0000000000000000           0     0     1
+</span></span><span class=line><span class=cl>Key to Flags:
+</span></span><span class=line><span class=cl>  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+</span></span><span class=line><span class=cl>  L (link order), O (extra OS processing required), G (group), T (TLS),
+</span></span><span class=line><span class=cl>  C (compressed), x (unknown), o (OS specific), E (exclude),
+</span></span><span class=line><span class=cl>  D (mbind), l (large), p (processor specific)
+</span></span></code></pre></td></tr></table></div></div><br><p>각 구조체에는 아래와 같은 필드들이 저장되어 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>typedef struct {
+</span></span><span class=line><span class=cl>  Elf64_Word	sh_name;        
+</span></span><span class=line><span class=cl>  Elf64_Word	sh_type;        
+</span></span><span class=line><span class=cl>  Elf64_Xword	sh_flags;       
+</span></span><span class=line><span class=cl>  Elf64_Addr	sh_addr;        
+</span></span><span class=line><span class=cl>  Elf64_Off	sh_offset;      
+</span></span><span class=line><span class=cl>  Elf64_Xword	sh_size;        
+</span></span><span class=line><span class=cl>  Elf64_Word	sh_link;        
+</span></span><span class=line><span class=cl>  Elf64_Word	sh_info;        
+</span></span><span class=line><span class=cl>  Elf64_Xword	sh_addralign;   
+</span></span><span class=line><span class=cl>  Elf64_Xword	sh_entsize;     
+</span></span><span class=line><span class=cl>} Elf64_Shdr;
+</span></span></code></pre></td></tr></table></div></div><ul><li>sh_name : 섹션 이름 (문자열 테이블의 인덱스)</li><li>sh_type : 섹션 타입 (ex. SHT_PROGBITS, SHT_SYMTAB 등)</li><li>sh_flags : 섹션 속성 (읽기/쓰기/실행 등)</li><li>sh_addr : 실행 시 메모리에서의 가상 주소</li><li>sh_offset : 파일 내 섹션 시작 오프셋</li><li>sh_size : 섹션 크기 (바이트 단위)</li><li>sh_link : 관련된 다른 섹션의 인덱스</li><li>sh_info : 섹션에 대한 부가 정보</li><li>sh_addralign : 섹션 정렬 조건</li><li>sh_entsize : 항목 크기 (테이블 형식일 경우)</li></ul><br><hr><br><h2 id=실습용-코드-작성-후-명령어-실습-후-정리>실습용 코드 작성 후 명령어 실습 후 정리</h2><h4 id=실습용-코드>실습용 코드</h4><p>두 정수 값을 입력받고, 두 정수를 더하는 함수를 통해 더한 값을 출력하는 코드를 작성하였다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>add</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>a</span> <span class=o>+</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d %d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>x</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=nf>add</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><br><h4 id=명령어-실습>명령어 실습</h4><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image_hu_f09ed889c0103bf9.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image_hu_f2648511b1412980.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>gcc test.c -o test -g</code> 명령어로 컴파일한 뒤 <code>gdb ./test</code> 명령어로 gdb를 실행하였다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-1.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-1_hu_25b1fdae4da80c9d.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-1_hu_677f861647955bc4.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>list</code> 명령어를 통해 심볼이 남아있는 것을 확인할 수 있다.<br><code>b main</code> 명령어로 main 함수에 브레이크 포인트를 설정하였다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-7.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-7_hu_1c335d9d74f07096.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-7_hu_603cdd0a8e346d06.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>disas</code> 명령어로 어셈블리어 코드를 확인할 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-8.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-8_hu_3a80b53be9dceb37.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-8_hu_c4ebd7924991dfc6.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>layout asm</code> 명령어로 어셈블리어 코드 창을 띄워 코드를 실행하면서 확인할 수도 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-2.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-2_hu_235a8740190a0ebc.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-2_hu_bfe1cf82586b971.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>n</code> 명령어로 한 줄씩 실행해볼 수 있다. <code>x</code>, <code>y</code>에 각각 3과 7을 입력한 뒤, add 함수에 브레이크 포인트를 설정하여 함수 안으로 진입해보았다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-3.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-3_hu_d47d1edd9bbd063b.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-3_hu_10a78e2cebb1b689.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>info stack</code>과 <code>info frame</code> 명령어로 함수가 호출된 것을 확인할 수 있고, 매개변수들과 지역변수의 정보들을 확인할 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-4.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-4_hu_37e58f23272b953.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-4_hu_59e4c6321ecd076d.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>print</code> 명령어로 변수의 주소를 확인하고 이를 <code>x/w [주소]</code> 명령어를 통해 메모리 상에 위치한 값을 직접 확인할 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-6.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-6_hu_ac7e17da0bececd6.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-6_hu_b969430f0f504bce.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p>스택 프레임의 포인터인 <code>rbp</code>를 통해서도 매개변수가 위치한 메모리를 확인할 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-5.png width=1920 height=617 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-5_hu_f610e09f60de2753.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-3%EC%B0%A8%EC%8B%9C/image-5_hu_336041a460652865.png 1024w" loading=lazy class=gallery-image data-flex-grow=311 data-flex-basis=746px></p><p><code>return 0</code> 명령어를 통해 add 함수를 강제로 0으로 반환해보았다. 원래라면 10(3 + 7)이 출력되어야 하지만 0이 출력되는 것을 확인할 수 있다.</p></section><footer class=article-footer><section class=article-tags><a href=/tags/layer7/>Layer7</a>
+<a href=/tags/reversing/>Reversing</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/layer7-reversing-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Reversing mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 8차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-7%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 7차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-6%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 6차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-5%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 5차시</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 T43W00</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,349 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content='codeup 문제 풀이 아래 문제 풀이와 정답 코드 정리\n1014, 1015, 1017, 1018, 1026, 1027, 1028 1029, 1030, 1031, 1032, 1033, 1034, 1035\n1014 문제 링크\n문제 설명 2개의 문자(ASCII CODE)를 입력받아서 순서를 바꿔 출력해보자.\n풀이 입력받은 변수의 순서를 바꾸어 출력해주었다.\n코드 1 2 3 4 5 6 7 8 9 10 11 #include <stdio.h> int main() { char a, b; scanf("%c %c", &amp;a, &amp;b); printf("%c %c", b, a); return 0; } 1015 문제 링크\n'><title>Layer7 C언어 1차시</title><link rel=canonical href=https://t43w00.netlify.app/p/layer7-c%EC%96%B8%EC%96%B4-1%EC%B0%A8%EC%8B%9C/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Layer7 C언어 1차시"><meta property='og:description' content='codeup 문제 풀이 아래 문제 풀이와 정답 코드 정리\n1014, 1015, 1017, 1018, 1026, 1027, 1028 1029, 1030, 1031, 1032, 1033, 1034, 1035\n1014 문제 링크\n문제 설명 2개의 문자(ASCII CODE)를 입력받아서 순서를 바꿔 출력해보자.\n풀이 입력받은 변수의 순서를 바꾸어 출력해주었다.\n코드 1 2 3 4 5 6 7 8 9 10 11 #include <stdio.h> int main() { char a, b; scanf("%c %c", &amp;a, &amp;b); printf("%c %c", b, a); return 0; } 1015 문제 링크\n'><meta property='og:url' content='https://t43w00.netlify.app/p/layer7-c%EC%96%B8%EC%96%B4-1%EC%B0%A8%EC%8B%9C/'><meta property='og:site_name' content='T43W00'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Layer7'><meta property='article:published_time' content='2025-03-31T00:00:00+00:00'><meta property='article:modified_time' content='2025-03-31T00:00:00+00:00'><meta name=twitter:title content="Layer7 C언어 1차시"><meta name=twitter:description content='codeup 문제 풀이 아래 문제 풀이와 정답 코드 정리\n1014, 1015, 1017, 1018, 1026, 1027, 1028 1029, 1030, 1031, 1032, 1033, 1034, 1035\n1014 문제 링크\n문제 설명 2개의 문자(ASCII CODE)를 입력받아서 순서를 바꿔 출력해보자.\n풀이 입력받은 변수의 순서를 바꾸어 출력해주었다.\n코드 1 2 3 4 5 6 7 8 9 10 11 #include <stdio.h> int main() { char a, b; scanf("%c %c", &amp;a, &amp;b); printf("%c %c", b, a); return 0; } 1015 문제 링크\n'><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_da68217e1fd91b15.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐱</span></figure><div class=site-meta><h1 class=site-name><a href=/>T43W00</a></h1><h2 class=site-description>정보보안 공부</h2></div></header><ol class=menu-social><li><a href=https://github.com/t43w00 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://x.com/743w00 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#1014>1014</a><ol><li><a href=#문제-설명>문제 설명</a></li><li><a href=#풀이>풀이</a></li><li><a href=#코드>코드</a></li></ol></li><li><a href=#1015>1015</a><ol><li><a href=#문제-설명-1>문제 설명</a></li><li><a href=#풀이-1>풀이</a></li><li><a href=#코드-1>코드</a></li></ol></li><li><a href=#1017>1017</a><ol><li><a href=#문제-설명-2>문제 설명</a></li><li><a href=#풀이-2>풀이</a></li><li><a href=#코드-2>코드</a></li></ol></li><li><a href=#1018>1018</a><ol><li><a href=#문제-설명-3>문제 설명</a></li><li><a href=#풀이-3>풀이</a></li><li><a href=#코드-3>코드</a></li></ol></li><li><a href=#1026>1026</a><ol><li><a href=#문제-설명-4>문제 설명</a></li><li><a href=#풀이-4>풀이</a></li><li><a href=#코드-4>코드</a></li></ol></li><li><a href=#1027>1027</a><ol><li><a href=#문제-설명-5>문제 설명</a></li><li><a href=#풀이-5>풀이</a></li><li><a href=#코드-5>코드</a></li></ol></li><li><a href=#1028>1028</a><ol><li><a href=#문제-설명-6>문제 설명</a></li><li><a href=#풀이-6>풀이</a></li><li><a href=#코드-6>코드</a></li></ol></li><li><a href=#1029>1029</a><ol><li><a href=#문제-설명-7>문제 설명</a></li><li><a href=#풀이-7>풀이</a></li><li><a href=#코드-7>코드</a></li></ol></li><li><a href=#1030>1030</a><ol><li><a href=#문제-설명-8>문제 설명</a></li><li><a href=#풀이-8>풀이</a></li><li><a href=#코드-8>코드</a></li></ol></li><li><a href=#1031>1031</a><ol><li><a href=#문제-설명-9>문제 설명</a></li><li><a href=#풀이-9>풀이</a></li><li><a href=#코드-9>코드</a></li></ol></li><li><a href=#1032>1032</a><ol><li><a href=#문제-설명-10>문제 설명</a></li><li><a href=#풀이-10>풀이</a></li><li><a href=#코드-10>코드</a></li></ol></li><li><a href=#1033>1033</a><ol><li><a href=#문제-설명-11>문제 설명</a></li><li><a href=#풀이-11>풀이</a></li><li><a href=#코드-11>코드</a></li></ol></li><li><a href=#1034>1034</a><ol><li><a href=#문제-설명-12>문제 설명</a></li><li><a href=#풀이-12>풀이</a></li><li><a href=#코드-12>코드</a></li></ol></li><li><a href=#1035>1035</a><ol><li><a href=#문제-설명-13>문제 설명</a></li><li><a href=#풀이-13>풀이</a></li><li><a href=#코드-13>코드</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/layer7/>Layer7</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/layer7-c%EC%96%B8%EC%96%B4-1%EC%B0%A8%EC%8B%9C/>Layer7 C언어 1차시</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 31, 2025</time></div></footer></div></header><section class=article-content><h1 id=codeup-문제-풀이>codeup 문제 풀이</h1><p>아래 문제 풀이와 정답 코드 정리</p><p>1014, 1015, 1017, 1018, 1026, 1027, 1028
+1029, 1030, 1031, 1032, 1033, 1034, 1035</p><hr><h2 id=1014>1014</h2><p><a class=link href="https://codeup.kr/problem.php?id=1014" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명>문제 설명</h3><p>2개의 문자(ASCII CODE)를 입력받아서 순서를 바꿔 출력해보자.</p><h3 id=풀이>풀이</h3><p>입력받은 변수의 순서를 바꾸어 출력해주었다.</p><h3 id=코드>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%c %c&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%c %c&#34;</span><span class=p>,</span> <span class=n>b</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1015>1015</h2><p><a class=link href="https://codeup.kr/problem.php?id=1015" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-1>문제 설명</h3><p>실수(float) 1개를 입력받아 저장한 후,
+저장되어 있는 값을 소수점 셋 째 자리에서 반올림하여
+소수점 이하 둘 째 자리까지 출력하시오.</p><h3 id=풀이-1>풀이</h3><p>실수 값을 입력받은 뒤, <code>%.2f</code> 서식 지정자를 사용하여 소수점 이하 둘 째 자리까지만 출력하도록 하였다.</p><h3 id=코드-1>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>float</span> <span class=n>f</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%f&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>f</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%.2f&#34;</span><span class=p>,</span> <span class=n>f</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1017>1017</h2><p><a class=link href="https://codeup.kr/problem.php?id=1017" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-2>문제 설명</h3><p>int형 정수 1개를 입력받아 공백을 사이에 두고 3번 출력해보자.</p><h3 id=풀이-2>풀이</h3><p>입력받은 정수를 공백을 사이에 두고 3번 출력해주었다.</p><h3 id=코드-2>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d %d %d&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>,</span> <span class=n>a</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1018>1018</h2><p><a class=link href="https://codeup.kr/problem.php?id=1018" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-3>문제 설명</h3><p>어떤 형식에 맞추어 시간이 입력될 때, 그대로 출력하는 연습을 해보자.</p><h3 id=풀이-3>풀이</h3><p><code>:</code> 문자를 기준으로 앞 뒤로 정수를 입력받아 형식에 맞게 출력해주었다.</p><h3 id=코드-3>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>h</span><span class=p>,</span> <span class=n>m</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d:%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>h</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>m</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d:%d&#34;</span><span class=p>,</span> <span class=n>h</span><span class=p>,</span> <span class=n>m</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1026>1026</h2><p><a class=link href="https://codeup.kr/problem.php?id=1026" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-4>문제 설명</h3><p>입력되는 시:분:초 에서 분만 출력해보자.</p><h3 id=풀이-4>풀이</h3><p><code>:</code> 문자를 기준으로 시, 분, 초를 각각 <code>h</code>, <code>m</code>, <code>s</code>에 입력받아 <code>m</code>만 출력해주었다.</p><h3 id=코드-4>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>h</span><span class=p>,</span> <span class=n>m</span><span class=p>,</span> <span class=n>s</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d:%d:%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>h</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>m</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=n>m</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1027>1027</h2><p><a class=link href="https://codeup.kr/problem.php?id=1027" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-5>문제 설명</h3><p>년월일을 출력하는 방법은 나라마다, 형식마다 조금씩 다르다.</p><p>년월일(yyyy.mm.dd)를 입력받아,</p><p>일월년(dd-mm-yyyy)로 출력해보자.</p><p>(단, 한 자리 일/월은 0을 붙여 두자리로, 년도도 0을 붙여 네자리로 출력한다.)</p><h3 id=풀이-5>풀이</h3><p><code>.</code> 기준으로 년, 월, 일을 각각 <code>y</code>, <code>m</code>, <code>d</code> 변수에 입력받은 뒤, <code>dd-mm-yyyy</code> 형식으로 출력해주었다.</p><h3 id=코드-5>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>y</span><span class=p>,</span> <span class=n>m</span><span class=p>,</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d.%d.%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>y</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>m</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>d</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%02d-%02d-%04d&#34;</span><span class=p>,</span> <span class=n>d</span><span class=p>,</span> <span class=n>m</span><span class=p>,</span> <span class=n>y</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1028>1028</h2><p><a class=link href="https://codeup.kr/problem.php?id=1028" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-6>문제 설명</h3><p>정수 1개를 입력받아 그대로 출력해보자.
+(단, 입력되는 정수의 범위는 0 ~ 4,294,967,295 이다.)</p><h3 id=풀이-6>풀이</h3><p><code>unsigned int</code> 자료형으로 입력받아 <code>0 ~ 4294967295</code> 범위의 정수를 입력받아 출력하였다.</p><h3 id=코드-6>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%u&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%u&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1029>1029</h2><p><a class=link href="https://codeup.kr/problem.php?id=1029" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-7>문제 설명</h3><p>실수 1개를 입력받아 그대로 출력해보자.
+(단, 입력되는 실수의 범위는 +- 1.7<em>10-308 ~ +- 1.7</em>10308 이다.)</p><h3 id=풀이-7>풀이</h3><p><code>double</code> 자료형을 입력받아 <code>+- 3.4*10-38 ~ +- 3.4*1038</code> 범위의 실수 값을 출력할 수 있도록 하였다.</p><h3 id=코드-7>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>double</span> <span class=n>f</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%lf&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>f</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%.11lf&#34;</span><span class=p>,</span> <span class=n>f</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1030>1030</h2><p><a class=link href="https://codeup.kr/problem.php?id=1030" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-8>문제 설명</h3><p>정수 1개를 입력받아 그대로 출력해보자.
+단, 입력되는 정수의 범위는
+<code>-9,223,372,036,854,775,808 ~ +9,223,372,036,854,775,807</code> 이다.</p><h3 id=풀이-8>풀이</h3><p><code>long long int</code> 자료형을 사용하여 범위에 맞는 값을 입출력 하였다.</p><h3 id=코드-8>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=kt>long</span> <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%lld&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%lld&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1031>1031</h2><p><a class=link href="https://codeup.kr/problem.php?id=1031" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-9>문제 설명</h3><p>10진수를 입력받아 8진수(octal)로 출력해보자.</p><h3 id=풀이-9>풀이</h3><p><code>%d</code> 서식 지정자로 입력을 받은 뒤, 8진수를 나타내는 <code>%o</code> 서식 지정자로 출력하였다.</p><h3 id=코드-9>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%o&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1032>1032</h2><p><a class=link href="https://codeup.kr/problem.php?id=1031" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-10>문제 설명</h3><p>10진수를 입력받아 16진수(hexadecimal)로 출력해보자.</p><h3 id=풀이-10>풀이</h3><p><code>%d</code> 서식 지정자로 입력을 받은 뒤, 16진수를 나타내는 <code>%x</code> 서식 지정자로 출력하였다.</p><h3 id=코드-10>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%x&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1033>1033</h2><p><a class=link href="https://codeup.kr/problem.php?id=1031" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-11>문제 설명</h3><p>10진수를 입력받아 16진수(hexadecimal)로 출력해보자.</p><h3 id=풀이-11>풀이</h3><p><code>%d</code> 서식 지정자로 입력을 받은 뒤, 16진수(대문자)를 나타내는 <code>%X</code> 서식 지정자로 출력하였다.</p><h3 id=코드-11>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%X&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1034>1034</h2><p><a class=link href="https://codeup.kr/problem.php?id=1031" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-12>문제 설명</h3><p>8진수로 입력된 정수 1개를 10진수로 바꾸어 출력해보자.</p><h3 id=풀이-12>풀이</h3><p>8진수를 나타내는 <code>%o</code> 서식 지정자로 입력을 받은 뒤, 10진수를 나타내는 <code>%d</code> 서식 지정자로 출력하였다.</p><h3 id=코드-12>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%o&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=1035>1035</h2><p><a class=link href="https://codeup.kr/problem.php?id=1031" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-설명-13>문제 설명</h3><p>16진수로 입력된 정수 1개를 8진수로 바꾸어 출력해보자.</p><h3 id=풀이-13>풀이</h3><p>16진수를 나타내는 <code>%x</code> 서식 지정자로 입력을 받은 뒤, 8진수를 나타내는 <code>%o</code> 서식 지정자로 출력하였다.</p><h3 id=코드-13>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%x&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%o&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h1 id=c언어-환경-세팅-인증>C언어 환경 세팅 인증</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>❯ gcc -v
+</span></span><span class=line><span class=cl>Using built-in specs.
+</span></span><span class=line><span class=cl>COLLECT_GCC=C:\TDM-GCC-64\bin\gcc.exe
+</span></span><span class=line><span class=cl>COLLECT_LTO_WRAPPER=C:/TDM-GCC-64/bin/../libexec/gcc/x86_64-w64-mingw32/10.3.0/lto-wrapper.exe
+</span></span><span class=line><span class=cl>Target: x86_64-w64-mingw32
+</span></span><span class=line><span class=cl>Configured with: ../../../src/gcc-git-10.3.0/configure --build=x86_64-w64-mingw32 --enable-targets=all --enable-languages=ada,c,c++,fortran,jit,lto,objc,obj-c++ --enable-libgomp --enable-lto --enable-graphite --enable-cxx-flags=-DWINPTHREAD_STATIC --disable-build-with-cxx --disable-build-poststage1-with-cxx --enable-libstdcxx-debug --enable-threads=posix --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts=yes --disable-libstdcxx-pch --enable-libstdcxx-threads --enable-libstdcxx-time=yes --enable-mingw-wildcard --with-gnu-ld --disable-werror --enable-nls --disable-win32-registry --enable-large-address-aware --disable-rpath --disable-symvers --prefix=/mingw64tdm --with-local-prefix=/mingw64tdm --with-pkgversion=tdm64-1 --with-bugurl=https://github.com/jmeubank/tdm-gcc/issues
+</span></span><span class=line><span class=cl>Thread model: posix
+</span></span><span class=line><span class=cl>Supported LTO compression algorithms: zlib zstd
+</span></span><span class=line><span class=cl>gcc version 10.3.0 (tdm64-1)
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/layer7/>Layer7</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/layer7-%EC%8B%9C%EC%8A%A4%ED%85%9C-%ED%95%B4%ED%82%B9-1%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 시스템 해킹 1차시</h2></div></a></article><article><a href=/p/layer7-web-hacking-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Web Hacking mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-reversing-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Reversing mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 8차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-7%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 7차시</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 T43W00</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

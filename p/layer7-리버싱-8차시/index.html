@@ -1,0 +1,359 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="CTFd 문제 풀이 정리 Custom 1 디컴파일된 main 함수의 코드를 보면 플래그를 동적으로 생성하고, 사용자에게 입력받은 값을 비교하는 것을 확인할 수 있다.\ngdb를 이용하여 플래그를 생성한 위치에서 스택을 확인하여 플래그를 획득하였다.\nCustom 2 디컴파일된 코드를 보면, 플래그와 관련된 출력이나 연산이 없다는 것을 알 수 있다.\n"><title>Layer7 리버싱 8차시</title><link rel=canonical href=https://t43w00.netlify.app/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Layer7 리버싱 8차시"><meta property='og:description' content="CTFd 문제 풀이 정리 Custom 1 디컴파일된 main 함수의 코드를 보면 플래그를 동적으로 생성하고, 사용자에게 입력받은 값을 비교하는 것을 확인할 수 있다.\ngdb를 이용하여 플래그를 생성한 위치에서 스택을 확인하여 플래그를 획득하였다.\nCustom 2 디컴파일된 코드를 보면, 플래그와 관련된 출력이나 연산이 없다는 것을 알 수 있다.\n"><meta property='og:url' content='https://t43w00.netlify.app/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/'><meta property='og:site_name' content='T43W00'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Layer7'><meta property='article:tag' content='Reversing'><meta property='article:published_time' content='2025-07-04T00:00:00+00:00'><meta property='article:modified_time' content='2025-07-04T00:00:00+00:00'><meta name=twitter:title content="Layer7 리버싱 8차시"><meta name=twitter:description content="CTFd 문제 풀이 정리 Custom 1 디컴파일된 main 함수의 코드를 보면 플래그를 동적으로 생성하고, 사용자에게 입력받은 값을 비교하는 것을 확인할 수 있다.\ngdb를 이용하여 플래그를 생성한 위치에서 스택을 확인하여 플래그를 획득하였다.\nCustom 2 디컴파일된 코드를 보면, 플래그와 관련된 출력이나 연산이 없다는 것을 알 수 있다.\n"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_da68217e1fd91b15.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐱</span></figure><div class=site-meta><h1 class=site-name><a href=/>T43W00</a></h1><h2 class=site-description>정보보안 공부</h2></div></header><ol class=menu-social><li><a href=https://github.com/t43w00 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://x.com/743w00 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#ctfd-문제-풀이-정리>CTFd 문제 풀이 정리</a><ol><li><a href=#custom-1>Custom 1</a></li><li><a href=#custom-2>Custom 2</a></li></ol></li><li><a href=#dreamhack-reverse-engineering-학습>Dreamhack Reverse Engineering 학습</a></li><li><a href=#dreamhack-워게임-풀이>Dreamhack 워게임 풀이</a><ol><li><a href=#legacyopt>legacyopt</a></li><li><a href=#recover>Recover</a></li></ol></li><li><a href=#reversingkr-문제-풀이>Reversing.kr 문제 풀이</a><ol><li><a href=#easy-crack>Easy Crack</a></li><li><a href=#easy-keygen>Easy Keygen</a></li><li><a href=#easy-unpack>Easy Unpack</a></li><li><a href=#easy-elf>Easy ELF</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/layer7/>Layer7
+</a><a href=/categories/reversing/>Reversing</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/>Layer7 리버싱 8차시</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jul 04, 2025</time></div></footer></div></header><section class=article-content><h2 id=ctfd-문제-풀이-정리>CTFd 문제 풀이 정리</h2><h3 id=custom-1>Custom 1</h3><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image.png width=1535 height=843 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image_hu_5ddeb1c70cad681a.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image_hu_f1a00694c1e26510.png 1024w" loading=lazy class=gallery-image data-flex-grow=182 data-flex-basis=437px></p><p>디컴파일된 <code>main</code> 함수의 코드를 보면 플래그를 동적으로 생성하고, 사용자에게 입력받은 값을 비교하는 것을 확인할 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-1.png width=1920 height=597 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-1_hu_8ed7bf75147007bb.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-1_hu_8804b54fb1bf79f0.png 1024w" loading=lazy class=gallery-image data-flex-grow=321 data-flex-basis=771px></p><p><code>gdb</code>를 이용하여 플래그를 생성한 위치에서 스택을 확인하여 플래그를 획득하였다.</p><br><br><h3 id=custom-2>Custom 2</h3><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-2.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-2_hu_ca17effe4fb6946.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-2_hu_495dde514bcf5aaf.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px>
+<img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-3.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-3_hu_aa7d923bfe36c447.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-3_hu_8846ae390ff008ab.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p>디컴파일된 코드를 보면, 플래그와 관련된 출력이나 연산이 없다는 것을 알 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-4.png width=385 height=708 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-4_hu_934b3d555bb4bcee.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-4_hu_c88eaf89e97c3ef5.png 1024w" loading=lazy class=gallery-image data-flex-grow=54 data-flex-basis=130px></p><p>함수 목록에서 <code>print_flag</code>라는 이름의 함수를 확인할 수 있었는데, 이를 <code>gdb</code>를 이용하여 실행해보았다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-5.png width=1920 height=597 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-5_hu_d5a079697c7f0356.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-5_hu_8d6a66a81de0c261.png 1024w" loading=lazy class=gallery-image data-flex-grow=321 data-flex-basis=771px></p><p>플래그처럼 보이는 문자열이 나왔는데 중간에 unprintable char가 있다. 플래그 안의 값이 <code>base64</code>로 인코딩된 형식처럼 보였다. printable char를 대입하여 각각 디코딩해서 정상적인 문장을 찾아보았다.</p><br><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>base64</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>encoded</span> <span class=o>=</span> <span class=s2>&#34;TG92ZWx5IHRvIGJlIHNpdHRpbmcgaGVyZSB3aXRoIHlv�QpZb3UncmUga2luZGEgY3V0ZSwgYnV0IGl0J3MgUmFpbmluZyBoYXJkZXI=&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mh>0x30</span><span class=p>,</span> <span class=mh>0x7A</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>encoded</span> <span class=o>=</span> <span class=n>encoded</span><span class=p>[:</span><span class=mi>44</span><span class=p>]</span> <span class=o>+</span> <span class=nb>chr</span><span class=p>(</span><span class=n>i</span><span class=p>)</span> <span class=o>+</span> <span class=n>encoded</span><span class=p>[</span><span class=mi>45</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl>        <span class=n>decoded</span> <span class=o>=</span> <span class=n>base64</span><span class=o>.</span><span class=n>b64decode</span><span class=p>(</span><span class=n>encoded</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=s1>&#39;ascii&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=nb>chr</span><span class=p>(</span><span class=n>i</span><span class=p>),</span> <span class=s1>&#39;</span><span class=se>\t</span><span class=s1>&#39;</span><span class=p>,</span> <span class=n>decoded</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>except</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=n>end</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><br><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-md data-lang=md><span class=line><span class=cl>0        b&#34;Lovely to be sitting here with yo\xd1\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>1        b&#34;Lovely to be sitting here with yo\xd5\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>2        b&#34;Lovely to be sitting here with yo\xd9\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>3        b&#34;Lovely to be sitting here with yo\xdd\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>4        b&#34;Lovely to be sitting here with yo\xe1\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>5        b&#34;Lovely to be sitting here with yo\xe5\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>6        b&#34;Lovely to be sitting here with yo\xe9\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl>↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 
+</span></span><span class=line><span class=cl>d        b&#34;Lovely to be sitting here with you\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 
+</span></span><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl>u        b&#34;Lovely to be sitting here with yo\xb9\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>v        b&#34;Lovely to be sitting here with yo\xbd\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>w        b&#34;Lovely to be sitting here with yo\xc1\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>x        b&#34;Lovely to be sitting here with yo\xc5\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span><span class=line><span class=cl>y        b&#34;Lovely to be sitting here with yo\xc9\nYou&#39;re kinda cute, but it&#39;s Raining harder&#34;
+</span></span></code></pre></td></tr></table></div></div><p><code>d</code>가 가장 적절해보인다. 따라서 해당 unprintable char를 <code>d</code>로 바꿔주었더니, 플래그 제출에 성공하였다.</p><br><hr><br><h2 id=dreamhack-reverse-engineering-학습>Dreamhack Reverse Engineering 학습</h2><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-6.png width=1920 height=1200 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-6_hu_6f7e408357c203f6.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-6_hu_67d390ab50bda54a.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=384px></p><br><hr><br><h2 id=dreamhack-워게임-풀이>Dreamhack 워게임 풀이</h2><h3 id=legacyopt>legacyopt</h3><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-7.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-7_hu_cf4cf75114194be5.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-7_hu_8b6a838fdf82bae6.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p>디컴파일된 코드를 보니, 사용자에게 입력을 받아 <code>sub_1209</code> 함수를 통해 연산을 한 뒤 출력을 하는 것 같다.</p><p>문제 파일에는 <code>output.txt</code> 파일이 포함되어 있는데, 이를 통해 역연산하여 입력값을 구하면 될 것 같다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>220c6a33204455fb390074013c4156d704316528205156d70b217c14255b6ce10837651234464e
+</span></span></code></pre></td></tr></table></div></div><br><p><code>sub_1209</code> 함수는 아래와 같다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>unsigned</span> <span class=kr>__int64</span> <span class=kr>__fastcall</span> <span class=nf>sub_1209</span><span class=p>(</span><span class=n>_BYTE</span> <span class=o>*</span><span class=n>a1</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>a2</span><span class=p>,</span> <span class=kt>int</span> <span class=n>a3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>v3</span><span class=p>;</span> <span class=c1>// eax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v4</span><span class=p>;</span> <span class=c1>// edx
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v5</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v6</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v7</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v8</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v9</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v10</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v11</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v12</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v13</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v14</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v15</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v16</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v17</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v18</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v19</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v20</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v21</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v22</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v23</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v24</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v25</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v26</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v27</span><span class=p>;</span> <span class=c1>// cl
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>unsigned</span> <span class=kr>__int64</span> <span class=n>result</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v32</span><span class=p>;</span> <span class=c1>// [rsp+20h] [rbp-4h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=n>v3</span> <span class=o>=</span> <span class=n>a3</span> <span class=o>+</span> <span class=mi>7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>v4</span> <span class=o>=</span> <span class=n>a3</span> <span class=o>+</span> <span class=mi>14</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>v3</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>v3</span> <span class=o>=</span> <span class=n>v4</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>v32</span> <span class=o>=</span> <span class=n>v3</span> <span class=o>&gt;&gt;</span> <span class=mi>3</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>switch</span> <span class=p>(</span> <span class=n>a3</span> <span class=o>%</span> <span class=mi>8</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>0</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_4</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>1</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_11</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>2</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_10</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>3</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_9</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>4</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_8</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>5</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_7</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>6</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_6</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=mi>7</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>while</span> <span class=p>(</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>v8</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v9</span> <span class=o>=</span> <span class=o>*</span><span class=n>v8</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v10</span> <span class=o>=</span> <span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>v10</span> <span class=o>=</span> <span class=n>v9</span> <span class=o>^</span> <span class=mh>0x66</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_6</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v11</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v12</span> <span class=o>=</span> <span class=o>*</span><span class=n>v11</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v13</span> <span class=o>=</span> <span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>v13</span> <span class=o>=</span> <span class=n>v12</span> <span class=o>^</span> <span class=mh>0x44</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_7</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v14</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v15</span> <span class=o>=</span> <span class=o>*</span><span class=n>v14</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v16</span> <span class=o>=</span> <span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>v16</span> <span class=o>=</span> <span class=n>v15</span> <span class=o>^</span> <span class=mh>0x11</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_8</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v17</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v18</span> <span class=o>=</span> <span class=o>*</span><span class=n>v17</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v19</span> <span class=o>=</span> <span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>v19</span> <span class=o>=</span> <span class=n>v18</span> <span class=o>^</span> <span class=mh>0x77</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_9</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v20</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v21</span> <span class=o>=</span> <span class=o>*</span><span class=n>v20</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v22</span> <span class=o>=</span> <span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>v22</span> <span class=o>=</span> <span class=n>v21</span> <span class=o>^</span> <span class=mh>0x55</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_10</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v23</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v24</span> <span class=o>=</span> <span class=o>*</span><span class=n>v23</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v25</span> <span class=o>=</span> <span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>v25</span> <span class=o>=</span> <span class=n>v24</span> <span class=o>^</span> <span class=mh>0x22</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_11</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v26</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v27</span> <span class=o>=</span> <span class=o>*</span><span class=n>v26</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>result</span> <span class=o>=</span> <span class=p>(</span><span class=kt>unsigned</span> <span class=kr>__int64</span><span class=p>)</span><span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=p>(</span><span class=n>_BYTE</span> <span class=o>*</span><span class=p>)</span><span class=n>result</span> <span class=o>=</span> <span class=n>v27</span> <span class=o>^</span> <span class=mh>0x33</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span> <span class=o>--</span><span class=n>v32</span> <span class=o>&lt;=</span> <span class=mi>0</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_4</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v5</span> <span class=o>=</span> <span class=n>a2</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v6</span> <span class=o>=</span> <span class=o>*</span><span class=n>v5</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v7</span> <span class=o>=</span> <span class=n>a1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>v7</span> <span class=o>=</span> <span class=n>v6</span> <span class=o>^</span> <span class=mh>0x88</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>      <span class=n>result</span> <span class=o>=</span> <span class=p>(</span><span class=kt>unsigned</span> <span class=kt>int</span><span class=p>)(</span><span class=n>a3</span> <span class=o>%</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>코드를 보면 switch-case문을 통해 <code>a3 % 8</code>에 해당하는 case로 분기하는 것을 알 수 있는데, <code>output.txt</code>가 39byte이므로, <code>case 7</code>(39 % 8)으로 분기하는 것을 알 수 있다.</p><br><p>따라서 입력받은 값에 <code>case 7</code>부터 시작해서 순서대로 <code>[0x66, 0x44, 0x11, 0x77, 0x55, 0x22, 0x33, 0x88]</code> 값들과 xor 연산을 반복해주는 것이다.</p><br><p>Python으로 역연산하여 입력값을 구하는 코드를 작성하였다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>output</span> <span class=o>=</span> <span class=s2>&#34;220c6a33204455fb390074013c4156d704316528205156d70b217c14255b6ce10837651234464e&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>data</span> <span class=o>=</span> <span class=nb>bytes</span><span class=o>.</span><span class=n>fromhex</span><span class=p>(</span><span class=n>output</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>key</span> <span class=o>=</span> <span class=p>[</span><span class=mh>0x66</span><span class=p>,</span> <span class=mh>0x44</span><span class=p>,</span> <span class=mh>0x11</span><span class=p>,</span> <span class=mh>0x77</span><span class=p>,</span> <span class=mh>0x55</span><span class=p>,</span> <span class=mh>0x22</span><span class=p>,</span> <span class=mh>0x33</span><span class=p>,</span> <span class=mh>0x88</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>data</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>  <span class=nb>print</span><span class=p>(</span><span class=nb>chr</span><span class=p>(</span><span class=n>data</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>^</span> <span class=n>key</span><span class=p>[</span><span class=n>i</span> <span class=o>%</span> <span class=mi>8</span><span class=p>]),</span> <span class=n>end</span><span class=o>=</span><span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-8.png width=1920 height=1200 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-8_hu_f8e31f5e589750cb.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-8_hu_9a380461b66aab96.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=384px></p><br><br><h3 id=recover>Recover</h3><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-9.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-9_hu_5248f16bb3183832.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-9_hu_5c858535eedb88b7.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p>디컴파일된 코드를 보면 <code>flag.png</code> 파일을 읽어와 1byte씩 xor 및 더하기 연산을 해주는 것을 확인할 수 있다.</p><br><p>Python으로 역연산하여 <code>flag.png</code>를 복호화하는 코드를 작성하였다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;./encrypted&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>data</span> <span class=o>=</span> <span class=n>f</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>key</span> <span class=o>=</span> <span class=p>[</span><span class=mh>0xDE</span><span class=p>,</span> <span class=mh>0xAD</span><span class=p>,</span> <span class=mh>0xBE</span><span class=p>,</span> <span class=mh>0xEF</span><span class=p>,</span> <span class=mh>0x00</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>decrypted</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>data</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>    <span class=n>decrypted</span><span class=o>.</span><span class=n>append</span><span class=p>(((</span><span class=n>data</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>-</span> <span class=mi>19</span><span class=p>)</span> <span class=o>^</span> <span class=n>key</span><span class=p>[</span><span class=n>i</span> <span class=o>%</span> <span class=mi>4</span><span class=p>])</span> <span class=o>&amp;</span> <span class=mh>0xFF</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;flag.png&#34;</span><span class=p>,</span> <span class=s2>&#34;ab&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>decrypted</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><br><p>복호화된 <code>flag.png</code> 열어보면 플래그를 확인할 수 있다.</p><br><hr><br><h2 id=reversingkr-문제-풀이>Reversing.kr 문제 풀이</h2><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-18.png width=1920 height=1200 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-18_hu_6b460d874f000fc8.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-18_hu_bbece7f829415dbd.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=384px></p><br><h3 id=easy-crack>Easy Crack</h3><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-10.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-10_hu_e6080648b4b6ab8d.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-10_hu_d013cbb29e21269.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p>디컴파일된 코드를 확인해보면, Windows API로 만든 GUI 프로그램이기 때문에 <code>WinMain</code> 함수를 확인할 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-11.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-11_hu_e8ba494ac7fe2edb.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-11_hu_2dd10d5cbf2375d8.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p><code>DialogFunc</code> 함수를 확인해보면 종료 조건과 아래는 어떤 함수를 호출해주는 것을 볼 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-12.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-12_hu_ed6c261451beb6bb.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-12_hu_9d07da00cdd7bd6e.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p>확인해보면 조건문을 만족하면 <code>MessageBoxA</code> 함수를 <code>aIncorrectPassw</code>를 인자로 반환한다.</p><p>따라서 조건문을 만족하지 않도록 하는 <code>String</code> 값을 구해야한다.</p><br><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>String[1] != 97                 // a
+</span></span><span class=line><span class=cl>strncmp(&amp;String[2], Str2, 2u)   // Str2 : 5y
+</span></span><span class=line><span class=cl>strcmp(&amp;String[4], aR3versing)  // aR3versing : R3versing
+</span></span><span class=line><span class=cl>String[0] != 69                 // 69 : E
+</span></span></code></pre></td></tr></table></div></div><p>따라서 <code>String</code>의 값은 &ldquo;Ea5yR3versing"이다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-13.png width=181 height=147 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-13_hu_676b1339851df2a3.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-13_hu_1c4e8da43ee7007d.png 1024w" loading=lazy class=gallery-image data-flex-grow=123 data-flex-basis=295px></p><br><h3 id=easy-keygen>Easy Keygen</h3><p>Find the Name when the Serial is 5B134977135E7D13</p><p>해당 시리얼의 이름을 알아내야 하는 것 같다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-14.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-14_hu_662c7d55d7a9f46a.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-14_hu_1e02cc08c5ee2230.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p>디컴파일된 코드를 확인해보면 <code>v8</code>에 이름을 입력받고, 이 값을 이용해 <code>Buffer</code>에 <code>v8[v3++] ^ v7[i - 1]</code> 값을 Hex 문자열 형태로 저장한다.</p><p>다음으로 <code>v8</code>에 시리얼을 입력받아, 이를 <code>Buffer</code>와 비교하여 같으면 <code>Correct</code>를 호출하게 된다.</p><p>시리얼 값을 알고 있기 때문에 이를 바탕으로 이름을 역연산하여 구할 수 있다.</p><br><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>Serial</span> <span class=o>=</span> <span class=p>[</span><span class=mh>0x5B</span><span class=p>,</span> <span class=mh>0x13</span><span class=p>,</span> <span class=mh>0x49</span><span class=p>,</span> <span class=mh>0x77</span><span class=p>,</span> <span class=mh>0x13</span><span class=p>,</span> <span class=mh>0x5E</span><span class=p>,</span> <span class=mh>0x7D</span><span class=p>,</span> <span class=mh>0x13</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>v7</span> <span class=o>=</span> <span class=p>[</span><span class=mh>0x10</span><span class=p>,</span> <span class=mh>0x20</span><span class=p>,</span> <span class=mh>0x30</span><span class=p>]</span> <span class=c1># v6, v7 두 배열을 인덱스를 한 칸 미뤄서 하나의 배열로 사용.</span>
+</span></span><span class=line><span class=cl><span class=c1># v6 = v7[-1] = 16 = 0x10</span>
+</span></span><span class=line><span class=cl><span class=c1># v7 = &#34; 0&#34;, &#39; &#39; = 0x20, &#39;0&#39; = 0x30</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>Serial</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=nb>chr</span><span class=p>(</span><span class=n>Serial</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>^</span> <span class=n>v7</span><span class=p>[</span><span class=n>i</span> <span class=o>%</span> <span class=mi>3</span><span class=p>]),</span> <span class=n>end</span><span class=o>=</span><span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-15.png width=1235 height=658 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-15_hu_c5bfaabc05894c0c.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-15_hu_e9969e09ebfe65f1.png 1024w" loading=lazy class=gallery-image data-flex-grow=187 data-flex-basis=450px></p><br><br><h3 id=easy-unpack>Easy Unpack</h3><p>Find the OEP</p><p>ex) 00401000</p><br><p>문제 풀이 전, 언팩(Unpack)이란 압축되거나 암호화된, 즉 Packed 파일에서 동적으로 원래 파일로 압축을 해제하거나 복호화하여 실행하는 것을 말한다. 프로그램 실행 중에 암호화된 프로그램이 동적으로 복호화되기 때문에 정적 분석으로는 프로그램을 분석할 수 없다.</p><br><p>문제에서 OEP를 구하라고 하는데, OEP는 Original Entry Point의 약자로, 언패킹이 된 후의 엔트리 포인트를 말한다.</p><p>동적 분석으로 실행하다보면 엔트리 포인트를 찾을 수 있을 것이다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-16.png width=1920 height=1200 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-16_hu_15833e94bb7961fb.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-16_hu_b5505f74331b69f8.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=384px></p><p><code>x32dbg</code>로 계속해서 한 줄씩 실행하다 보면, 위와 같이 다른 주소로 실행 흐름이 바뀌는 것을 확인할 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-17.png width=1920 height=1200 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-17_hu_cafc3e4a33e027f2.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-17_hu_2fff4422f41c7a00.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=384px></p><p>해당 주소를 확인해보면 함수 프롤로그와 <code>GetVersion</code>, <code>GetCommandLineA</code>와 같은 API 호출 등을 확인할 수 있는데, 이를 통해 이 주소가 엔트리 포인트임을 알 수 있다.</p><br><p>따라서 OEP는 <code>00401150</code>이다.</p><br><br><h3 id=easy-elf>Easy ELF</h3><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-19.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-19_hu_f1cbd880f477050b.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-19_hu_cb896f921adb1515.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px> <img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-21.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-21_hu_7e8fe53a920b9398.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-21_hu_931788431265d9a7.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p>디컴파일된 코드를 확인해보면, <code>sub_8048434</code> 함수는 scanf()이고 <code>sub_8048451</code> 함수의 반환값에 따라 결과가 달라지는 것을 알 수 있다.</p><br><p><img src=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-20.png width=1535 height=856 srcset="/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-20_hu_e6fa3be87f4663ef.png 480w, /p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/image-20_hu_dbff4068a3af923f.png 1024w" loading=lazy class=gallery-image data-flex-grow=179 data-flex-basis=430px></p><p><code>sub_8048451</code> 함수를 확인해보면, 입력을 받아온 값을 xor 연산을 한 뒤 특정 값과 비교하여 같으면 1을 반환 시키는 것으로 보인다.</p><br><p>Python으로 역연산하여 입력값을 구하는 코드를 작성하였다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=nb>bytes</span> <span class=o>=</span> <span class=p>[</span><span class=mi>120</span> <span class=o>^</span> <span class=mh>0x34</span><span class=p>,</span> <span class=mi>49</span><span class=p>,</span> <span class=mi>124</span> <span class=o>^</span> <span class=mh>0x32db</span><span class=n>g</span><span class=p>,</span> <span class=p>(</span><span class=o>-</span><span class=mi>35</span> <span class=o>^</span> <span class=mh>0x88</span><span class=p>)</span> <span class=o>&amp;</span> <span class=mh>0xFF</span><span class=p>,</span> <span class=mi>88</span><span class=p>,</span> <span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=nb>bytes</span><span class=p>)):</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=nb>chr</span><span class=p>(</span><span class=nb>bytes</span><span class=p>[</span><span class=n>i</span><span class=p>]),</span> <span class=n>end</span><span class=o>=</span><span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/layer7/>Layer7</a>
+<a href=/tags/reversing/>Reversing</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/layer7-reversing-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Reversing mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-7%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 7차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-6%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 6차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-5%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 5차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-4%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 4차시</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 T43W00</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

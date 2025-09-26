@@ -1,0 +1,375 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="수업 내용 정리 포인터란? 변수 : 자신의 자료형에 맞는 값을 저장\n포인터 변수 : 기존과 달리, 메모리 주소를 저장\n메모리 주소 : 실제 컴퓨터에 저장되는 메모리 영역을 구분 짓는 값 포인터를 사용하는 이유 변수명이 같아도 함수마다 다른 메모리에 별도의 저장 공간을 확보. -> 포인터를 사용하여 다른 함수에서도 사용할 수 있도록 함.\n메모리 구조 메모리 공간을 네 가지로 분류.\n코드 영역 (code section) 소스 코드 저장\n데이터 영역 (data section) 전역, 정적 변수 저장\n"><title>Layer7 C언어 4차시</title><link rel=canonical href=https://t43w00.netlify.app/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Layer7 C언어 4차시"><meta property='og:description' content="수업 내용 정리 포인터란? 변수 : 자신의 자료형에 맞는 값을 저장\n포인터 변수 : 기존과 달리, 메모리 주소를 저장\n메모리 주소 : 실제 컴퓨터에 저장되는 메모리 영역을 구분 짓는 값 포인터를 사용하는 이유 변수명이 같아도 함수마다 다른 메모리에 별도의 저장 공간을 확보. -> 포인터를 사용하여 다른 함수에서도 사용할 수 있도록 함.\n메모리 구조 메모리 공간을 네 가지로 분류.\n코드 영역 (code section) 소스 코드 저장\n데이터 영역 (data section) 전역, 정적 변수 저장\n"><meta property='og:url' content='https://t43w00.netlify.app/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/'><meta property='og:site_name' content='T43W00'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Layer7'><meta property='article:published_time' content='2025-04-12T00:00:00+00:00'><meta property='article:modified_time' content='2025-04-12T00:00:00+00:00'><meta name=twitter:title content="Layer7 C언어 4차시"><meta name=twitter:description content="수업 내용 정리 포인터란? 변수 : 자신의 자료형에 맞는 값을 저장\n포인터 변수 : 기존과 달리, 메모리 주소를 저장\n메모리 주소 : 실제 컴퓨터에 저장되는 메모리 영역을 구분 짓는 값 포인터를 사용하는 이유 변수명이 같아도 함수마다 다른 메모리에 별도의 저장 공간을 확보. -> 포인터를 사용하여 다른 함수에서도 사용할 수 있도록 함.\n메모리 구조 메모리 공간을 네 가지로 분류.\n코드 영역 (code section) 소스 코드 저장\n데이터 영역 (data section) 전역, 정적 변수 저장\n"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_da68217e1fd91b15.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐱</span></figure><div class=site-meta><h1 class=site-name><a href=/>T43W00</a></h1><h2 class=site-description>정보보안 공부</h2></div></header><ol class=menu-social><li><a href=https://github.com/t43w00 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://x.com/743w00 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#수업-내용-정리>수업 내용 정리</a><ol><li><a href=#포인터란>포인터란?</a></li><li><a href=#포인터를-사용하는-이유>포인터를 사용하는 이유</a></li><li><a href=#메모리-구조>메모리 구조</a><ol><li><a href=#전역-변수>전역 변수</a></li><li><a href=#지역-변수>지역 변수</a></li></ol></li><li><a href=#포인터-연산자>포인터 연산자</a></li><li><a href=#동적-메모리-할당이란>동적 메모리 할당이란?</a></li><li><a href=#동적-메모리-할당-함수>동적 메모리 할당 함수</a></li></ol></li><li><a href=#백준-문제-정리>백준 문제 정리</a><ol><li><a href=#25703--포인터-공부>25703 | 포인터 공부</a><ol><li><a href=#문제>문제</a></li><li><a href=#풀이>풀이</a></li><li><a href=#코드>코드</a></li></ol></li><li><a href=#11729--하노이-탑-이동-순서>11729 | 하노이 탑 이동 순서</a><ol><li><a href=#문제-1>문제</a></li><li><a href=#풀이-1>풀이</a></li><li><a href=#코드-1>코드</a></li></ol></li></ol></li><li><a href=#코드업-문제-정리>코드업 문제 정리</a><ol><li><a href=#1810--부분-문자열>1810 | 부분 문자열</a><ol><li><a href=#문제-2>문제</a></li><li><a href=#풀이-2>풀이</a></li><li><a href=#코드-2>코드</a></li></ol></li><li><a href=#1581--swap-함수-만들기>1581 | swap 함수 만들기</a><ol><li><a href=#문제-3>문제</a></li><li><a href=#풀이-3>풀이</a></li><li><a href=#코드-3>코드</a></li></ol></li></ol></li><li><a href=#창작-문제>창작 문제</a><ol><li><a href=#문제-4>문제</a></li><li><a href=#풀이-4>풀이</a></li><li><a href=#코드-4>코드</a></li></ol></li><li><a href=#10775--공항-협력-과제>10775 | 공항 (협력 과제)</a><ol><li><a href=#문제-5>문제</a></li><li><a href=#풀이-5>풀이</a></li><li><a href=#코드-5>코드</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/layer7/>Layer7</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/>Layer7 C언어 4차시</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Apr 12, 2025</time></div></footer></div></header><section class=article-content><h2 id=수업-내용-정리>수업 내용 정리</h2><h3 id=포인터란>포인터란?</h3><p>변수 : 자신의 자료형에 맞는 값을 저장</p><p>포인터 변수 : 기존과 달리, 메모리 주소를 저장</p><ul><li>메모리 주소 : 실제 컴퓨터에 저장되는 메모리 영역을 구분 짓는 값</li></ul><h3 id=포인터를-사용하는-이유>포인터를 사용하는 이유</h3><p>변수명이 같아도 함수마다 다른 메모리에 별도의 저장 공간을 확보.
+-> 포인터를 사용하여 다른 함수에서도 사용할 수 있도록 함.</p><h3 id=메모리-구조>메모리 구조</h3><p>메모리 공간을 네 가지로 분류.</p><ul><li><p>코드 영역 (code section)
+소스 코드 저장</p></li><li><p>데이터 영역 (data section)
+전역, 정적 변수 저장</p></li><li><p>힙 영역 (heap section)
+동적 할당 변수 저장</p></li><li><p>스택 영역 (stack section)
+지역 변수, 매개 변수 저장</p></li></ul><h4 id=전역-변수>전역 변수</h4><p>프로그램의 어디서든 접근 가능한 변수 (데이터 영역에 저장)</p><p>프로그램 시작과 동시에 메모리에 할당.</p><h4 id=지역-변수>지역 변수</h4><p>프로그램에서 특정 블록에서만 접근할 수 있는 변수. (스택 영역에 저장)</p><p>함수가 실행될 때마다 메모리에 할당. 함수 종료 시 메모리에서 해제.</p><h3 id=포인터-연산자>포인터 연산자</h3><p><code>*</code> : 역참조 연산자로, 메모리에 저장된 값에 접근할 수 있음.
+<code>&</code> : 주소 연산자로, 변수의 메모리 주소를 가져옴.</p><h3 id=동적-메모리-할당이란>동적 메모리 할당이란?</h3><p>프로그램 실행 중 원하는 크기 만큼 메모리를 할당하여 사용.</p><h3 id=동적-메모리-할당-함수>동적 메모리 할당 함수</h3><p><code>malloc()</code> : 인자값 크기만큼 메모리 할당</p><p><code>free()</code> : 메모리 할당한 변수 해제</p><hr><h2 id=백준-문제-정리>백준 문제 정리</h2><p>25703*
+재귀 함수 : 11729*</p><p><img src=/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/image.png width=1092 height=92 srcset="/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/image_hu_b7ad76bf73831a75.png 480w, /p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/image_hu_ffa96943c07f95b8.png 1024w" loading=lazy class=gallery-image data-flex-grow=1186 data-flex-basis=2848px></p><h3 id=25703--포인터-공부>25703 | 포인터 공부</h3><p><a class=link href=https://www.acmicpc.net/problem/25703 target=_blank rel=noopener>문제 링크</a></p><h4 id=문제>문제</h4><p>용모는 오늘 객체지향프로그래밍1 시간에 포인터에 대해 배웠다. 포인터란, 프로그래밍 언어에서 다른 변수, 혹은 그 변수의 메모리 공간주소를 가리키는 변수를 의미한다.</p><p>C/C++에서 포인터는 (자료형) <em>(변수명)으로 선언할 수 있으며 값은 &(이미 선언된 변수명)으로 지정할 수 있다. 이때 변수 선언에서 &lsquo;</em>&rsquo; 기호는 이 변수가 포인터임을 의미하고, &lsquo;&&rsquo; 기호는 변수의 메모리 주소값을 의미한다.</p><p>예를 들어, int형 변수 a에 대한 포인터 ptr을 다음과 같이 선언할 수 있다. 이때 ptr은 a가 저장된 메모리의 주소를 가리키고 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=o>*</span><span class=n>ptr</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>또한 포인터의 포인터를 선언하는 식으로 다중 포인터를 선언하는 것이 가능하다. int형 변수 a에 대해 4중 포인터를 만들려 하는 경우 다음과 같이 코드를 작성해야 한다. 이중 포인터인 ptr2는 a의 포인터인 ptr의 주소를, 삼중 포인터인 ptr3는 이중 포인터인 ptr2의 주소를 가리키는 식으로 특정 변수에 대해 다중 포인터를 끝없이 선언할 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=o>*</span><span class=n>ptr</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=o>**</span><span class=n>ptr2</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>ptr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=o>***</span><span class=n>ptr3</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>ptr2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=o>****</span><span class=n>ptr4</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>ptr3</span><span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>용모는 int형 변수 a에 대해 N중 포인터를 선언하는 코드를 작성할 때 필요한 변수 선언문들을 작성해야 하는 과제를 받았다. 이때 위 다중 포인터 선언 예시와 같이 각 포인터 변수의 이름은 &ldquo;ptr&rdquo;, &ldquo;ptr2&rdquo;, &mldr;, &ldquo;ptrN&rdquo; (N은 수)이 되어야 하고, 코드 형식은 위 예시와 동일해야 한다.</p><p>하지만 공부가 너무 싫고 게임을 너무나 좋아했던 용모는 코드를 치는 시간이 아까웠기 때문에 과제의 코드를 대신 출력해주는 프로그램을 작성하고 게임을 하러 가기로 하였다.</p><p>용모가 작성할 프로그램을 여러분도 작성해보자.</p><h4 id=풀이>풀이</h4><p>특정한 패턴이 없는 1 ~ 3번 줄까지는 그대로 출력하고, 나머지 줄부터는 반복문을 통해 포인터 중첩 정도 만큼 별을 출력하도록 하였다.</p><h4 id=코드>코드</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>switch</span> <span class=p>(</span><span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>case</span> <span class=mi>0</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>                <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;int a;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>case</span> <span class=mi>1</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>                <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;int *ptr = &amp;a;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>case</span> <span class=mi>2</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>                <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;int **ptr2 = &amp;ptr;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>                <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\n</span><span class=s>int &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>j</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>j</span> <span class=o>&lt;</span> <span class=n>i</span><span class=p>;</span> <span class=n>j</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;*&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>                <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;ptr%d = &amp;ptr%d;&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>i</span> <span class=o>-</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=11729--하노이-탑-이동-순서>11729 | 하노이 탑 이동 순서</h3><p><a class=link href=https://www.acmicpc.net/problem/25703 target=_blank rel=noopener>문제 링크</a></p><h4 id=문제-1>문제</h4><p>세 개의 장대가 있고 첫 번째 장대에는 반경이 서로 다른 n개의 원판이 쌓여 있다. 각 원판은 반경이 큰 순서대로 쌓여있다. 이제 수도승들이 다음 규칙에 따라 첫 번째 장대에서 세 번째 장대로 옮기려 한다.</p><ol><li>한 번에 한 개의 원판만을 다른 탑으로 옮길 수 있다.</li><li>쌓아 놓은 원판은 항상 위의 것이 아래의 것보다 작아야 한다.</li></ol><p>이 작업을 수행하는데 필요한 이동 순서를 출력하는 프로그램을 작성하라. 단, 이동 횟수는 최소가 되어야 한다.</p><h4 id=풀이-1>풀이</h4><p><code>n</code>개의 원판을 목적지 기둥으로 옮기는 메인 아이디어는 <code>n - 1</code>개의 원판을 중간 기둥으로 옮긴 다음에 목적지 기둥으로 옮기는 것이다. 이를 재귀 함수로 구현하였다.</p><p>따라서 <code>hanoi()</code> 함수를 보면, <code>hanoi(n - 1, from, to, via);</code> 코드를 통해 <code>n - 1</code>개의 원판을 세 번째 기둥을 보조 기둥으로 이용하여 두 번째 기둥으로 옮기고,</p><p><code>printf("%d %d\n", from, to);</code> 코드를 통해 가장 큰 원판을 세 번째 기둥으로 옮기고,</p><p><code>hanoi(n - 1, via, from, to);</code> 함수를 통해 두 번째 기둥으로 옮긴 <code>n - 1</code> 개의 원판을 세번째 기둥으로 옮기도록 하였다.</p><h4 id=코드-1>코드</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>hanoi</span><span class=p>(</span><span class=kt>int</span> <span class=n>n</span><span class=p>,</span> <span class=kt>int</span> <span class=n>from</span><span class=p>,</span> <span class=kt>int</span> <span class=n>via</span><span class=p>,</span> <span class=kt>int</span> <span class=n>to</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>n</span> <span class=o>==</span> <span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>from</span><span class=p>,</span> <span class=n>to</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>hanoi</span><span class=p>(</span><span class=n>n</span> <span class=o>-</span> <span class=mi>1</span><span class=p>,</span> <span class=n>from</span><span class=p>,</span> <span class=n>to</span><span class=p>,</span> <span class=n>via</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>from</span><span class=p>,</span> <span class=n>to</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>hanoi</span><span class=p>(</span><span class=n>n</span> <span class=o>-</span> <span class=mi>1</span><span class=p>,</span> <span class=n>via</span><span class=p>,</span> <span class=n>from</span><span class=p>,</span> <span class=n>to</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>n</span><span class=p>,</span> <span class=n>sum</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>sum</span> <span class=o>*=</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>sum</span> <span class=o>-</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>hanoi</span><span class=p>(</span><span class=n>n</span><span class=p>,</span> <span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=코드업-문제-정리>코드업 문제 정리</h2><p>1810*, 1581*</p><p><img src=/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/image-1.png width=1021 height=61 srcset="/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/image-1_hu_5bd49d934d403067.png 480w, /p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/image-1_hu_4efb14d3fe50f736.png 1024w" loading=lazy class=gallery-image data-flex-grow=1673 data-flex-basis=4017px></p><hr><h3 id=1810--부분-문자열>1810 | 부분 문자열</h3><p><a class=link href="https://codeup.kr/problem.php?id=1810" target=_blank rel=noopener>문제 링크</a></p><h4 id=문제-2>문제</h4><p>어떤 문자열에서 부분문자열을 추출하여 출력하는 프로그램을 작성하시오.</p><p>단 배열 대신 동적메모리 할당방법을 사용하시오.</p><h4 id=풀이-2>풀이</h4><p><code>str</code>이라는 변수의 포인터에 100byte 크기의 메모리 공간을 할당한 뒤, 문자열과 두 정수를 입력받아 두 정수 사이의 인덱스 만큼 출력하도록 하였다.</p><h4 id=코드-2>코드</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>str</span> <span class=o>=</span> <span class=nf>malloc</span><span class=p>(</span><span class=mi>100</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%s %d %d&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>a</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>b</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%c&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>[</span><span class=n>i</span> <span class=o>-</span> <span class=mi>1</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nf>free</span><span class=p>(</span><span class=n>str</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=1581--swap-함수-만들기>1581 | swap 함수 만들기</h3><p><a class=link href="https://codeup.kr/problem.php?id=1581" target=_blank rel=noopener>문제 링크</a></p><h4 id=문제-3>문제</h4><p>이 문제는 두 변수의 값을 바꾸는 함수를 구현하는 문제입니다.</p><p>다음 조건을 참고해서 함수 본체만 작성해서 제출하시기 바랍니다.</p><p>함수명 : myswap</p><p>매개 변수(parameter) : 정수형 포인터 변수 변수 2개(매개변수를 반드시 int∗로 사용)</p><p>반환 형(return type) : 없음(void)</p><p>함수 내용 : 첫 번째 포인터가 가리키는 변수의 값이 두 번째 포인터가 가리키는 변수의 값보다 클 경우 두 값을 서로 바꾼다.</p><h4 id=풀이-3>풀이</h4><p>두 변수의 포인터를 인자로 받아 첫 번째 값이 더 크다면 역참조를 통해 두 주소의 값을 서로 바꿔주었다.</p><h4 id=코드-3>코드</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>myswap</span><span class=p>(</span><span class=kt>int</span><span class=o>*</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span><span class=o>*</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>tmp</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>*</span><span class=n>a</span> <span class=o>&gt;</span> <span class=o>*</span><span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span> <span class=o>=</span> <span class=o>*</span><span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>a</span> <span class=o>=</span> <span class=o>*</span><span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=n>b</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nf>main</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>a</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>myswap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>a</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d %d&#34;</span><span class=p>,</span> <span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=창작-문제>창작 문제</h2><h3 id=문제-4>문제</h3><p><img src=/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/%EC%98%A4%ED%9B%84%207_39%202025%EB%85%84%204%EC%9B%94%209%EC%9D%BC.jpg width=1206 height=657 srcset="/p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/%EC%98%A4%ED%9B%84%207_39%202025%EB%85%84%204%EC%9B%94%209%EC%9D%BC_hu_83ce232a65d6c5dd.jpg 480w, /p/layer7-c%EC%96%B8%EC%96%B4-4%EC%B0%A8%EC%8B%9C/%EC%98%A4%ED%9B%84%207_39%202025%EB%85%84%204%EC%9B%94%209%EC%9D%BC_hu_57179115761cce59.jpg 1024w" loading=lazy class=gallery-image data-flex-grow=183 data-flex-basis=440px></p><h3 id=풀이-4>풀이</h3><p>입력받은 <code>N</code>의 크기 만큼 메모리를 할당하여 배열을 선언하였다. 정렬 알고리즘을 통해 크기 순으로 정렬하고, 반복문을 통해 <code>i</code>번째 값과 <code>i + 1</code>번째 값이 다른 경우만 출력되게 하여 중복을 방지하였다.</p><h3 id=코드-4>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>N</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>N</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=o>*</span><span class=n>arr</span> <span class=o>=</span> <span class=p>(</span><span class=kt>int</span> <span class=o>*</span><span class=p>)</span> <span class=nf>malloc</span><span class=p>(</span><span class=n>N</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=kt>int</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>N</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=n>arr</span> <span class=o>+</span> <span class=n>i</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>N</span> <span class=o>-</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>j</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span> <span class=n>j</span> <span class=o>&lt;</span> <span class=n>N</span><span class=p>;</span> <span class=n>j</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>i</span><span class=p>)</span> <span class=o>&gt;</span> <span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>j</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=kt>int</span> <span class=n>tmp</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>i</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>i</span><span class=p>)</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>j</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>j</span><span class=p>)</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>N</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>i</span><span class=p>)</span> <span class=o>!=</span> <span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d &#34;</span><span class=p>,</span> <span class=o>*</span><span class=p>(</span><span class=n>arr</span> <span class=o>+</span> <span class=n>i</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=10775--공항-협력-과제>10775 | 공항 (협력 과제)</h2><p><a class=link href=https://www.acmicpc.net/problem/10775 target=_blank rel=noopener>문제 링크</a></p><h3 id=문제-5>문제</h3><p>오늘은 신승원의 생일이다.</p><p>박승원은 생일을 맞아 신승원에게 인천국제공항을 선물로 줬다.</p><p>공항에는 G개의 게이트가 있으며 각각은 1에서 G까지의 번호를 가지고 있다.</p><p>공항에는 P개의 비행기가 순서대로 도착할 예정이며, 당신은 i번째 비행기를 1번부터 gi (1 ≤ gi ≤ G) 번째 게이트중 하나에 영구적으로 도킹하려 한다. 비행기가 어느 게이트에도 도킹할 수 없다면 공항이 폐쇄되고, 이후 어떤 비행기도 도착할 수 없다.</p><p>신승원은 가장 많은 비행기를 공항에 도킹시켜서 박승원을 행복하게 하고 싶어한다. 승원이는 비행기를 최대 몇 대 도킹시킬 수 있는가?</p><h3 id=풀이-5>풀이</h3><p>풀이 시작 전 <code>union-find</code> 알고리즘이 사용된다는 정보를 알고 학습 후에 풀이하였습니다.</p><p>게이트 개수인 <code>G</code>를 입력받아, 그 값 만큼 <code>parent</code> 배열의 각 인덱스를 <code>i</code>로 초기화 해주었다.</p><p>이후 <code>gi</code>를 입력받아, <code>find()</code> 함수를 통해 <code>gi</code>와 가장 가까운 값을 반환하도록 하였고, <code>Union()</code> 함수를 통해 이전 노드와 연결되도록 하여 도킹을 구현하였다.</p><p>따라서 만약 같은 값의 <code>gi</code>가 입력되면 이전 노드의 값이 반환될 것이고, 그 경우를 카운트하여 <code>find(gi)</code>의 값이 0이면(도킹할 수 있는 게이트가 없을 때) 반복을 멈추고 출력하도록 하였다.</p><h3 id=코드-5>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>parent</span><span class=p>[</span><span class=mi>100001</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>find</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>parent</span><span class=p>[]</span> <span class=o>==</span> <span class=n>x</span><span class=p>)</span> <span class=k>return</span> <span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>parent</span><span class=p>[</span><span class=n>x</span><span class=p>]</span> <span class=o>=</span> <span class=nf>find</span><span class=p>(</span><span class=n>parent</span><span class=p>[</span><span class=n>x</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Union</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>a</span> <span class=o>=</span> <span class=nf>find</span><span class=p>(</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span> <span class=o>=</span> <span class=nf>find</span><span class=p>(</span><span class=n>b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>parent</span><span class=p>[</span><span class=n>a</span><span class=p>]</span> <span class=o>=</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>G</span><span class=p>,</span> <span class=n>P</span><span class=p>,</span> <span class=n>gi</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d %d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>G</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>P</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>G</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>parent</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>cnt</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>P</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>gi</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>D</span> <span class=o>=</span> <span class=nf>find</span><span class=p>(</span><span class=n>gi</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>D</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nf>Union</span><span class=p>(</span><span class=n>D</span><span class=p>,</span> <span class=n>D</span> <span class=o>-</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>cnt</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>cnt</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/layer7/>Layer7</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/layer7-%EC%8B%9C%EC%8A%A4%ED%85%9C-%ED%95%B4%ED%82%B9-1%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 시스템 해킹 1차시</h2></div></a></article><article><a href=/p/layer7-web-hacking-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Web Hacking mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-reversing-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Reversing mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 8차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-7%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 7차시</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 T43W00</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

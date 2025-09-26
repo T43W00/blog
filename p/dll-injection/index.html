@@ -1,0 +1,204 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="DLL Injection 기법 학습 내용 정리"><title>DLL Injection</title><link rel=canonical href=https://t43w00.netlify.app/p/dll-injection/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="DLL Injection"><meta property='og:description' content="DLL Injection 기법 학습 내용 정리"><meta property='og:url' content='https://t43w00.netlify.app/p/dll-injection/'><meta property='og:site_name' content='T43W00'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Reversing'><meta property='article:published_time' content='2025-03-07T00:00:00+00:00'><meta property='article:modified_time' content='2025-03-07T00:00:00+00:00'><meta name=twitter:title content="DLL Injection"><meta name=twitter:description content="DLL Injection 기법 학습 내용 정리"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_da68217e1fd91b15.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐱</span></figure><div class=site-meta><h1 class=site-name><a href=/>T43W00</a></h1><h2 class=site-description>정보보안 공부</h2></div></header><ol class=menu-social><li><a href=https://github.com/t43w00 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://x.com/743w00 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#목표>목표</a></li><li><a href=#dll-injection이란>DLL Injection이란?</a></li><li><a href=#dll-injection-구현>DLL Injection 구현</a><ol><li><a href=#프로세스-핸들-구하기>프로세스 핸들 구하기</a><ol><li><a href=#pid-구하기>PID 구하기</a></li></ol></li><li><a href=#메모리-공간-할당하기>메모리 공간 할당하기</a></li><li><a href=#메모리-공간에-dll-경로-쓰기>메모리 공간에 DLL 경로 쓰기</a></li><li><a href=#loadlibrary-함수-주소-가져오기>LoadLibrary 함수 주소 가져오기</a></li><li><a href=#원격-스레드-생성하기>원격 스레드 생성하기</a></li></ol></li><li><a href=#코드-구현>코드 구현</a><ol><li><a href=#dll-injection-코드>DLL Injection 코드</a></li><li><a href=#dll-코드>DLL 코드</a></li></ol></li><li><a href=#코드-실행>코드 실행</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/reversing/>Reversing</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/dll-injection/>DLL Injection</a></h2><h3 class=article-subtitle>DLL Injection 기법 학습 내용 정리</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 07, 2025</time></div></footer></div></header><section class=article-content><h2 id=목표>목표</h2><p><code>notepad.exe</code>에 <code>MessageBox</code> 함수를 호출하는 <code>DLL Injection</code> 하기</p><hr><h2 id=dll-injection이란>DLL Injection이란?</h2><p>실행 중인 프로세스의 공간에 강제로 <code>DLL</code>을 주입하여 악의적인 코드를 실행하는 기법을 말한다.</p><hr><h2 id=dll-injection-구현>DLL Injection 구현</h2><p>프로세스의 메모리에 <code>DLL</code> 파일의 경로를 쓰고, 원격 스레드를 통해 <code>DLL</code>을 로드한다.</p><p><code>DLL</code>이 로드되면 <code>DllMain</code> 함수가 실행되는데, 이 함수에 원하는 코드를 작성하여 실행할 수 있다.</p><hr><h3 id=프로세스-핸들-구하기>프로세스 핸들 구하기</h3><p>먼저 프로세스의 메모리에 접근하기 위해 프로세스의 핸들을 구해야 한다.</p><p>프로세스 핸들은 <code>OpenProcess</code> 함수를 통해 구해야 하는데, 인자로 <code>PID</code>가 필요하다.</p><hr><h4 id=pid-구하기>PID 구하기</h4><p><code>PID</code>는 작업 관리자에서 확인할 수 있지만, 매번 확인할 수는 없으니 동적으로 구해야 한다.</p><p><code>tlhelp32.h</code>의 <code>CreateToolhelp32Snapshot</code> 함수를 통해 스냅샷을 만들어 프로세스의 정보를 가져올 수 있는데, <code>PROCESSENTRY32</code> 구조체의 필드 중 <code>th32ProcessId</code>를 가져올 수 있다.</p><hr><h3 id=메모리-공간-할당하기>메모리 공간 할당하기</h3><p><code>VirtualAllocEx</code> 함수를 통해 프로세스의 메모리 공간을 할당할 수 있다.</p><hr><h3 id=메모리-공간에-dll-경로-쓰기>메모리 공간에 DLL 경로 쓰기</h3><p><code>WriteProcessMemory</code> 함수를 통해 지정된 프로세스의 메모리 영역에 데이터를 쓸 수 있다.</p><p>이 함수를 통해 타겟 프로세스의 메모리 영역에 DLL의 경로를 쓰면 된다.</p><hr><h3 id=loadlibrary-함수-주소-가져오기>LoadLibrary 함수 주소 가져오기</h3><p><code>GetModuleHandle</code> 함수로 <code>kernel32.dll</code>의 핸들을 가져오고, <code>GetProcAddress</code> 함수를 통해 <code>LoadLibrary</code> 함수의 주소를 가져올 수 있다.</p><hr><h3 id=원격-스레드-생성하기>원격 스레드 생성하기</h3><p>타겟 프로세스에 원격 스레드를 생성하여 DLL을 LoadLibrary 함수를 통해 불러온다.</p><hr><h2 id=코드-구현>코드 구현</h2><hr><h3 id=dll-injection-코드>DLL Injection 코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// compile -o DLL_Injection.exe DLL_Injection.c
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;windows.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;tlhelp32.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>HANDLE</span> <span class=n>hSnapshot</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>HANDLE</span> <span class=n>hProcess</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>PROCESSENTRY32</span> <span class=n>PE32</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>targetPID</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=kt>char</span><span class=o>*</span> <span class=n>dllPath</span> <span class=o>=</span> <span class=s>&#34;C:/Users/t43w00/MessageBox.dll&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// PID 구하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=n>PE32</span><span class=p>.</span><span class=n>dwSize</span> <span class=o>=</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>PROCESSENTRY32</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>hSnapshot</span> <span class=o>=</span> <span class=nf>CreateToolhelp32Snapshot</span><span class=p>(</span><span class=n>TH32CS_SNAPPROCESS</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=nf>Process32First</span><span class=p>(</span><span class=n>hSnapshot</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>PE32</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span><span class=nf>Process32Next</span><span class=p>(</span><span class=n>hSnapshot</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>PE32</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nf>strcmp</span><span class=p>(</span><span class=n>PE32</span><span class=p>.</span><span class=n>szExeFile</span><span class=p>,</span> <span class=s>&#34;Notepad.exe&#34;</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>targetPID</span> <span class=o>=</span> <span class=n>PE32</span><span class=p>.</span><span class=n>th32ProcessID</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// 프로세스 핸들 구하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>hProcess</span> <span class=o>=</span> <span class=nf>OpenProcess</span><span class=p>(</span><span class=n>PROCESS_ALL_ACCESS</span><span class=p>,</span> <span class=n>FALSE</span><span class=p>,</span> <span class=n>targetPID</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;Process Name : %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>PE32</span><span class=p>.</span><span class=n>szExeFile</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;Process ID : %lu</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>targetPID</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;Process Handle : %p</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>hProcess</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// 메모리 공간 할당하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>LPVOID</span> <span class=n>pRemoteDllPath</span> <span class=o>=</span> <span class=nf>VirtualAllocEx</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>hProcess</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nb>NULL</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nf>strlen</span><span class=p>(</span><span class=n>dllPath</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>MEM_COMMIT</span> <span class=o>|</span> <span class=n>MEM_RESERVE</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>PAGE_READWRITE</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// 메모리 공간에 DLL 경로 쓰기
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=nf>WriteProcessMemory</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>hProcess</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>pRemoteDllPath</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>dllPath</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nf>strlen</span><span class=p>(</span><span class=n>dllPath</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nb>NULL</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// LoadLibrary 함수 주소 가져오기
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>HMODULE</span> <span class=n>hKernel32</span> <span class=o>=</span> <span class=nf>GetModuleHandle</span><span class=p>(</span><span class=s>&#34;kernel32.dll&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>FARPROC</span> <span class=n>pLoadLibrary</span> <span class=o>=</span> <span class=nf>GetProcAddress</span><span class=p>(</span><span class=n>hKernel32</span><span class=p>,</span> <span class=s>&#34;LoadLibraryA&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// 원격 스레드 생성하기
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>HANDLE</span> <span class=n>hRemoteThread</span> <span class=o>=</span> <span class=nf>CreateRemoteThread</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>hProcess</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nb>NULL</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=n>LPTHREAD_START_ROUTINE</span><span class=p>)</span><span class=n>pLoadLibrary</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>pRemoteDllPath</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nb>NULL</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nf>WaitForSingleObject</span><span class=p>(</span><span class=n>hRemoteThread</span><span class=p>,</span> <span class=n>INFINITE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// 정리
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=nf>VirtualFreeEx</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>hProcess</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>pRemoteDllPath</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>MEM_RELEASE</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nf>CloseHandle</span><span class=p>(</span><span class=n>hSnapshot</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>CloseHandle</span><span class=p>(</span><span class=n>hProcess</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=dll-코드>DLL 코드</h3><p><code>DLL</code>이 프로세스에 로드되었을 때 <code>DllMain</code> 함수에서 <code>MessageBoxA</code> 함수가 실행되도록 작성하였다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;windows.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=n>BOOL</span> <span class=n>APIENTRY</span> <span class=nf>DllMain</span><span class=p>(</span><span class=n>HINSTANCE</span> <span class=n>hinstDLL</span><span class=p>,</span> <span class=n>DWORD</span> <span class=n>fdwReason</span><span class=p>,</span> <span class=n>LPVOID</span> <span class=n>lpvReserved</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=n>fdwReason</span> <span class=o>==</span> <span class=n>DLL_PROCESS_ATTACH</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>MessageBoxA</span><span class=p>(</span><span class=nb>NULL</span><span class=p>,</span> <span class=s>&#34;Injected!&#34;</span><span class=p>,</span> <span class=s>&#34;MessageBox&#34;</span><span class=p>,</span> <span class=n>MB_OK</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>TRUE</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=코드-실행>코드 실행</h2><p><code>notepad.exe</code>를 실행한 뒤에, <code>DLL_Injection.exe</code>를 실행하면 <code>MessageBox</code>가 호출되는 것을 확인할 수 있다.</p></section><footer class=article-footer><section class=article-tags><a href=/tags/reversing/>Reversing</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/layer7-reversing-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Reversing mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 8차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-7%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 7차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-6%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 6차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-5%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 5차시</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 T43W00</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,544 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="수업 내용 정리 메모리 구조 프로그램을 실행하려면 메모리에 프로그램이 로드되어야 한다.\n메모리에는 프로그램에서 용도에 따라 사용되는 공간을 5가지 영역으로 나눌 수 있다.\ntext 영역 프로그램의 실제 코드(기계어)가 저장되는 영역이다. 메모리의 가장 낮은 주소에 저장된다. 프로그램이 종료될 때까지 메모리에 저장된다. data 영역 GVAR(초기화된 전역 변수와 정적 변수)이 저장되는 영역이다. 프로그램이 종료될 때까지 메모리에 저장된다. bss 영역 초기화되지 않은 전역 변수나 정적 변수들이 저장되는 영역이다. 프로그램 실행 시 그 값이 0으로 초기화된다. 실행 파일에 저장되지 않는다. heap 영역 동적으로 할당되는 메모리 영역이다. 선입선출(FIFO, First In First Out) 방식이다. 런타임 시 크기가 결정된다. stack 영역 함수 호출과 지역 변수 선언 시에 사용되는 영역이다. 함수마다 스택 프레임이 생성되며 함수 반환 시 소멸된다. 후입선출(LIFO, Last In First Out) 구조이다. 컴파일 "><title>Layer7 컴퓨터 구조 2차시</title><link rel=canonical href=https://t43w00.netlify.app/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Layer7 컴퓨터 구조 2차시"><meta property='og:description' content="수업 내용 정리 메모리 구조 프로그램을 실행하려면 메모리에 프로그램이 로드되어야 한다.\n메모리에는 프로그램에서 용도에 따라 사용되는 공간을 5가지 영역으로 나눌 수 있다.\ntext 영역 프로그램의 실제 코드(기계어)가 저장되는 영역이다. 메모리의 가장 낮은 주소에 저장된다. 프로그램이 종료될 때까지 메모리에 저장된다. data 영역 GVAR(초기화된 전역 변수와 정적 변수)이 저장되는 영역이다. 프로그램이 종료될 때까지 메모리에 저장된다. bss 영역 초기화되지 않은 전역 변수나 정적 변수들이 저장되는 영역이다. 프로그램 실행 시 그 값이 0으로 초기화된다. 실행 파일에 저장되지 않는다. heap 영역 동적으로 할당되는 메모리 영역이다. 선입선출(FIFO, First In First Out) 방식이다. 런타임 시 크기가 결정된다. stack 영역 함수 호출과 지역 변수 선언 시에 사용되는 영역이다. 함수마다 스택 프레임이 생성되며 함수 반환 시 소멸된다. 후입선출(LIFO, Last In First Out) 구조이다. 컴파일 "><meta property='og:url' content='https://t43w00.netlify.app/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/'><meta property='og:site_name' content='T43W00'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Layer7'><meta property='article:published_time' content='2025-05-13T00:00:00+00:00'><meta property='article:modified_time' content='2025-05-13T00:00:00+00:00'><meta name=twitter:title content="Layer7 컴퓨터 구조 2차시"><meta name=twitter:description content="수업 내용 정리 메모리 구조 프로그램을 실행하려면 메모리에 프로그램이 로드되어야 한다.\n메모리에는 프로그램에서 용도에 따라 사용되는 공간을 5가지 영역으로 나눌 수 있다.\ntext 영역 프로그램의 실제 코드(기계어)가 저장되는 영역이다. 메모리의 가장 낮은 주소에 저장된다. 프로그램이 종료될 때까지 메모리에 저장된다. data 영역 GVAR(초기화된 전역 변수와 정적 변수)이 저장되는 영역이다. 프로그램이 종료될 때까지 메모리에 저장된다. bss 영역 초기화되지 않은 전역 변수나 정적 변수들이 저장되는 영역이다. 프로그램 실행 시 그 값이 0으로 초기화된다. 실행 파일에 저장되지 않는다. heap 영역 동적으로 할당되는 메모리 영역이다. 선입선출(FIFO, First In First Out) 방식이다. 런타임 시 크기가 결정된다. stack 영역 함수 호출과 지역 변수 선언 시에 사용되는 영역이다. 함수마다 스택 프레임이 생성되며 함수 반환 시 소멸된다. 후입선출(LIFO, Last In First Out) 구조이다. 컴파일 "><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_da68217e1fd91b15.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐱</span></figure><div class=site-meta><h1 class=site-name><a href=/>T43W00</a></h1><h2 class=site-description>정보보안 공부</h2></div></header><ol class=menu-social><li><a href=https://github.com/t43w00 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://x.com/743w00 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#수업-내용-정리>수업 내용 정리</a><ol><li><a href=#메모리-구조>메모리 구조</a><ol><li><a href=#text-영역>text 영역</a></li><li><a href=#data-영역>data 영역</a></li><li><a href=#bss-영역>bss 영역</a></li><li><a href=#heap-영역>heap 영역</a></li><li><a href=#stack-영역>stack 영역</a></li></ol></li><li><a href=#컴파일>컴파일</a><ol><li><a href=#gcc>gcc</a></li></ol></li><li><a href=#인터프리터>인터프리터</a><ol><li><a href=#lexer>Lexer</a></li><li><a href=#parser>Parser</a></li></ol></li></ol></li><li><a href=#codeup-문제-정리>Codeup 문제 정리</a><ol><li><a href=#1266--n개의-수의-합>1266 | n개의 수의 합</a></li><li><a href=#문제>문제</a></li><li><a href=#풀이>풀이</a></li><li><a href=#코드>코드</a></li><li><a href=#컴파일-1>컴파일</a><ol><li><a href=#전처리>전처리</a></li><li><a href=#어셈블리>어셈블리</a></li><li><a href=#컴파일-2>컴파일</a></li><li><a href=#링킹>링킹</a></li></ol></li></ol></li><li><a href=#dreamhack-beginners-학습>Dreamhack Beginners 학습</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/layer7/>Layer7</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/>Layer7 컴퓨터 구조 2차시</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>May 13, 2025</time></div></footer></div></header><section class=article-content><h2 id=수업-내용-정리>수업 내용 정리</h2><h3 id=메모리-구조>메모리 구조</h3><p>프로그램을 실행하려면 메모리에 프로그램이 로드되어야 한다.</p><p>메모리에는 프로그램에서 용도에 따라 사용되는 공간을 5가지 영역으로 나눌 수 있다.</p><p><img src=/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.png width=750 height=582 srcset="/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C_hu_f282a1d67dcf6c12.png 480w, /p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C_hu_5c27652f7d2a3342.png 1024w" loading=lazy alt="alt text" class=gallery-image data-flex-grow=128 data-flex-basis=309px></p><hr><h4 id=text-영역>text 영역</h4><ul><li>프로그램의 실제 코드(기계어)가 저장되는 영역이다.</li><li>메모리의 가장 낮은 주소에 저장된다.</li><li>프로그램이 종료될 때까지 메모리에 저장된다.</li></ul><br><h4 id=data-영역>data 영역</h4><ul><li><strong>GVAR</strong>(초기화된 전역 변수와 정적 변수)이 저장되는 영역이다.</li><li>프로그램이 종료될 때까지 메모리에 저장된다.</li></ul><br><h4 id=bss-영역>bss 영역</h4><ul><li><strong>초기화되지 않은</strong> 전역 변수나 정적 변수들이 저장되는 영역이다.</li><li>프로그램 실행 시 그 값이 0으로 초기화된다.</li><li>실행 파일에 저장되지 않는다.</li></ul><br><h4 id=heap-영역>heap 영역</h4><ul><li>동적으로 할당되는 메모리 영역이다.</li><li>선입선출(FIFO, First In First Out) 방식이다.</li><li>런타임 시 크기가 결정된다.</li></ul><br><h4 id=stack-영역>stack 영역</h4><ul><li>함수 호출과 지역 변수 선언 시에 사용되는 영역이다.</li><li>함수마다 스택 프레임이 생성되며 함수 반환 시 소멸된다.</li><li>후입선출(LIFO, Last In First Out) 구조이다.</li></ul><br><hr><h3 id=컴파일>컴파일</h3><p><img src=/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/c-compilation-model.png width=231 height=432 srcset="/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/c-compilation-model_hu_40ec015058920ce7.png 480w, /p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/c-compilation-model_hu_127f5f81711f4dfc.png 1024w" loading=lazy alt="alt text" class=gallery-image data-flex-grow=53 data-flex-basis=128px></p><p>C언어에서의 컴파일은 전처리 과정에서 주석과 띄어쓰기를 제외한 뒤, 필요한 헤더 파일을 소스 코드로 복사하여 전처리된 파일인 <code>.i</code> 확장자 파일로 만든다.</p><p>이후 전처리된 파일을 저수준 언어인 어셈블리어로 변환한다. 이 과정을 컴파일이라고 하며, <code>.s</code> 확장자를 사용한다.</p><p>다음으로 저수준 언어인 어셈블리어를 기계어로 변환하는 과정을 거친다. CPU가 읽고 해석할 수 있는 오브젝트 파일로 변환되며, <code>.o</code> 확장자를 사용한다.</p><p>마지막으로, 오브젝트 파일과 프로그램 실행에 필요한 라이브러리 파일들을 결합하여 실행 파일로 만든다. 이 과정을 링킹이라고 하며, 실행 파일의 경우 운영체제나 아키텍쳐에 따라 다르다.</p><br><p>이 과정을 요약해보자면 아래와 같다.</p><blockquote><p>전처리 -> 어셈블리 -> 컴파일 -> 링킹</p></blockquote><hr><h4 id=gcc>gcc</h4><p><code>-S</code> : 어셈블리어 파일로 컴파일<br><code>-c</code> : 오브젝트 파일로 컴파일<br><code>-o</code> : 실행 파일로 컴파일</p><hr><h3 id=인터프리터>인터프리터</h3><p>인터프리터는 크게 Lexer와 Parser로 구성된다.</p><p>Lexer에는 파이썬 코드가 입력되어 식별자, 상수, 연산자 등의 토큰으로 구별하여 Parser가 이를 AST라는 분석 트리를 생성한다.</p><h4 id=lexer>Lexer</h4><p>소스 코드를 받아 식을 식별자, 상수, 연산자 등으로 나누어 토큰으로 반환한다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Python data-lang=Python><span class=line><span class=cl><span class=c1># 예시</span>
+</span></span><span class=line><span class=cl><span class=n>x</span> <span class=o>=</span> <span class=mi>7</span> <span class=o>-</span> <span class=mi>3</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span></code></pre></td></tr></table></div></div><p>위 코드에서는 <code>x</code>는 식별자, <code>=</code>, <code>-</code>, <code>+</code>는 연산자, <code>7</code>, <code>3</code>, <code>1</code>은 상수가 된다.<br></p><hr><h4 id=parser>Parser</h4><p>Lexer로 나눈 토큰들을 추상 구문 트리(AST) 형태로 만든다.</p><p>위 식을 예로 들자면, 식별자 <code>x</code>, 대입 연산자 <code>=</code>, 연산식 중에서 연산식을 연산하는 값들을 연산자의 자식으로 나타내어 트리 형태로 만든다.</p><p><img src=/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/lsbasi_part7_ast_01.png width=1024 height=561 srcset="/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/lsbasi_part7_ast_01_hu_78966d06a62684f6.png 480w, /p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/lsbasi_part7_ast_01_hu_5fa4500c4241e681.png 1024w" loading=lazy alt="alt text" class=gallery-image data-flex-grow=182 data-flex-basis=438px></p><br><p>아래 파이썬 코드를 통해 확인해볼 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Python data-lang=Python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>ast</span>
+</span></span><span class=line><span class=cl><span class=n>code</span> <span class=o>=</span> <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>x = 7 - 3 + 1
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>tree</span> <span class=o>=</span> <span class=n>ast</span><span class=o>.</span><span class=n>parse</span><span class=p>(</span><span class=n>code</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>ast</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>tree</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># output : Module(body=[Assign(targets=[Name(id=&#39;x&#39;, ctx=Store())], value=BinOp(left=BinOp(left=Constant(value=7), op=Sub(), right=Constant(value=3)), op=Add(), right=Constant(value=1)))], type_ignores=[])</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=codeup-문제-정리>Codeup 문제 정리</h2><p><img src=/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/image.png width=1037 height=31 srcset="/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/image_hu_c44bfb62a519fab.png 480w, /p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/image_hu_505ad0beaaedb117.png 1024w" loading=lazy class=gallery-image data-flex-grow=3345 data-flex-basis=8028px></p><h3 id=1266--n개의-수의-합>1266 | n개의 수의 합</h3><p><a class=link href="https://codeup.kr/problem.php?id=1266" target=_blank rel=noopener>문제 링크</a></p><h3 id=문제>문제</h3><p>수의 개수  n이 주어지고, 그 다음 줄에 무작위로 n개의 정수가 입력된다.</p><p>n개의 수의 합을 출력하시오.</p><h3 id=풀이>풀이</h3><p>반복문을 통해 n개의 수를 입력받아 총합을 출력하였다.</p><h3 id=코드>코드</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=kt>int</span> <span class=n>n</span><span class=p>,</span> <span class=n>num</span><span class=p>,</span> <span class=n>sum</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>num</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>sum</span> <span class=o>+=</span> <span class=n>num</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=n>sum</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=컴파일-1>컴파일</h3><h4 id=전처리>전처리</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>~/Documents/Coding via C v13.3.0-gcc
+</span></span><span class=line><span class=cl>❯ gcc -E test.c -o test.i
+</span></span></code></pre></td></tr></table></div></div><p><code>gcc</code>의 <code>-E</code> 옵션을 사용하여 전처리 파일을 생성하였다.</p><br><p>확인해보면 헤더 파일에서 가져온 함수들이 보이고, 맨 아래에는 내가 작성한 코드가 있는 것을 확인할 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=p>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>extern</span> <span class=kt>int</span> <span class=nf>getc_unlocked</span> <span class=p>(</span><span class=n>FILE</span> <span class=o>*</span><span class=n>__stream</span><span class=p>)</span> <span class=nf>__attribute__</span> <span class=p>((</span><span class=nf>__nonnull__</span> <span class=p>(</span><span class=mi>1</span><span class=p>)));</span>
+</span></span><span class=line><span class=cl><span class=k>extern</span> <span class=kt>int</span> <span class=nf>getchar_unlocked</span> <span class=p>(</span><span class=kt>void</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=cp># 600 &#34;/usr/include</span><span class=cpf>/stdio.h&#34; 3 4</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>extern</span> <span class=kt>int</span> <span class=nf>fgetc_unlocked</span> <span class=p>(</span><span class=n>FILE</span> <span class=o>*</span><span class=n>__stream</span><span class=p>)</span> <span class=nf>__attribute__</span> <span class=p>((</span><span class=nf>__nonnull__</span> <span class=p>(</span><span class=mi>1</span><span class=p>)));</span>
+</span></span><span class=line><span class=cl><span class=cp># 611 &#34;/usr/include</span><span class=cpf>/stdio.h&#34; 3 4</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>extern</span> <span class=kt>int</span> <span class=nf>fputc</span> <span class=p>(</span><span class=kt>int</span> <span class=n>__c</span><span class=p>,</span> <span class=n>FILE</span> <span class=o>*</span><span class=n>__stream</span><span class=p>)</span> <span class=nf>__attribute__</span> <span class=p>((</span><span class=nf>__nonnull__</span> <span class=p>(</span><span class=mi>2</span><span class=p>)));</span>
+</span></span><span class=line><span class=cl><span class=k>extern</span> <span class=kt>int</span> <span class=nf>putc</span> <span class=p>(</span><span class=kt>int</span> <span class=n>__c</span><span class=p>,</span> <span class=n>FILE</span> <span class=o>*</span><span class=n>__stream</span><span class=p>)</span> <span class=nf>__attribute__</span> <span class=p>((</span><span class=nf>__nonnull__</span> <span class=p>(</span><span class=mi>2</span><span class=p>)));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp># 3 &#34;test.c&#34;
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl> <span class=kt>int</span> <span class=n>n</span><span class=p>,</span> <span class=n>num</span><span class=p>,</span> <span class=n>sum</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl> <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>n</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nf>scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>num</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>sum</span> <span class=o>+=</span> <span class=n>num</span><span class=p>;</span>
+</span></span><span class=line><span class=cl> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=n>sum</span><span class=p>);</span>
+</span></span><span class=line><span class=cl> <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>...</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=어셈블리>어셈블리</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>~/Documents/Coding via C v13.3.0-gcc
+</span></span><span class=line><span class=cl>❯ gcc -S test.i -o test.s
+</span></span></code></pre></td></tr></table></div></div><p><code>gcc</code>의 <code>-S</code> 옵션을 사용하여 어셈블리 파일을 생성하였다.</p><br><p>확인해보면 전처리된 파일에 비해 짧고 간단한 형태인 어셈블리어로 변환된 것을 확인할 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-s data-lang=s><span class=line><span class=cl>        <span class=n>.file</span>   <span class=s>&#34;test.c&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>.text</span>
+</span></span><span class=line><span class=cl>        <span class=n>.section</span>        <span class=n>.rodata</span>
+</span></span><span class=line><span class=cl><span class=n>.LC0</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>.string</span> <span class=s>&#34;%d&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>.text</span>
+</span></span><span class=line><span class=cl>        <span class=n>.globl</span>  <span class=n>main</span>
+</span></span><span class=line><span class=cl>        <span class=n>.type</span>   <span class=n>main</span><span class=p>,</span> <span class=o>@</span><span class=kr>function</span>
+</span></span><span class=line><span class=cl><span class=n>main</span><span class=o>:</span>
+</span></span><span class=line><span class=cl><span class=n>.LFB0</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>.cfi_startproc</span>
+</span></span><span class=line><span class=cl>        <span class=n>endbr64</span>
+</span></span><span class=line><span class=cl>        <span class=n>pushq</span>   <span class=o>%rbp
+</span></span></span><span class=line><span class=cl><span class=o>        .cfi_def_cfa_offset 16
+</span></span></span><span class=line><span class=cl><span class=o>        .cfi_offset 6, -16
+</span></span></span><span class=line><span class=cl><span class=o>        movq    %</span><span class=n>rsp</span><span class=p>,</span> <span class=o>%rbp
+</span></span></span><span class=line><span class=cl><span class=o>        .cfi_def_cfa_register 6
+</span></span></span><span class=line><span class=cl><span class=o>        subq    $32, %</span><span class=n>rsp</span>
+</span></span><span class=line><span class=cl>        <span class=n>movq</span>    <span class=o>%fs:40, %</span><span class=n>rax</span>
+</span></span><span class=line><span class=cl>        <span class=n>movq</span>    <span class=o>%rax, -8(%</span><span class=n>rbp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>xorl</span>    <span class=o>%eax, %</span><span class=n>eax</span>
+</span></span><span class=line><span class=cl>        <span class=n>movl</span>    <span class=o>$</span><span class=m>0</span><span class=p>,</span> <span class=m>-16</span><span class=p>(</span><span class=o>%rbp)
+</span></span></span><span class=line><span class=cl><span class=o>        leaq    -24(%</span><span class=n>rbp</span><span class=p>),</span> <span class=o>%rax
+</span></span></span><span class=line><span class=cl><span class=o>        movq    %</span><span class=n>rax</span><span class=p>,</span> <span class=o>%rsi
+</span></span></span><span class=line><span class=cl><span class=o>        leaq    .LC0(%</span><span class=n>rip</span><span class=p>),</span> <span class=o>%rax
+</span></span></span><span class=line><span class=cl><span class=o>        movq    %</span><span class=n>rax</span><span class=p>,</span> <span class=o>%rdi
+</span></span></span><span class=line><span class=cl><span class=o>        movl    $0, %</span><span class=n>eax</span>
+</span></span><span class=line><span class=cl>        <span class=n>call</span>    <span class=n>__isoc99_scanf</span><span class=o>@</span><span class=n>PLT</span>
+</span></span><span class=line><span class=cl>        <span class=n>movl</span>    <span class=o>$</span><span class=m>0</span><span class=p>,</span> <span class=m>-12</span><span class=p>(</span><span class=o>%rbp)
+</span></span></span><span class=line><span class=cl><span class=o>        jmp     .L2
+</span></span></span><span class=line><span class=cl><span class=o>.L3:
+</span></span></span><span class=line><span class=cl><span class=o>        leaq    -20(%</span><span class=n>rbp</span><span class=p>),</span> <span class=o>%rax
+</span></span></span><span class=line><span class=cl><span class=o>        movq    %</span><span class=n>rax</span><span class=p>,</span> <span class=o>%rsi
+</span></span></span><span class=line><span class=cl><span class=o>        leaq    .LC0(%</span><span class=n>rip</span><span class=p>),</span> <span class=o>%rax
+</span></span></span><span class=line><span class=cl><span class=o>        movq    %</span><span class=n>rax</span><span class=p>,</span> <span class=o>%rdi
+</span></span></span><span class=line><span class=cl><span class=o>        movl    $0, %</span><span class=n>eax</span>
+</span></span><span class=line><span class=cl>        <span class=n>call</span>    <span class=n>__isoc99_scanf</span><span class=o>@</span><span class=n>PLT</span>
+</span></span><span class=line><span class=cl>        <span class=n>movl</span>    <span class=m>-20</span><span class=p>(</span><span class=o>%rbp), %</span><span class=n>eax</span>
+</span></span><span class=line><span class=cl>        <span class=n>addl</span>    <span class=o>%eax, -16(%</span><span class=n>rbp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>addl</span>    <span class=o>$</span><span class=m>1</span><span class=p>,</span> <span class=m>-12</span><span class=p>(</span><span class=o>%rbp)
+</span></span></span><span class=line><span class=cl><span class=o>.L2:
+</span></span></span><span class=line><span class=cl><span class=o>        movl    -24(%</span><span class=n>rbp</span><span class=p>),</span> <span class=o>%eax
+</span></span></span><span class=line><span class=cl><span class=o>        cmpl    %</span><span class=n>eax</span><span class=p>,</span> <span class=m>-12</span><span class=p>(</span><span class=o>%rbp)
+</span></span></span><span class=line><span class=cl><span class=o>        jl      .L3
+</span></span></span><span class=line><span class=cl><span class=o>        movl    -16(%</span><span class=n>rbp</span><span class=p>),</span> <span class=o>%eax
+</span></span></span><span class=line><span class=cl><span class=o>        movl    %</span><span class=n>eax</span><span class=p>,</span> <span class=o>%esi
+</span></span></span><span class=line><span class=cl><span class=o>        leaq    .LC0(%</span><span class=n>rip</span><span class=p>),</span> <span class=o>%rax
+</span></span></span><span class=line><span class=cl><span class=o>        movq    %</span><span class=n>rax</span><span class=p>,</span> <span class=o>%rdi
+</span></span></span><span class=line><span class=cl><span class=o>        movl    $0, %</span><span class=n>eax</span>
+</span></span><span class=line><span class=cl>        <span class=n>call</span>    <span class=n>printf</span><span class=o>@</span><span class=n>PLT</span>
+</span></span><span class=line><span class=cl>        <span class=n>movl</span>    <span class=o>$</span><span class=m>0</span><span class=p>,</span> <span class=o>%eax
+</span></span></span><span class=line><span class=cl><span class=o>        movq    -8(%</span><span class=n>rbp</span><span class=p>),</span> <span class=o>%rdx
+</span></span></span><span class=line><span class=cl><span class=o>        subq    %</span><span class=n>fs</span><span class=o>:</span><span class=m>40</span><span class=p>,</span> %<span class=n>rdx</span>
+</span></span><span class=line><span class=cl>        <span class=n>je</span>      <span class=n>.L5</span>
+</span></span><span class=line><span class=cl>        <span class=n>call</span>    <span class=n>__stack_chk_fail</span><span class=o>@</span><span class=n>PLT</span>
+</span></span><span class=line><span class=cl><span class=n>.L5</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>leave</span>
+</span></span><span class=line><span class=cl>        <span class=n>.cfi_def_cfa</span> <span class=m>7</span><span class=p>,</span> <span class=m>8</span>
+</span></span><span class=line><span class=cl>        <span class=n>ret</span>
+</span></span><span class=line><span class=cl>        <span class=n>.cfi_endproc</span>
+</span></span><span class=line><span class=cl><span class=n>.LFE0</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>.size</span>   <span class=n>main</span><span class=p>,</span> <span class=n>.-main</span>
+</span></span><span class=line><span class=cl>        <span class=n>.ident</span>  <span class=s>&#34;GCC: (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>.section</span>        <span class=n>.note.GNU</span><span class=o>-</span><span class=n>stack</span><span class=p>,</span><span class=s>&#34;&#34;</span><span class=p>,</span><span class=o>@</span><span class=n>progbits</span>
+</span></span><span class=line><span class=cl>        <span class=n>.section</span>        <span class=n>.note.gnu.property</span><span class=p>,</span><span class=s>&#34;a&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>.align</span> <span class=m>8</span>
+</span></span><span class=line><span class=cl>        <span class=n>.long</span>   <span class=m>1</span><span class=n>f</span> <span class=o>-</span> <span class=m>0</span><span class=n>f</span>
+</span></span><span class=line><span class=cl>        <span class=n>.long</span>   <span class=m>4</span><span class=n>f</span> <span class=o>-</span> <span class=m>1</span><span class=n>f</span>
+</span></span><span class=line><span class=cl>        <span class=n>.long</span>   <span class=m>5</span>
+</span></span><span class=line><span class=cl><span class=m>0</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>.string</span> <span class=s>&#34;GNU&#34;</span>
+</span></span><span class=line><span class=cl><span class=m>1</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>.align</span> <span class=m>8</span>
+</span></span><span class=line><span class=cl>        <span class=n>.long</span>   <span class=mh>0xc0000002</span>
+</span></span><span class=line><span class=cl>        <span class=n>.long</span>   <span class=m>3</span><span class=n>f</span> <span class=o>-</span> <span class=m>2</span><span class=n>f</span>
+</span></span><span class=line><span class=cl><span class=m>2</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>.long</span>   <span class=mh>0x3</span>
+</span></span><span class=line><span class=cl><span class=m>3</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>.align</span> <span class=m>8</span>
+</span></span><span class=line><span class=cl><span class=m>4</span><span class=o>:</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=컴파일-2>컴파일</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>~/Documents/Coding via C v13.3.0-gcc
+</span></span><span class=line><span class=cl>❯ gcc -c test.s -o test.o
+</span></span></code></pre></td></tr></table></div></div><p><code>gcc</code>의 <code>-c</code> 옵션을 사용하여 오브젝트 파일을 생성하였다.</p><br><p>확인해보면 기계어 형태로 이루어진 바이너리 파일임을 확인할 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>❯ cat test.o
+</span></span><span class=line><span class=cl>��UH��H�� dH�%(H�E�1��E�H�E�H��H�H�Ǹ��E��%H�E�H��H�H�Ǹ��E�E�E��E�9E�|ӋE��H�H�Ǹ��H�U�dH+%(t���%dGCC: (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0GNU�zRx
+</span></span></code></pre></td></tr></table></div></div><br><p><code>hexdump</code>를 통해 실제 기계어로도 확인할 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>❯ hexdump test.o
+</span></span><span class=line><span class=cl>0000000 457f 464c 0102 0001 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000010 0001 003e 0001 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000020 0000 0000 0000 0000 03a0 0000 0000 0000
+</span></span><span class=line><span class=cl>0000030 0000 0000 0040 0000 0000 0040 000e 000d
+</span></span><span class=line><span class=cl>0000040 0ff3 fa1e 4855 e589 8348 20ec 4864 048b
+</span></span><span class=line><span class=cl>0000050 2825 0000 4800 4589 31f8 c7c0 f045 0000
+</span></span><span class=line><span class=cl>0000060 0000 8d48 e845 8948 48c6 058d 0000 0000
+</span></span><span class=line><span class=cl>0000070 8948 b8c7 0000 0000 00e8 0000 c700 f445
+</span></span><span class=line><span class=cl>0000080 0000 0000 25eb 8d48 ec45 8948 48c6 058d
+</span></span><span class=line><span class=cl>0000090 0000 0000 8948 b8c7 0000 0000 00e8 0000
+</span></span><span class=line><span class=cl>00000a0 8b00 ec45 4501 83f0 f445 8b01 e845 4539
+</span></span><span class=line><span class=cl>00000b0 7cf4 8bd3 f045 c689 8d48 0005 0000 4800
+</span></span><span class=line><span class=cl>00000c0 c789 00b8 0000 e800 0000 0000 00b8 0000
+</span></span><span class=line><span class=cl>00000d0 4800 558b 64f8 2b48 2514 0028 0000 0574
+</span></span><span class=line><span class=cl>00000e0 00e8 0000 c900 25c3 0064 4700 4343 203a
+</span></span><span class=line><span class=cl>00000f0 5528 7562 746e 2075 3331 332e 302e 362d
+</span></span><span class=line><span class=cl>0000100 6275 6e75 7574 7e32 3432 302e 2934 3120
+</span></span><span class=line><span class=cl>0000110 2e33 2e33 0030 0000 0004 0000 0010 0000
+</span></span><span class=line><span class=cl>0000120 0005 0000 4e47 0055 0002 c000 0004 0000
+</span></span><span class=line><span class=cl>0000130 0003 0000 0000 0000 0014 0000 0000 0000
+</span></span><span class=line><span class=cl>0000140 7a01 0052 7801 0110 0c1b 0807 0190 0000
+</span></span><span class=line><span class=cl>0000150 001c 0000 001c 0000 0000 0000 00a7 0000
+</span></span><span class=line><span class=cl>0000160 4500 100e 0286 0d43 0206 0c9e 0807 0000
+</span></span><span class=line><span class=cl>0000170 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000180 0000 0000 0000 0000 0001 0000 0004 fff1
+</span></span><span class=line><span class=cl>0000190 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00001a0 0000 0000 0003 0001 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00001b0 0000 0000 0000 0000 0000 0000 0003 0005
+</span></span><span class=line><span class=cl>00001c0 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00001d0 0008 0000 0012 0001 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00001e0 00a7 0000 0000 0000 000d 0000 0010 0000
+</span></span><span class=line><span class=cl>00001f0 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000200 001c 0000 0010 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000210 0000 0000 0000 0000 0023 0000 0010 0000
+</span></span><span class=line><span class=cl>0000220 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000230 7400 7365 2e74 0063 616d 6e69 5f00 695f
+</span></span><span class=line><span class=cl>0000240 6f73 3963 5f39 6373 6e61 0066 7270 6e69
+</span></span><span class=line><span class=cl>0000250 6674 5f00 735f 6174 6b63 635f 6b68 665f
+</span></span><span class=line><span class=cl>0000260 6961 006c 0000 0000 002c 0000 0000 0000
+</span></span><span class=line><span class=cl>0000270 0002 0000 0003 0000 fffc ffff ffff ffff
+</span></span><span class=line><span class=cl>0000280 0039 0000 0000 0000 0004 0000 0005 0000
+</span></span><span class=line><span class=cl>0000290 fffc ffff ffff ffff 0050 0000 0000 0000
+</span></span><span class=line><span class=cl>00002a0 0002 0000 0003 0000 fffc ffff ffff ffff
+</span></span><span class=line><span class=cl>00002b0 005d 0000 0000 0000 0004 0000 0005 0000
+</span></span><span class=line><span class=cl>00002c0 fffc ffff ffff ffff 007b 0000 0000 0000
+</span></span><span class=line><span class=cl>00002d0 0002 0000 0003 0000 fffc ffff ffff ffff
+</span></span><span class=line><span class=cl>00002e0 0088 0000 0000 0000 0004 0000 0006 0000
+</span></span><span class=line><span class=cl>00002f0 fffc ffff ffff ffff 00a1 0000 0000 0000
+</span></span><span class=line><span class=cl>0000300 0004 0000 0007 0000 fffc ffff ffff ffff
+</span></span><span class=line><span class=cl>0000310 0020 0000 0000 0000 0002 0000 0002 0000
+</span></span><span class=line><span class=cl>0000320 0000 0000 0000 0000 2e00 7973 746d 6261
+</span></span><span class=line><span class=cl>0000330 2e00 7473 7472 6261 2e00 6873 7473 7472
+</span></span><span class=line><span class=cl>0000340 6261 2e00 6572 616c 742e 7865 0074 642e
+</span></span><span class=line><span class=cl>0000350 7461 0061 622e 7373 2e00 6f72 6164 6174
+</span></span><span class=line><span class=cl>0000360 2e00 6f63 6d6d 6e65 0074 6e2e 746f 2e65
+</span></span><span class=line><span class=cl>0000370 4e47 2d55 7473 6361 006b 6e2e 746f 2e65
+</span></span><span class=line><span class=cl>0000380 6e67 2e75 7270 706f 7265 7974 2e00 6572
+</span></span><span class=line><span class=cl>0000390 616c 652e 5f68 7266 6d61 0065 0000 0000
+</span></span><span class=line><span class=cl>00003a0 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>*
+</span></span><span class=line><span class=cl>00003e0 0020 0000 0001 0000 0006 0000 0000 0000
+</span></span><span class=line><span class=cl>00003f0 0000 0000 0000 0000 0040 0000 0000 0000
+</span></span><span class=line><span class=cl>0000400 00a7 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000410 0001 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000420 001b 0000 0004 0000 0040 0000 0000 0000
+</span></span><span class=line><span class=cl>0000430 0000 0000 0000 0000 0268 0000 0000 0000
+</span></span><span class=line><span class=cl>0000440 00a8 0000 0000 0000 000b 0000 0001 0000
+</span></span><span class=line><span class=cl>0000450 0008 0000 0000 0000 0018 0000 0000 0000
+</span></span><span class=line><span class=cl>0000460 0026 0000 0001 0000 0003 0000 0000 0000
+</span></span><span class=line><span class=cl>0000470 0000 0000 0000 0000 00e7 0000 0000 0000
+</span></span><span class=line><span class=cl>0000480 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000490 0001 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00004a0 002c 0000 0008 0000 0003 0000 0000 0000
+</span></span><span class=line><span class=cl>00004b0 0000 0000 0000 0000 00e7 0000 0000 0000
+</span></span><span class=line><span class=cl>00004c0 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00004d0 0001 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00004e0 0031 0000 0001 0000 0002 0000 0000 0000
+</span></span><span class=line><span class=cl>00004f0 0000 0000 0000 0000 00e7 0000 0000 0000
+</span></span><span class=line><span class=cl>0000500 0003 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000510 0001 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000520 0039 0000 0001 0000 0030 0000 0000 0000
+</span></span><span class=line><span class=cl>0000530 0000 0000 0000 0000 00ea 0000 0000 0000
+</span></span><span class=line><span class=cl>0000540 002c 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000550 0001 0000 0000 0000 0001 0000 0000 0000
+</span></span><span class=line><span class=cl>0000560 0042 0000 0001 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000570 0000 0000 0000 0000 0116 0000 0000 0000
+</span></span><span class=line><span class=cl>0000580 0000 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000590 0001 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00005a0 0052 0000 0007 0000 0002 0000 0000 0000
+</span></span><span class=line><span class=cl>00005b0 0000 0000 0000 0000 0118 0000 0000 0000
+</span></span><span class=line><span class=cl>00005c0 0020 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00005d0 0008 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00005e0 006a 0000 0001 0000 0002 0000 0000 0000
+</span></span><span class=line><span class=cl>00005f0 0000 0000 0000 0000 0138 0000 0000 0000
+</span></span><span class=line><span class=cl>0000600 0038 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000610 0008 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000620 0065 0000 0004 0000 0040 0000 0000 0000
+</span></span><span class=line><span class=cl>0000630 0000 0000 0000 0000 0310 0000 0000 0000
+</span></span><span class=line><span class=cl>0000640 0018 0000 0000 0000 000b 0000 0009 0000
+</span></span><span class=line><span class=cl>0000650 0008 0000 0000 0000 0018 0000 0000 0000
+</span></span><span class=line><span class=cl>0000660 0001 0000 0002 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000670 0000 0000 0000 0000 0170 0000 0000 0000
+</span></span><span class=line><span class=cl>0000680 00c0 0000 0000 0000 000c 0000 0004 0000
+</span></span><span class=line><span class=cl>0000690 0008 0000 0000 0000 0018 0000 0000 0000
+</span></span><span class=line><span class=cl>00006a0 0009 0000 0003 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00006b0 0000 0000 0000 0000 0230 0000 0000 0000
+</span></span><span class=line><span class=cl>00006c0 0034 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00006d0 0001 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00006e0 0011 0000 0003 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>00006f0 0000 0000 0000 0000 0328 0000 0000 0000
+</span></span><span class=line><span class=cl>0000700 0074 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000710 0001 0000 0000 0000 0000 0000 0000 0000
+</span></span><span class=line><span class=cl>0000720
+</span></span></code></pre></td></tr></table></div></div><h4 id=링킹>링킹</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>~/Documents/Coding via C v13.3.0-gcc
+</span></span><span class=line><span class=cl>❯ gcc test.o -o test
+</span></span></code></pre></td></tr></table></div></div><p><code>gcc</code>의 <code>-o</code> 옵션을 사용하여 실행 파일을 생성하였다.</p><br><p>실행해보면 잘 실행되는 것을 확인할 수 있다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>~/Documents/Coding via C v13.3.0-gcc
+</span></span><span class=line><span class=cl>❯ ./test
+</span></span><span class=line><span class=cl>4
+</span></span><span class=line><span class=cl>1
+</span></span><span class=line><span class=cl>2
+</span></span><span class=line><span class=cl>3
+</span></span><span class=line><span class=cl>4
+</span></span><span class=line><span class=cl>10
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=dreamhack-beginners-학습>Dreamhack Beginners 학습</h2><p><img src=/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/image-1.png width=1920 height=1200 srcset="/p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/image-1_hu_ece2f2faa9400a29.png 480w, /p/layer7-%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B5%AC%EC%A1%B0-2%EC%B0%A8%EC%8B%9C/image-1_hu_cf70ab2accce8297.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=384px></p></section><footer class=article-footer><section class=article-tags><a href=/tags/layer7/>Layer7</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/layer7-%EC%8B%9C%EC%8A%A4%ED%85%9C-%ED%95%B4%ED%82%B9-1%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 시스템 해킹 1차시</h2></div></a></article><article><a href=/p/layer7-web-hacking-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Web Hacking mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-reversing-mini-ctf-write-up/><div class=article-details><h2 class=article-title>Layer7 Reversing mini CTF | Write-up</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-8%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 8차시</h2></div></a></article><article><a href=/p/layer7-%EB%A6%AC%EB%B2%84%EC%8B%B1-7%EC%B0%A8%EC%8B%9C/><div class=article-details><h2 class=article-title>Layer7 리버싱 7차시</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 T43W00</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

